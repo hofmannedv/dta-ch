@@ -1,0 +1,10 @@
+
+826;131220;;12345;131220;Bank 44;ABC12;;1;6;ABC01;12345678901;56789;;CHF;123,45;Felix Z;Markt 1;1234 Zürich;;/C/123456789;Hans Wurst;Taufgraben 1;1234 Bern;;1234567890123456;34
+
+827;131220;1234;12345;131220;Bank 44;ABC12;;1;6;ABC01;12345678901;56789;;CHF;123,45;Felix Z;Markt 1;1234 Zürich;;/C/123456789          ;Hans Wurst;Taufgraben 1;1234 Bern;;bankPayment;Das;ist;ein;Test;/C/456789;Holger Klein;Vor dem Tor 1;4132 Muttenz;
+
+830;131220;;12345;131220;Bank 44;ABC12;;1;6;ABC01;12345678901;56789;;CHF;123,45;;Felix Z;Markt 1;1234 Zürich;;A;/C/11112222;ABCDE123;;;;/C/4444;Hans Wurst;Waldweg 5;12345 Stadt;;Zahlung;pro;Monat;und Jahr;CHG/OUR
+
+832;131222;;00000;131222;Volksbank 1234;ABC12;;1;6;ABC01;12345678901;67890;;CHF;123,45;;Holger F;Haus 4;1000 Basel;;/C/;Tom Foster;45 House Road;12345 San Diego;California;Zahlung;pro;Monat;und Jahr;CHG/OUR
+
+836;131223;;00000;131222;Geldhaus 23;ABC12;;1;6;ABC01;12345678901;67890;;CHF;123,45;;Holger F;Haus 4;1000 Basel;D;;;CH1234567890;Tom Foster;45 House Road;12345 San Diego;U;pro;Monat;und Jahr;CHG/OUR
