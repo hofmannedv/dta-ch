@@ -403,26 +403,32 @@ class DTACH {
 	}
 
 	function setEntrySequenceNumber($number) {
+		// store given entry sequence number
 		$this->header["entrySequenceNumber"] = $number;
 	}
 
 	function getEntrySequenceNumber() {
+		// retrieve stored entry sequence number
 		return($this->header["entrySequenceNumber"]);
 	}
 
 	function setPaymentType($value) {
+		// set given payment type
 		$this->header["paymentType"] = $value;
 	}
 
 	function getPaymentType() {
+		// retrieve stored payment type
 		return($this->header["paymentType"]);
 	}
 
 	function setProcessingFlag($flag) {
+		// store processing flag
 		$this->header["processingFlag"] = $flag;
 	}
 
 	function getProcessingFlag() {
+		// retrieve processing flag
 		return($this->header["processingFlag"]);
 	}
 
