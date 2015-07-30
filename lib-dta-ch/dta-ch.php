@@ -1170,6 +1170,7 @@ class DTACH {
 	}
 
 	function validateHeader() {
+		// validate the whole transaction header
 
 		// requestedProcessingDate
 		$v = $this->validateRequestedProcessingDate();
@@ -1216,6 +1217,7 @@ class DTACH {
 	}
 
 	function adjustHeader() {
+		// auto-adjust the transaction header
 
 		// requestedProcessingDate
 		$this->adjustRequestedProcessingDate();
