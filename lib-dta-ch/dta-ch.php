@@ -450,11 +450,11 @@ class DTACH {
 	}
 
 	function getTextFieldValue($fieldId) {
-		// return field value if it exists
+		// return field value if the requested field exists
 		if ($this->hasTextField($fieldId)) {
 			return $this->fields[$fieldId];
 		} else {
-			// ... otherwise return an error code
+			// ... otherwise return False as an error code
 			return False;
 		}
 	}
@@ -473,11 +473,15 @@ class DTACH {
 	}
 
 	function addTextField($fieldId, $fieldValue) {
+		// extend the field list by the new field, and assign the given
+		// value to it
 		$this->fields[$fieldId] = $fieldValue;
 		return True;		
 	}
 
 	function getHeaderFields() {
+		// return the list of all the transaction header fields with the
+		// according values
 		$taHeader = array(
 			"transactionType" => $this->getTransactionType(),
 			"requestedProcessingDate" => $this->getRequestedProcessingDate(),
@@ -494,7 +498,14 @@ class DTACH {
 	}
 
 	function getIndividualFields(){
+		// return the list of all the individual fields with the
+		// according values
+
+		// retrieve the current type of transaction
 		$taId = $this->getTransactionType();
+
+		// define a basic list of fields that all the transactions have
+		// in common
 		$basicList = array(
 			"orderingPartyIdentification",
 			"orderingPartyTransactionNumber",
@@ -511,6 +522,8 @@ class DTACH {
 			"beneficiaryPartyLine3"
 		);
 
+		// define an individual list per transaction type as described
+		// in the SIX specification
 		$taList = array();
 
 		switch ($taId) {
@@ -613,7 +626,10 @@ class DTACH {
 				break;
 			}
 
+			// combine the two lists of fields
 			$fullList = array_merge($basicList, $taList);
+
+			// retrieve the according field values for this transaction
 			$taFull = array();
 
 			foreach ($fullList as $entry) {
@@ -625,6 +641,7 @@ class DTACH {
 					echo "<i>cannot associate $entry</i>\n";
 				}
 			}
+		// return the full list
 		return $taFull;
 	}
 
