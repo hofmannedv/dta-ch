@@ -1149,7 +1149,12 @@ class DTACH {
 	}
 
 	function validateProcessingFlag() {
+		// validate the processing flag
+
+		// retrieve the stored processing flag
 		$processingFlag = $this->getProcessingFlag();
+
+		// it has to be zero
 		if ($processingFlag == 0) {
 			return True;
 		}
@@ -1157,6 +1162,9 @@ class DTACH {
 	}
 
 	function adjustProcessingFlag(){
+		// auto-adjust the processing flag
+
+		// it has to be zero. Update the processing flag.
 		$this->setProcessingFlag(0);
 		return;
 	}
