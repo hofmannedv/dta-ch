@@ -920,10 +920,19 @@ class DTACH {
 	}
 
 	function adjustOutputSequenceNumber(){
+		// auto-correct the output sequence number of the transaction
+
+		// retrieve the output sequence number of the transaction
 		$outputSequenceNumber = $this->getOutputSequenceNumber();
+
+		// define the validation pattern: "00000"
 		$pattern = '/^0{5}$/';
+
+		// verify the output sequence number, and adjust if necessary
 		if (preg_match($pattern, $outputSequenceNumber) == False) {
 			$outputSequenceNumber = "00000";
+
+			// update the value, and store the new content
 			$this->setOutputSequenceNumber($outputSequenceNumber);
 		}
 		return;
