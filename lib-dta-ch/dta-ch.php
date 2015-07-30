@@ -978,19 +978,30 @@ class DTACH {
 	}
 
 	function validateBankClearingNumberSender(){
+		// validate the bank clearing number of the sender
+
+		// retrieve the stored bank clearing number of the sender
 		$bankClearingNumberSender = $this->getBankClearingNumberSender();
+
+		// retrieve the current type of transaction
 		$transactionType = $this->getTransactionType();
 		if ($transactionType == 890) {
+			// define pattern for empty spaces
 			$bankPattern = '/^\s*$/';
 		} else {
+			// define pattern of digits and spaces
 			$bankPattern = '/^\d+\s*$/';
 		}
 
+		// does the bank clearing number matches the pattern?
 		if (preg_match($bankPattern, $bankClearingNumberSender)) {
+			// does the bank clearing number has a length of seven characters?
 			if (strlen($bankClearingNumberSender) == 7) {
+				// ... yes: return True
 				return True;
 			}
 		}
+		// ... no: return False
 		return False;
 	}
 
