@@ -1110,8 +1110,15 @@ class DTACH {
 	}
 
 	function validatePaymentType(){
+		// validate the payment type
+
+		// retrieve the stored payment type
 		$paymentType = $this->getPaymentType();
+
+		// retrieve the stored transaction type
 		$transactionType = $this->getTransactionType();
+
+		// paymentType 1 is allowed for TA 827, 836, and 837, only
 		if ($paymentType == 1) {
 			if (in_array($transactionType, Array(827,836,837))){
 				return True;
