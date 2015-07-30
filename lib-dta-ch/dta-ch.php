@@ -1047,9 +1047,20 @@ class DTACH {
 	}
 
 	function adjustDataFileSenderidentification(){
+		// auto-adjust the data file sender identification
+
+		// retrieve the stored data file sender identification
 		$dataFileSenderIdentification = $this->getDataFileSenderidentification();
+
+		// define a regex pattern to remove all non-digits plus letters 
+		// from the current value
 		$dataFileSenderIdentification = preg_replace('/[^\dA-Z]+/', '', $dataFileSenderIdentification);
+
+		// extend the data file sender identification by spaces to
+		// achieve a length of seven characters
 		$dataFileSenderIdentification = str_pad($dataFileSenderIdentification,5," ", STR_PAD_RIGHT);
+
+		// update the value for the data file sender identification
 		$this->setDataFileSenderIdentification($dataFileSenderIdentification);
 		return;
 	}
