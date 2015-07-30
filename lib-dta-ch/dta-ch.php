@@ -941,7 +941,7 @@ class DTACH {
 	function validateCreationDate(){
 		// validate the creation date of the transaction
 
-		// retrieve the stored creation date
+		// retrieve the stored creation date of the transaction
 		$creationDate = $this->getCreationDate();
 
 		// define the validation pattern
@@ -957,10 +957,21 @@ class DTACH {
 	}
 
 	function adjustCreationDate(){
+		// auto-adjust the creation date of the transaction
+
+		// retrieve the stored creation date of the transaction
 		$creationDate = $this->getCreationDate();
+
+		// define the validation pattern
 		$datePattern = '/^\d{2}((0[1-9])|(1[0-2]))((0[1-9])|([1,2]\d)|(3[0,1]))$/';
+
+		// verify the creation date
 		if (preg_match($datePattern, $creationDate)) {
+			// creation date is invalid
+			// substitute the date by the current date, instead
 			$creationDate = date("ymd");
+
+			// update the value of creation date of the transaction
 			$this->setCreationDate($creationDate);
 		}
 		return;
