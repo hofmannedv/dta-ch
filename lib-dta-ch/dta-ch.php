@@ -902,11 +902,20 @@ class DTACH {
 	}
 
 	function validateOutputSequenceNumber(){
+		// validate the output sequence number of the transaction
+		// has to consist of five digits
+
+		// retrieve the output sequence number of the transaction
 		$outputSequenceNumber = $this->getOutputSequenceNumber();
+
+		// define the validation pattern
 		$pattern = '/^\d{5}$/';
 		if (preg_match($pattern, $outputSequenceNumber)) {
+			// in case the pattern fits the value return True
 			return True;
 		}
+
+		// ... otherwise False
 		return False;
 	}
 
