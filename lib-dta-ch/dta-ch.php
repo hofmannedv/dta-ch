@@ -445,24 +445,28 @@ class DTACH {
 	}
 
 	function hasTextField($fieldId) {
+		// verify the existence of a field in the field list
 		return array_key_exists($fieldId, $this->fields);
 	}
 
 	function getTextFieldValue($fieldId) {
+		// return field value if it exists
 		if ($this->hasTextField($fieldId)) {
 			return $this->fields[$fieldId];
 		} else {
-			// Fehlermeldung
+			// ... otherwise return an error code
 			return False;
 		}
 	}
 
 	function setTextFieldValue($fieldId, $fieldValue) {
+		// store the given value in the desired field if this field exists
 		if ($this->hasTextField($fieldId)) {
 			$this->fields[$fieldId] = $fieldValue;
+			// return True if successfull
 			return True;
 		} else {
-			// Fehlermeldung
+			// ... otherwise return False as an error code
 			echo "<i>field id $fieldId does not exist.</i>\n";
 			return False;
 		}
