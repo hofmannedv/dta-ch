@@ -333,6 +333,7 @@ class DTACH {
 	// Header functions
 
 	function setTransactionType($value) {
+		// store the given transaction type
 		$this->header["transactionType"] = $value;
 	}
 
@@ -341,6 +342,7 @@ class DTACH {
 	}
 
 	function setRequestedProcessingDate($value) {
+		// store the requested processing date of the transaction
 		$this->header["requestedProcessingDate"] = $value;
 	}
 
@@ -349,6 +351,7 @@ class DTACH {
 	}
 
 	function setBankClearingNumberReceiver($number) {
+		// store the given bank clearing number
 		$this->header["bankClearingNumberReceiver"] = $number;
 	}
 
@@ -357,6 +360,7 @@ class DTACH {
 	}
 
 	function setOutputSequenceNumber($value) {
+		// store the given transaction sequence number
 		$this->header["outputSequenceNumber"] = $value;
 	}
 
@@ -365,6 +369,7 @@ class DTACH {
 	}
 
 	function setCreationDate($value) {
+		// store the creation date of the transaction
 		$this->header["creationDate"] = $value;
 	}
 
@@ -373,6 +378,7 @@ class DTACH {
 	}
 
 	function setBankClearingNumberSender($number) {
+		// store the bank clearing number of the sender
 		$this->header["bankClearingNumberSender"] = $number;
 	}
 
@@ -381,10 +387,12 @@ class DTACH {
 	}
 
 	function setDataFileSenderIdentification($id) {
+		// store the sender identification of the data file
 		$this->header["dataFileSenderIdentification"] = $id;
 	}
 
 	function getDataFileSenderIdentification() {
+		// retrieve the sender identification of the data file
 		return($this->header["dataFileSenderIdentification"]);
 	}
 
