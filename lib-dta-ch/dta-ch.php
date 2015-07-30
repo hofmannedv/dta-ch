@@ -1025,13 +1025,24 @@ class DTACH {
 	}
 
 	function validateDataFileSenderidentification(){
+		// validate the data file sender identification
+
+		// retrieve the stored data file sender identification
 		$dataFileSenderIdentification = $this->getDataFileSenderidentification();
+
+		// define a regex pattern to match the identification id
 		$pattern = '/^[\dA-Z]{5}$/';
+
+		// does the pattern matches the identification id?
 		if (preg_match($pattern, $dataFileSenderIdentification)) {
+			// does the identification id has a length of five characters?
 			if(strlen($dataFileSenderIdentification) == 5) {
+				// ... yes: return True
 				return True;
 			}
 		}
+
+		// ... no: return False
 		return False;
 	}
 
