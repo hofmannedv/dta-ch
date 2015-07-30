@@ -1264,11 +1264,20 @@ class DTACH {
 	}
 
 	function validateReferenceNumber() {
+		// validate the transaction reference number
+
+		// retrieve the stored ordering party identification
 		$orderingPartyIdentification = $this->validationResult["orderingPartyIdentification"];
+
+		// retrieve the party transaction number
 		$orderingPartyTransactionNumber = $this->validationResult["orderingPartyTransactionNumber"];
+
 		if ($orderingPartyIdentification AND $orderingPartyTransactionNumber) {
+			// return True if both exist
 			return True;
 		}
+
+		// ... otherwise False
 		return False;
 	}
 
