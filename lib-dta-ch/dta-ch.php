@@ -842,28 +842,44 @@ class DTACH {
 	}
 
 	function validateBankClearingNumberReceiver() {
+		// validate the bank clearing number of the transaction receiver
+
+		// retrieve the transaction type
 		$transactionType = $this->getTransactionType();
+
+		// read the according bank clearing number
 		$bankClearingNumberReceiver = $this->getBankClearingNumberReceiver();
+
+		// identify the beneficary transfer type
 		$beneficiaryTransferType = $this->getBeneficiaryTransferType();
+
+		// check the transaction type
 		if($transactionType == 827) {
 			if ($beneficiaryTransferType == "bankPayment") {
-				// bank payment
+				// define a pattern for the bank payment
 				$pattern = '/^\d+\s*$/';
 			} else {
-				// postal payment
+				// define a pattern for the postal payment
 				$pattern = '/^\s{12}$/';
 			}
+
+			// validate both pattern, and the string length
 			if (preg_match($pattern, $bankClearingNumberReceiver)) {
 				if (strlen($bankClearingNumberReceiver) == 12) {
 					return True;
 				}
 			}
 		} else {
+			// define a pattern for the postal payment
 			$pattern = '/^\s{12}$/';
+
+			// validate the pattern
 			if (preg_match($pattern, $bankClearingNumberReceiver)) {
 				return True;
 			}
 		}
+
+		// if still unmet, return False
 		return False;
 	}
 
