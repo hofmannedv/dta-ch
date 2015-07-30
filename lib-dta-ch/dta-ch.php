@@ -52,10 +52,15 @@ class DTACH {
 	// adjustment functions
 
 	function adjustString($term){
+		// the transaction content accepts a limited number of characters, 
+		// only, and that's why special characters like accents have to be 
+		// transformed
 
 		// invalid characters as a regexp
 		$invalidStringRegexp = '/[^A-Z0-9 \.,&\-\/\+\*\$%]/';
 
+		// define a transition table of special characters like accents,
+		// and umlauts
 		$specialChars = array(
 			'á' => 'a',
 			'à' => 'a',
@@ -271,18 +276,18 @@ class DTACH {
 			return "";
 		}
 
-		// ensure UTF-8, for single-byte-encodings use either
-		// the internal encoding or assume ISO-8859-1
+		// ensure UTF-8 encoding; for single-byte-encodings use 
+		// either the internal encoding or assume ISO-8859-1
 		$utf8String = mb_convert_encoding(
 			$term,
 			"UTF-8",
 			array("UTF-8", mb_internal_encoding(), "ISO-8859-1")
 		);
 
-		// replace known special chars
+		// replace special characters as defined in the table before
 		$result = strtr($utf8String, $specialChars);
 
-		// upper case
+		// transform to upper case
 		$result = strtoupper($result);
 
 		// make sure every special char is replaced by one space, 
@@ -290,6 +295,7 @@ class DTACH {
 		$result = mb_convert_encoding($result, "ASCII", "UTF-8");
 		$result = preg_replace($invalidStringRegexp, ' ', $result);
 
+		// return the converted string
 		return $result;
 	}
 
