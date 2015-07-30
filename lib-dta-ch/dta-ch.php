@@ -733,21 +733,40 @@ class DTACH {
 	// validation functions
 
 	function validateRequestedProcessingDate(){
+		// validate the requested transaction processing date 
+
+		// retrieve the transaction type
 		$transaction = $this->getTransactionType();
+
+		// define a list of possible transaction types
 		$transactionList = Array(826, 827);
+
+		// retrieve the stored transaction processing date
 		$requestedProcessingDate = $this->getRequestedProcessingDate();
+
+		// retrieve the stored date of delivery
 		$dateOfDelivery = $this->getDateOfDelivery();
+
+		// define two regex patterns to validate the date
 		$pattern1 = '/^\d{2}((0[1-9])|(1[0-2]))((0[1-9])|([1,2]\d)|(3[0,1]))$/';
 		$pattern2 = '/^0{6}$/';
-		
+
+		// does the transaction type match?
 		if(in_array($transaction, $transactionList)) {
+			
+			// does the requested transaction processing date matches
+			// the regex pattern? (Is the format correct?)
 			if (preg_match($pattern1, $requestedProcessingDate)) {
+
 				// the numbers are valid, somehow
-				// check further
+				// ... so check further
 				// assume: we do not have calculations before the year 2000
+				// extract year, month, and day from the given date
 				$year = "20" . substr($requestedProcessingDate, 0, 2);
 				$month = substr($requestedProcessingDate, 2, 2);
 				$day = substr($requestedProcessingDate, 4, 2);
+
+				// validate the date
 				if (checkdate($month,$day,$year)) {
 
 					// compare with date of delivery:
@@ -770,10 +789,12 @@ class DTACH {
 					$dateMax = new DateTime("$year2-$month2-$day2");
 					$dateMax->add(new DateInterval('P60D'));
 
+					// calculate minimal, and max. date as timestamp
 					$min = $dateMin->format('Y-m-d');
 					$max = $dateMax->format('Y-m-d');
 					//echo "Bereich: $min bis $max";
 
+					// check whether the date is within the possible range
 					if($datetime1 > $dateMin) {
 						if($datetime1 < $dateMax) {
 							return True;
@@ -782,10 +803,12 @@ class DTACH {
 				}
 			}
 		} else {
+			// check for an empty date field: 6x0
 			if (preg_match($pattern2, $requestedProcessingDate)) {
 				return True;
 			}
 		}
+		// the validations failed, and so the return value is set to False
 		return False;
 	}
 
