@@ -1,0 +1,7 @@
+README
+------
+
+* testdata:
+  various example transaction data to validate the SEPA module.
+  Includes TA 826, 827, 830, 832 und 836.
+
