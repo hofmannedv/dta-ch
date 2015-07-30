@@ -368,6 +368,7 @@ class DTACH {
 	}
 
 	function getOutputSequenceNumber() {
+		// get the stored transaction sequence number
 		return($this->header["outputSequenceNumber"]);
 	}
 
@@ -377,6 +378,7 @@ class DTACH {
 	}
 
 	function getCreationDate() {
+		// retrieve the stored creation date of the transaction
 		return($this->header["creationDate"]);
 	}
 
