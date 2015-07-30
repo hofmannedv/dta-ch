@@ -1,9 +1,24 @@
 <?php
+/*
+-----------------------------------------------------------
+DTA-CH class
+
+(C) 2015 Frank Hofmann, Berlin, Germany
+Released under GNU Public License (GPL)
+email frank.hofmann@efho.de
+-----------------------------------------------------------
+*/
+
 class DTACH {
 	function __construct() {
+
+		// define data format
 		$this->dataFormat = "";
+
+		// define date of delivery (transaction date)
 		$this->dateOfDelivery = "";
 
+		// initialize transaction header
 		$this->header = Array(
 			"requestedProcessingDate" => "",
 			"bankClearingNumberReceiver" => "",
@@ -17,15 +32,20 @@ class DTACH {
 			"processingFlag" => 0
 		);
 
+		// initialize transaction fields
 		$this->fields = Array();
+
+		// initialize validation fields
 		$this->validationResult = Array();
 	}
 
 	function getHeader() {
+		// return the transaction header
 		return $this->header;
 	}
 
 	function getFields() {
+		// return the transaction fields
 		return $this->fields;
 	}
 
