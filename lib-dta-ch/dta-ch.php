@@ -1006,9 +1006,20 @@ class DTACH {
 	}
 
 	function adjustBankClearingNumberSender(){
+		// auto-adjust the bank clearing number of the sender
+
+		// retrieve the stored bank clearing number of the sender
 		$bankClearingNumberSender = $this->getBankClearingNumberSender();
+
+		// define a regex pattern to remove all non-digits from 
+		// the current value
 		$bankClearingNumberSender = preg_replace('/[^\d]+/', '', $bankClearingNumberSender);
+
+		// extend the bank clearing number by spaces to achieve a 
+		// length of seven characters
 		$bankClearingNumberSender = str_pad($bankClearingNumberSender,7," ", STR_PAD_RIGHT);
+
+		// update bank clearing number
 		$this->setBankClearingNumberSender($bankClearingNumberSender);
 		return;
 	}
