@@ -1066,14 +1066,23 @@ class DTACH {
 	}
 
 	function validateEntrySequenceNumber(){
+		// validate the entry sequence number
+
+		// retrieve the stored entry sequence number
 		$entrySequenceNumber = $this->getEntrySequenceNumber();
+
+		// define a regex pattern of five digits
 		$pattern = '/^\d{5}$/';
 
+		// does the pattern match the entry sequence number?
 		if (preg_match($pattern, $entrySequenceNumber)) {
+			// does the length fit?
 			if(strlen($entrySequenceNumber) == 5) {
+				// ... yes: return True
 				return True;
 			}
 		}
+		// ... no: return False
 		return False;
 	}
 
