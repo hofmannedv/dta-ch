@@ -300,27 +300,33 @@ class DTACH {
 	}
 
 	function adjustNumber($number){
+		// adjust numbers 
+		// function currently not in use
 		return;
 	}
 
 	// Data format functions
 
 	function setDataFormat($value) {
+		// store the given data format
 		$this->dataFormat = $value;
 	}
 
 	function getDataFormat() {
+		// retrieve the saved data format
 		return $this->dataFormat;
 	}
 
 	// date of delivery
 
 	function setDateOfDelivery($value){
+		// store the given date of delivery
 		$this->dateOfDelivery = $value;
 		return;
 	}
 
 	function getDateOfDelivery() {
+		// retrieve the saved date of delivery
 		return $this->dateOfDelivery;
 	}
 
