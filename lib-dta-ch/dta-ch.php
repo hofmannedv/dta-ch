@@ -413,32 +413,34 @@ class DTACH {
 	}
 
 	function setPaymentType($value) {
-		// set given payment type
+		// set given transaction payment type
 		$this->header["paymentType"] = $value;
 	}
 
 	function getPaymentType() {
-		// retrieve stored payment type
+		// retrieve stored transaction payment type
 		return($this->header["paymentType"]);
 	}
 
 	function setProcessingFlag($flag) {
-		// store processing flag
+		// store transaction processing flag
 		$this->header["processingFlag"] = $flag;
 	}
 
 	function getProcessingFlag() {
-		// retrieve processing flag
+		// retrieve transaction processing flag
 		return($this->header["processingFlag"]);
 	}
 
 	// text field functions
 
 	function setBeneficiaryTransferType($value) {
+		// store given value as beneficiary transfer type
 		$this->fields["beneficiaryTransferType"] = $value;
 	}
 
 	function getBeneficiaryTransferType() {
+		// retrieve stored beneficiary transfer type
 		return $this->fields["beneficiaryTransferType"];
 	}
 
