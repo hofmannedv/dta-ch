@@ -884,9 +884,19 @@ class DTACH {
 	}
 
 	function adjustBankClearingNumberReceiver() {
+		// auto-correct the bank clearing number of the receiver
+
+		// retrieve the bank clearing number of the receiver
 		$bankClearingNumberReceiver = $this->getBankClearingNumberReceiver();
+
+		// remove all non-digits 
 		$bankClearingNumberReceiver = preg_replace('/[^\d]+/', '', $bankClearingNumberReceiver);
+
+		// to meet the desired field length of 12 characters add as many
+		// spaces as necessary on the right end
 		$bankClearingNumberReceiver = str_pad($bankClearingNumberReceiver,12," ", STR_PAD_RIGHT);
+
+		// update the value for the bank clearing number of the receiver
 		$this->setBankClearingNumberReceiver($bankClearingNumberReceiver);
 		return;
 	}
