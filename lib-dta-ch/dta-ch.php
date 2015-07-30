@@ -813,16 +813,30 @@ class DTACH {
 	}
 
 	function adjustRequestedProcessingDate(){
+		// auto-correct the requested transaction processing date 
+
+		// retrieve the transaction type
 		$transaction = $this->getTransactionType();
+
+		// define a list of possible transaction types
 		$transactionList = Array(826, 827);
+
+		// retrieve the stored transaction processing date
 		$requestedProcessingDate = $this->getRequestedProcessingDate();
 		
+		// does the transaction type match?
 		if(in_array($transaction, $transactionList)) {
+			// remove all whitespaces
 			$requestedProcessingDate = trim($requestedProcessingDate);
+
+			// remove all non-digits 
 			$requestedProcessingDate = preg_replace('/[^\d]/', '', $requestedProcessingDate);
 		} else {
+			// set to "000000"
 			$requestedProcessingDate = str_repeat("0", 6);
 		}
+
+		// update value of requested transaction processing date
 		$this->setRequestedProcessingDate($requestedProcessingDate);
 		return;
 	}
