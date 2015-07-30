@@ -1087,13 +1087,24 @@ class DTACH {
 	}
 
 	function adjustEntrySequenceNumber(){
+		// auto-adjust the entry sequence number
+
+		// retrieve the stored entry sequence number
 		$entrySequenceNumber = $this->getEntrySequenceNumber();
+
+		// remove all non-digits from the entry sequence number
 		$entrySequenceNumber = preg_replace('/[^\d]+/', '', $entrySequenceNumber);
+
+		// verify the length of the entry sequence number
 		if (strlen($entrySequenceNumber) == 0) {
+			// if zero set it to "00001"
 			$entrySequenceNumber = "00001";
 		} else {
+			// otherwise add as many zeros as needed starting from the left
 			$entrySequenceNumber = str_pad($entrySequenceNumber,5,"0", STR_PAD_LEFT);		
 		}
+
+		// update the entry sequence number
 		$this->setEntrySequenceNumber($entrySequenceNumber);
 		return;
 	}
