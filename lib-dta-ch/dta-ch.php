@@ -338,6 +338,7 @@ class DTACH {
 	}
 
 	function getTransactionType() {
+		// retrieve the stored transaction type
 		return($this->header["transactionType"]);
 	}
 
@@ -347,6 +348,7 @@ class DTACH {
 	}
 
 	function getRequestedProcessingDate() {
+		// retrieve the stored processing date of the transaction
 		return($this->header["requestedProcessingDate"]);
 	}
 
@@ -356,6 +358,7 @@ class DTACH {
 	}
 
 	function getBankClearingNumberReceiver() {
+		// retrieve the stored bank clearing number
 		return($this->header["bankClearingNumberReceiver"]);
 	}
 
@@ -383,6 +386,7 @@ class DTACH {
 	}
 
 	function getBankClearingNumberSender() {
+		// retrieve the bank clearing number of the sender
 		return($this->header["bankClearingNumberSender"]);
 	}
 
