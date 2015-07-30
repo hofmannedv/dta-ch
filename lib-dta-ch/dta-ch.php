@@ -939,11 +939,20 @@ class DTACH {
 	}
 
 	function validateCreationDate(){
+		// validate the creation date of the transaction
+
+		// retrieve the stored creation date
 		$creationDate = $this->getCreationDate();
+
+		// define the validation pattern
 		$datePattern = '/^\d{2}((0[1-9])|(1[0-2]))((0[1-9])|([1,2]\d)|(3[0,1]))$/';
+
+		// verify the creation date
 		if (preg_match($datePattern, $creationDate)) {
+			// ... valid, so return True
 			return True;
 		}
+		// ... invalid, so return False
 		return False;
 	}
 
