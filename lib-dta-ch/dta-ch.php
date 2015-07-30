@@ -646,6 +646,9 @@ class DTACH {
 	}
 
 	function getEntryDescriptions(){
+		// define the descriptions for the entry fields
+		// helpful to design input fields
+
 		$descriptions = array(
 			"accountWithIban" => "account with IBAN",
 			"accountWithoutIban" => "account without IBAN",
