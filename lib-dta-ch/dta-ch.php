@@ -1253,7 +1253,13 @@ class DTACH {
 	}
 
 	function validateDataFormat() {
+		// validate the transmitted data format
+
+		// retrieve the stored data format
 		$dataFormat = $this->getDataFormat();
+
+		// the data format has to be either fixed, or variable
+		// if so return True otherwise False
 		return in_array($dataFormat, Array("fixed", "variable"));
 	}
 
