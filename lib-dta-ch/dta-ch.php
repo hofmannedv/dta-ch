@@ -1363,24 +1363,41 @@ class DTACH {
 	}
 
 	function validateAccountToBeDebited(){
+		// validate the account information
+
+		// retrieve the account information (without IBAN) flag
 		$withoutIban = $this->validateAccountWithoutIban();
+
+		// retrieve the account information (with IBAN) flag
 		$withIban = $this->validateAccountWithIban();
+
+		// retrieve the account information (without IBAN)
 		$accountWithoutIban = $this->getTextFieldValue("accountWithoutIban");
+
+		// retrieve the account information flag (with IBAN)
 		$accountWithIban = $this->getTextFieldValue("accountWithIban");
+
+		// validate the "without IBAN" field
 		if($withoutIban) {
 			if (strlen(trim($accountWithIban)) == 0) {
+				// in case we have no entry enable both flags
 				$this->validationResult["accountWithoutIban"] = True;
 				$this->validationResult["accountWithIban"] = True;
 				return True;
 			}
 		}
+
+		// validate the "with IBAN" field
 		if($withIban) {
 			if (strlen(trim($accountWithoutIban)) == 0) {
+				// in case we have no entry enable both flags
 				$this->validationResult["accountWithoutIban"] = True;
 				$this->validationResult["accountWithIban"] = True;
 				return True;
 			}
 		}
+
+		// ... return error flag
 		return False;
 	}
 
