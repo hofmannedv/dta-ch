@@ -3035,9 +3035,12 @@ class DTACH {
 	}
 
 	function getFullText() {
+		// fill transaction details
 
 		// define the output format
 		$dataFormat = $this->getDataFormat();
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
 
 		// Start of text (SOT): CRLF+, 0D254E
