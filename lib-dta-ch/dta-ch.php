@@ -1653,18 +1653,42 @@ class DTACH {
 	} 
 
 	function validatePaymentAmount() {
+		// validate the payment amount
+
+		// define various regex patterns for payment amounts
+		// - 7.2
 		$pattern5 = '/^\d{1,7},\d{1,2}\s*$/';
+
+		// - 8.2
 		$pattern9 = '/^\d{1,8},\d{1,2}\s*$/';
+
+		// - 10.2
 		$pattern15 = '/^\d{1,10},\d{1,2}\s*$/';
+
+		// - /C/xxxxxxxxx
 		$patternISR9 = '/^\/C\/\d{9}$/';
+
+		// - /C/0000xxxxxxxxx
 		$patternISR5 = '/^\/C\/0000\d{5}$/';
+
+		// - 9.2
 		$patternAccount = '/^\d{1,9},\d{1,2}\s*$/';
+
+		// - 6.2
 		$patternPostalOrder = '/^\d{1,6},\d{1,2}\s*$/';
+
+		// retrieve payment amount
 		$paymentAmount = $this->getTextFieldValue("paymentAmount");
+
+		// retrieve identification id for the beneficiary party
 		$isr = $this->getTextFieldValue("beneficiaryPartyIdentification");
 
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// - for TA 826
 		if ($transactionType == 826) {
+			// distinguish between ISR5 and ISR9 payments
 			if (preg_match($patternISR5, $isr)) {
 				if (preg_match($pattern5, $paymentAmount)) {
 					return True;
@@ -1675,8 +1699,13 @@ class DTACH {
 				}
 			}
 		}
+
+		// - for TA 827
 		if ($transactionType == 827) {
+			// retrieve transfer type
 			$transferType = $this->getTextFieldValue("beneficiaryTransferType");
+
+			// check for postal orders
 			if ($transferType == "postalOrder") {
 				if (preg_match($patternPostalOrder,$paymentAmount)) {
 					return True;
@@ -1687,11 +1716,16 @@ class DTACH {
 				}
 			}
 		}
+
+		// - for TA 830, 832, 836, and 837
 		if (in_array($transactionType, Array(830,832,836,837))) {
+			// check for ISR15 patterns
 			if (preg_match($pattern15, $paymentAmount)) {
 				return True;
 			}
 		}
+
+		// ... invalid value: return False
 		return False;
 	}
 
