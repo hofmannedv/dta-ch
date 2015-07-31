@@ -1465,14 +1465,28 @@ class DTACH {
 	}
 
 	function validateAccountWithIban(){
+		// validate the account information with IBAN
+
+		// retrieve the transaction type
 		$transactionType = $this->getTransactionType();
+
+		// set default length to 24
 		$length = 24;
 		if($transactionType == 837){
+			// except for TA 837: 34
 			$length = 34;
 		}
+
+		// retrieve the account information with IBAN
 		$accountWithIban = $this->getTextFieldValue("accountWithIban");
+
+		// define a regex pattern for IBANs that are valid for either
+		// Switzerland, or Liechtenstein
 		$pattern = '/^((CH)|(LI))\d+\s{3,}$/';
+
+		// validate the account information
 		if (preg_match($pattern, $accountWithIban)) {
+			// does the length fit?
 			if (strlen($accountWithIban) == $length) {
 				return True;
 			}
@@ -1481,10 +1495,18 @@ class DTACH {
 	}
 
 	function isIban($accountNumber) {
+		// validate IBAN number
+
+		// define regex validation pattern: 
+		// two characters followed by digits
 		$pattern = '/[A-Z][A-Z]\d+$/';
+
+		// validate the account number
 		if (preg_match($pattern, trim($accountNumber))) {
+			// valid according to the pattern
 			return True;
 		}
+		// invalid according to the pattern
 		return False;
 	}
 
