@@ -2880,6 +2880,8 @@ class DTACH {
 	}
 
 	function adjustDataFields() {
+		// auto-correct transaction data fields
+
 		// dataFormat
 		//$v = $this->validateDataFormat();
 
