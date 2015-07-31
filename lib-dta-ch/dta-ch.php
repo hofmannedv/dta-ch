@@ -1402,22 +1402,38 @@ class DTACH {
 	}
 
 	function validateAccountWithoutIban(){
+		// validate the account information without IBAN
+
+		// retrieve the transaction type
 		$transactionType = $this->getTransactionType();
+
+		// set default length to 24
 		$length = 24;
 		if($transactionType == 837){
+			// except for TA 837: 34
 			$length = 34;
 		}
+
+		// retrieve the account information without IBAN
 		$accountWithoutIban = $this->getTextFieldValue("accountWithoutIban");
+
+		// define validation pattern of up to 16 digits, followed 
+		// by at least 8 spaces
 		$pattern = '/\d{1,16}\s{8,}/';
+
+		// verify the string length
 		if (strlen($accountWithoutIban) == $length) {
 			if (preg_match($pattern, $accountWithoutIban)) {
+				// return True in case the pattern matches
 				return True;
 			}
 
+			// check for an empty string
 			if (trim($accountWithoutIban) == "") {
 				return True;
 			}
 		}
+		// ... otherwise return False to indicate an error
 		return False;
 	}
 
