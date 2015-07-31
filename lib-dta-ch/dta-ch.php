@@ -1322,20 +1322,42 @@ class DTACH {
 	}
 
 	function validateOrderingPartyTransactionNumber() {
+		// validate the transaction number of the ordering party
+
+		// retrieve the transaction number of the ordering party
 		$orderingPartyTransactionNumber = $this->getTextFieldValue("orderingPartyTransactionNumber");
+
+		// define a regex pattern of 11 digits
 		$pattern = '/^\d{11}$/';
+
+		// compare the pattern with the transaction number of the ordering party
 		if (preg_match($pattern, $orderingPartyTransactionNumber)) {
+
+			// make sure that the length of the transaction number has
+			// the correct length
 			if(strlen($orderingPartyTransactionNumber) == 11) {
 				return True;
 			}
 		}
+
+		// ... return False
 		return False;
 	}
 
 	function adjustOrderingPartyTransactionNumber() {
+		// auto-adjust the transaction number of the ordering party
+
+		// retrieve the transaction number of the ordering party
 		$orderingPartyTransactionNumber = $this->getTextFieldValue("orderingPartyTransactionNumber");
+
+		// substitute/remove all non-digits
 		$orderingPartyTransactionNumber = preg_replace('/[^\d]+/', '', $orderingPartyTransactionNumber);
+
+		// pad the number with the according number of zeros to achieve
+		// a string length of 11 characters
 		$orderingPartyTransactionNumber = str_pad($orderingPartyTransactionNumber,11,"0", STR_PAD_LEFT);
+
+		// update the value for the transaction number of the ordering party
 		$this->setTextFieldValue("orderingPartyTransactionNumber",$orderingPartyTransactionNumber);
 		return;
 	}
