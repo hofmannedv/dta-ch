@@ -3745,7 +3745,10 @@ class DTACH {
 	}
 
 	function getFullRecord() {
+		// create full transaction record
+		// consists of full header, full text, and end of record
 		$record = $this->getFullHeader() . $this->getFullText() . $this->getEndOfRecord();
+
 		return $record;
 	}
 
