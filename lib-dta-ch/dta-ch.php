@@ -1438,14 +1438,28 @@ class DTACH {
 	}
 
 	function adjustAccountWithoutIban(){
+		// auto-update the account information without IBAN
+
+		// retrieve the transaction type
 		$transactionType = $this->getTransactionType();
+
+		// set default length to 24
 		$length = 24;
 		if($transactionType == 837){
+			// except for TA 837: 34
 			$length = 34;
 		}
+
+		// retrieve the account information without IBAN
 		$accountWithoutIban = $this->getTextFieldValue("accountWithoutIban");
+
+		// replace/remove all non-digits from the string
 		$accountWithoutIban = preg_replace('/[^\d]/', '', $accountWithoutIban );
+
+		// extend the string by spaces to achieve the needed length
 		$accountWithoutIban = str_pad($accountWithoutIban ,$length," ", STR_PAD_RIGHT);
+
+		// update the account information without IBAN
 		$this->setTextFieldValue("accountWithoutIban",$accountWithoutIban);
 		return;
 	}
