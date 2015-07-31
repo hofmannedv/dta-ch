@@ -1511,14 +1511,25 @@ class DTACH {
 	}
 
 	function adjustAccountWithIban(){
+		// auto-update the account information with IBAN
+
+		// retrieve the transaction type
 		$transactionType = $this->getTransactionType();
+
+		// retrieve the trimmed account information
 		$accountWithIban = trim($this->getTextFieldValue("accountWithIban"));
 
+		// define string length: 24
 		$length = 24;
 		if($transactionType == 837){
+			// except for TA 837: 34
 			$length = 34;
 		}
+
+		// extend the string by spaces to achieve the needed string length
 		$accountWithIban = str_pad($accountWithIban ,$length," ", STR_PAD_RIGHT);
+
+		// update value for the account information with IBAN
 		$this->setTextFieldValue("accountWithIban",$accountWithIban);
 		return;
 	}
