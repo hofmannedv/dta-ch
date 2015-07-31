@@ -1762,6 +1762,9 @@ class DTACH {
 	}
 
 	function validateOrderingParty(){
+		// validate the ordering party
+
+		// define the string length for the types of transactions
 		$entryLength = Array(
 			826 => 20,
 			827 => 24,
@@ -1771,19 +1774,26 @@ class DTACH {
 			837 => 24,
 			890 => 0
 		);
+		
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// set the length according to the type of transaction
 		$length = $entryLength[$transactionType];
 
+		// define field indexes for the ordering party
 		$orderingPartyLineList = Array(
 			"orderingPartyLine1",
 			"orderingPartyLine2",
 			"orderingPartyLine3"
 		);
 
+		// all TAs except 836 have a fourth line
 		if ($transactionType != 836) {
 			$orderingPartyLineList[] = "orderingPartyLine4";
 		};
 
+		// verify each single entry for the defined entry length
 		foreach($orderingPartyLineList as $entryKey) {
 			$value = $this->getTextFieldValue($entryKey);
 			if (strlen($value) == $length) {
