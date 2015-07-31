@@ -1282,13 +1282,23 @@ class DTACH {
 	}
 
 	function validateOrderingPartyIdentification() {
+		// validate the identification of the ordering party
+
+		// retrieve the stored identification of the ordering party
 		$orderingPartyIdentification = $this->getTextFieldValue("orderingPartyIdentification");
+
+		// define a regex pattern that consists of five letters or digits
 		$pattern = '/^[\dA-Z]{5}$/';
+
+		// if the pattern matches the identification ...
 		if (preg_match($pattern, $orderingPartyIdentification)) {
+			// ... and the length of the string is five ...
 			if(strlen($orderingPartyIdentification) == 5) {
+				// ... the identification of the ordering party is valid
 				return True;
 			}
 		}
+		// ... otherwise it is invalid
 		return False;
 	}
 
