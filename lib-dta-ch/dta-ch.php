@@ -1963,21 +1963,44 @@ class DTACH {
 	}
 
 	function validateReasonForPayment(){
+		// validate reason for payment
+
+		// define various regex patterns
+		// - 27 digits
 		$pattern27 = '/^\d{27}$/';
+
+		// - 11 x zero followed by 16 digits
 		$pattern16 = '/^0{11}\d{16}$/';
+
+		// - 15 digits followed by 12 spaces
 		$pattern5 = '/^\d{15}\s{12}$/';
+
+		// - /C/ followed by 9 digits
 		$patternISR9 = '/^\/C\/\d{9}$/';
+
+		// - /C/ followed by four x zero, and 5 digits
 		$patternISR5 = '/^\/C\/0000\d{5}$/';
 
+		// retrieve type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// TA 826, only
 		if ($transactionType == 826) {
+
+			// have a look at the identification of the beneficiary
+			// - retrieve identification of the beneficiary
 			$beneficiaryPartyIdentification = $this->getTextFieldValue("beneficiaryPartyIdentification");
+
+			// - retrieve ISR reference number
 			$isr = $this->getTextFieldValue("isrReferenceNumber");
+
+			// compare with the ISR5 pattern
 			if (preg_match($patternISR5, $beneficiaryPartyIdentification)) {
 				if (preg_match($pattern5, $isr)) {
 					return True;
 				} 
 			} elseif (preg_match($patternISR9, $beneficiaryPartyIdentification)) {
+				// compare with the ISR9 pattern
 				if (preg_match($pattern16, $isr)) {
 					return True;
 				} elseif (preg_match($pattern27, $isr)) {
@@ -1985,6 +2008,7 @@ class DTACH {
 				}
 			} 
 		}
+		// ... no match: return False
 		return False;
 	}
 
