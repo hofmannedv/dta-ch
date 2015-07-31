@@ -1569,16 +1569,29 @@ class DTACH {
 	}
 
 	function adjustPaymentValueDate() {
+		// auto-adjust the payment value date
+
+		// retrieve the payment value date
 		$paymentValueDate = $this->getTextFieldValue("paymentValueDate");
+
+		// retrieve type of transaction
 		$transactionType = $this->getTransactionType();
+
 		if (in_array($transactionType, Array(826,827))) {
+			// for TA 826 and 826 the date is empty (6x space)
 			$paymentValueDate = "      ";
 		} elseif (in_array($transactionType, Array(830,832,836,837))) {
+			// otherwise: validate the given date
+			// define regex date pattern
 			$datePattern = '/^\d{2}((0[1-9])|(1[0-2]))((0[1-9])|([1,2]\d)|(3[0,1]))$/';
+
 			if (preg_match($datePattern, $paymentValueDate) == False) {
+				// in case it is invalid use the today's date, instead
 				$paymentValueDate = date("ymd");
 			}
 		}
+
+		// update the payment value date
 		$this->setTextFieldValue("paymentValueDate",$paymentValueDate);
 		return;
 	}
