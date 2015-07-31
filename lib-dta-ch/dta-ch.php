@@ -3753,8 +3753,13 @@ class DTACH {
 	}
 
 	function outputFullRecord() {
+		// visualize a single transaction record as coloured HTML table
+
+		// retrieve full transaction record
 		$dtaRecord = $this->getFullRecord();
-		
+
+		// define output table
+		// - table header		
 		echo "<table border=\"0\" col=\2\" width=\"100%\">\n";
 		echo "<tr>\n";
 			echo "<td width=\"5%\" bgcolor=\"silver\"><b>Position</b></td>\n";
@@ -3762,6 +3767,8 @@ class DTACH {
 			echo "<td width=\"30%\" bgcolor=\"silver\"><b>Value (decimal)</b></td>\n";
 		echo "</tr>\n";
 
+		// - go through the transaction record character chunk by
+		//   character chunk
 		$i=0;
 		$j=0;
 		$itemSelector = 0;
@@ -3779,8 +3786,10 @@ class DTACH {
 			// default color list
 			$colorList = Array();
 
+			// retrieve type of transaction
 			$taId = $this->getTransactionType();
 
+			// load pre-defined string chunks
 			switch($taId) {
 				case 826:
 				$colorList = Array(
@@ -4106,18 +4115,30 @@ class DTACH {
 				break;
 			};
 
+			// prepare output
 			if(array_key_exists($itemSelector, $colorList)) {
+
+				// string start position
 				$from = $colorList[$itemSelector][0];
+
+				// string end position
 				$to = $colorList[$itemSelector][1];
+
+				// output background colour
 				$bgColor = $colorList[$itemSelector][2];
+
+				// adjust position if needed
 				if($i == $to) {$itemSelector++;}
 			} else {
+				// set default colour to white
 				$bgColor = "white";
 			}
 
+			// start output as typewriter style
 			echo "<kbd style=\"background-color:$bgColor\">" . $partialString . "</kbd>";
 
-			// extend asciiString
+			// evaluate asciiString to remove characters that cannot 
+			// be displayed, properly
 			$asciiValue = base_convert(trim($partialString), 16, 10);
 			if ($asciiValue < 20) {
 				$asciiValue = "- &nbsp;";
@@ -4129,6 +4150,7 @@ class DTACH {
 			$i += 3;
 			$j++;
 
+			// start a new table row after 384 characters
 			if (($i % 384) == 0) {
 				echo "<br>&nbsp;<br>\n";
 				echo "</td>\n";
@@ -4138,6 +4160,7 @@ class DTACH {
 				$asciiString = "";
 			}
 
+			// start a new table cell after 32 characters
 			if ($j == 32) {
 				// echo "</pre>\n";
 				echo "</td>\n";
@@ -4151,8 +4174,11 @@ class DTACH {
 		//$dtaRecord;
 		//echo "</pre>\n";
 
+		// end of table
 		echo "</table>\n";
 		echo "<br>\n";
+
+		return;
 	}
 
 	// csv import and export functions
