@@ -1730,8 +1730,15 @@ class DTACH {
 	}
 
 	function adjustPaymentAmount(){
+		// auto-adjust payment amount
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// retrieve payment amount, and remove trailing white space
 		$paymentAmount = trim($this->getTextFieldValue("paymentAmount"));
+
+		// define valid string length per transaction type
 		switch($transactionType) {
 		case 826:
 		case 827:
@@ -1744,8 +1751,12 @@ class DTACH {
 			$length = 15;
 			break;
 		}
+
+		// extend the payment string to the length as defined for 
+		// a transaction type above
 		$paymentAmount = str_pad($paymentAmount,$length," ", STR_PAD_RIGHT);
 		
+		// update payment amount
 		$this->setTextFieldValue("paymentAmount", $paymentAmount);
 		return;
 	}
