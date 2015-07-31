@@ -2992,6 +2992,7 @@ class DTACH {
 	// output functions
 
 	function getFullHeader() {
+		// fill transaction header
 	
 		// Start of Header (SOH), 01hex
 		$headerString = "00 01 ";
