@@ -2734,11 +2734,21 @@ class DTACH {
 	}
 
 	function validateTotal(){
+		// validate total of transaction
+
+		// retrieve type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// this field does exist in TA 890, only
 		if ($transactionType == 890) {
+			// retrieve total value
 			$total = $this->getTextFieldValue("total");
+
+			// define regex pattern with digits
 			$pattern = '/^\d+,\d{1,3}\s*$/';
+
 			if (preg_match($pattern, $total)) {
+				// validate the string length: 16 (max.)
 				if (strlen($total) == 16) {
 					return True;
 				}
