@@ -1303,10 +1303,22 @@ class DTACH {
 	}
 
 	function adjustOrderingPartyIdentification() {
+		// auto-adjust the identification of the ordering party
+
+		// retrieve the stored identification of the ordering party
 		$orderingPartyIdentification = $this->getTextFieldValue("orderingPartyIdentification");
+
+		// define a regex pattern that consists of non-letters and non-digits
+		// remove all characters that match this pattern from the identification
 		$orderingPartyIdentification = preg_replace('/[^\dA-Z]+/', '', $orderingPartyIdentification);
+
+		// add as many spaces as needed starting from the right
 		$orderingPartyIdentification = str_pad($orderingPartyIdentification,5," ", STR_PAD_RIGHT);
+
+		// update the value of the identification of the ordering party
 		$this->setTextFieldValue("orderingPartyIdentification",$orderingPartyIdentification);
+
+		return;
 	}
 
 	function validateOrderingPartyTransactionNumber() {
