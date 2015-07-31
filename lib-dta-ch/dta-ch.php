@@ -2759,6 +2759,8 @@ class DTACH {
 	}
 
 	function validateDataFields() {
+		// validate transaction data fields
+
 		// dataFormat
 		$v = $this->validateDataFormat();
 		$this->validationResult["dataFormat"] = $v;
