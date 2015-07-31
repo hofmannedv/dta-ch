@@ -2981,7 +2981,12 @@ class DTACH {
 	// conversion functions
 
 	function toHex ($binaryString) {
+		// transform a binary string into its according hex value
+
+		// assume an empty header string
 		$headerString = "";
+
+		// convert the string character by character separated by a space
 		for($i=0; $i<strlen($binaryString); $i++){
 			$headerString .= bin2hex($binaryString[$i]) . ' ';
 		}
