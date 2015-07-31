@@ -2759,10 +2759,22 @@ class DTACH {
 	}
 
 	function adjustTotal(){
+		// validate total of transaction
+
+		// retrieve type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// this field does exist in TA 890, only
 		if ($transactionType == 890) {
+
+			// remove all the spaces at the beginning, and at the end
 			$total = trim($this->getTextFieldValue("total"));
+
+			// at the end, add as many spaces as needed to achieve a
+			// length of 16 characters
 			$total = str_pad($total,16," ", STR_PAD_RIGHT);
+
+			// update the value for the total of the transaction
 			$this->setTextFieldValue("total", $total);
 		}
 		return;
