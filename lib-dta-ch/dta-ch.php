@@ -2013,23 +2013,46 @@ class DTACH {
 	}
 
 	function adjustReasonForPayment(){
+		// adjust reason for payment
+
+		// define various regex patterns
+		// - 27 digits
 		$pattern27 = '/^\d{27}$/';
+		// - 16 digits
 		$pattern16 = '/^\d{16}$/';
+		// - 15 digits followed by 12 spaces
 		$pattern5 = '/^\d{15}\s{12}$/';
+		// - /C/ followed by 9 digits
 		$patternISR9 = '/^\/C\/\d{9}$/';
+		// - /C/ followed by four x zero, and 5 digits
 		$patternISR5 = '/^\/C\/0000\d{5}$/';
+		
+		// have a look at the identification of the beneficiary
+		// - retrieve identification of the beneficiary
 		$beneficiaryPartyIdentification = $this->getTextFieldValue("beneficiaryPartyIdentification");
+
+		// - retrieve ISR reference number
 		$isr = $this->getTextFieldValue("isrReferenceNumber");
+
+		// remove all non-digits from the string
 		$isr = preg_replace('/[^\d]+/', '', $isr);
+
+		// validate with ISR5 pattern
 		if (preg_match($patternISR5, $beneficiaryPartyIdentification)) {
+			// extend the string by additional spaces
 			$isr = str_pad($isr ,27," ", STR_PAD_RIGHT);
+
+			// update value for ISR reference number
 			$this->setTextFieldValue("isrReferenceNumber", $isr);
 			return;
 		} 
-		// isr9 with 16 or 27 digits can be extended, partly
+		// ISR9 with 16 or 27 digits can be extended, partly
 		if (preg_match($patternISR9, $beneficiaryPartyIdentification)) {
 			if(preg_match($pattern16, $isr)) {
+				// extend the string by additional spaces
 				$isr = str_pad($isr ,27,"0", STR_PAD_LEFT);
+
+				// update value for ISR reference number
 				$this->setTextFieldValue("isrReferenceNumber", $isr);
 			}
 		}
