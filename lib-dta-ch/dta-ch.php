@@ -1540,15 +1540,27 @@ class DTACH {
 	}
 
 	function validatePaymentValueDate() {
+		// validate the payment value date
+
+		// retrieve the payment value date
 		$paymentValueDate = $this->getTextFieldValue("paymentValueDate");
+
+		// retrieve the type of transaction 
 		$transactionType = $this->getTransactionType();
+
+		// define the regex validation pattern: 6 spaces
 		$pattern = '/^\s{6}$/';
+
+		// define the regex date pattern
 		$datePattern = '/^\d{2}((0[1-9])|(1[0-2]))((0[1-9])|([1,2]\d)|(3[0,1]))$/';
+
+		// check for an empty value date (TA 826 and 827, only)
 		if (in_array($transactionType, Array(826,827))) {
 			if (preg_match($pattern, $paymentValueDate)) {
 				return True;
 			}
 		} elseif (in_array($transactionType, Array(830,832,836,837))) {
+			// check for a regular date (TA 830, 832, 836, and 837)
 			if (preg_match($datePattern, $paymentValueDate)) {
 				return True;
 			}
