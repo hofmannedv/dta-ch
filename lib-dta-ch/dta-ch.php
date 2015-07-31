@@ -1626,14 +1626,28 @@ class DTACH {
 	}
 
 	function adjustPaymentCurrencyCode() {
+		// auto-adjust the payment currency code
+
+		// retrieve the payment currency code
 		$paymentCurrencyCode = $this->getTextFieldValue("paymentCurrencyCode");
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
 		if (in_array($transactionType, Array(826,827))) {
+			// allowed currency for TA 826 and 827: CHF, only
 			$paymentCurrencyCode == "CHF";
 		} elseif (in_array($transactionType, Array(830,832,836,837))) {
+			
+			// remove all non-upper-case letters
 			$paymentCurrencyCode = preg_replace('/[^A-Z]/', '', $paymentCurrencyCode );
+
+			// extend the currency code by space to ensure 
+			// a three-character string
 			$paymentCurrencyCode = str_pad($paymentCurrencyCode,3," ", STR_PAD_RIGHT);
 		}
+
+		// update the payment currency code
 		$this->setTextFieldValue("paymentCurrencyCode",$paymentCurrencyCode);
 		return;
 	} 
