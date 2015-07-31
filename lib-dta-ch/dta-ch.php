@@ -1947,8 +1947,15 @@ class DTACH {
 	}
 
 	function validateIsrCheckDigit(){
+		// validate the ISR check digit
+
+		// define regex pattern: two digits
 		$patternISRcheck = '/^\d\d$/';
+
+		// retrieve ISR check digit
 		$isrCheckDigit = $this->getTextFieldValue("isrCheckDigit");
+
+		// validate ISR check digit
 		if (preg_match($patternISRcheck, $isrCheckDigit)) {
 			return True;
 		}
