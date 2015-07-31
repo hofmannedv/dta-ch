@@ -1535,6 +1535,7 @@ class DTACH {
 	}
 
 	function validateFullPaymentAmount() {
+		// validate full payment
 		return False;
 	}
 
