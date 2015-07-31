@@ -1597,18 +1597,31 @@ class DTACH {
 	}
 
 	function validatePaymentCurrencyCode() {
+		// validate the payment currency code
+
+		// retrieve the payment currency code
 		$paymentCurrencyCode = $this->getTextFieldValue("paymentCurrencyCode");
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
 		if (in_array($transactionType, Array(826,827))) {
+			// allowed currency for TA 826 and 827: CHF, only
 			if ($paymentCurrencyCode == "CHF") {
 				return True;
 			}
 		} elseif (in_array($transactionType, Array(830,832,836,837))) {
+			// otherwise: all currencies
+
+			// define regex currency pattern: 3 upper-case characters
 			$pattern = '/^[A-Z]{3}$/';
+
+			// validate the currency code
 			if (preg_match($pattern, $paymentCurrencyCode)) {
 				return True;
 			}
 		}
+		// ... currency code is wrong, so return False
 		return False;
 	}
 
