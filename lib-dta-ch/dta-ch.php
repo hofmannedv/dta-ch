@@ -2277,25 +2277,40 @@ class DTACH {
 	}
 
 	function adjustBeneficiaryPartyLine() {
+		// adjust the description of the beneficiary
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// define the indexes
 		$partyLines = Array(
 			"beneficiaryPartyLine1",
 			"beneficiaryPartyLine2",
 			"beneficiaryPartyLine3"
 		);
 
+		// except for TA 836, there is a fourth index
 		if ($transactionType != 836) {
 			$partyLines[] = "beneficiaryPartyLine4";
 		};
 
+		// define default length: 24 characters
 		$length = 24;
+
+		// TA 826 and 836 have a different length
 		if ($transactionType == 826) {$length = 20;}
 		if ($transactionType == 836) {$length = 35;}
 
+		// look at the data line by line
 		foreach($partyLines as $item) {
+			// remove all the spaces
 			$value = trim($this->getTextFieldValue($item));
 			$value = $this->adjustString($value);
+
+			// extend the string by spaces to have the correct string length
 			$value = str_pad($value ,$length," ", STR_PAD_RIGHT);
+
+			// update the value
 			$this->setTextFieldValue($item, $value);
 		}
 		return;
