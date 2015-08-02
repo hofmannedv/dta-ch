@@ -2394,7 +2394,12 @@ class DTACH {
 	}
 
 	function adjustBeneficiaryMessageLine(){
+		// validate the message line(s) for the beneficiary
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// define a list of indexes for the message lines
 		$messageLines = Array(
 			"beneficiaryMessageLine1",
 			"beneficiaryMessageLine2",
@@ -2402,15 +2407,29 @@ class DTACH {
 			"beneficiaryMessageLine4"
 		);
 
+		// continue if the type of transaction is either TA 827, 830, or 832
 		if (in_array($transactionType, Array(827,830,832))) {
+
+			// define default length: 28 (valid vor TA 827
 			$length = 28; // for TA 827
+
+			// for both TA 830 and 832 the length is 30 characters
 			if (in_array($transactionType, Array(830,832))) {$length = 30;}
 
+			// go through the message text line by line
 			foreach($messageLines as $item) {
+
+				// retrieve the according value
 				$value = $this->getTextFieldValue($item);
+
+				// remove the spaces at the beginning, and at the end
 				$value = trim($value);
 				$value = $this->adjustString($value);
+
+				// add as much spaces as needed to reach the specified length
 				$value = str_pad($value ,$length," ", STR_PAD_RIGHT);
+
+				// update the value
 				$this->setTextFieldValue($item, $value);
 			}
 		}
