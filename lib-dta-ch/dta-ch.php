@@ -2126,12 +2126,26 @@ class DTACH {
 	}
 
 	function adjustBeneficiaryPartyAccount837(){
+		// auto-adjust the account of the beneficiary party
+		// TA 837 only
+
+		// retrieve the account of the beneficiary party
 		$beneficiaryPartyAccount = $this->getTextFieldValue("beneficiaryPartyAccount");
+
+		// define two regex patterns: 
+		// - /C/ followed by digits and spaces
 		$pattern1 = "/^\/C\/\d+\s*$/";
+
+		// - /C/ followed by spaces
 		$pattern2 = "/^\/C\/\s*$/";
 		if (preg_match($pattern1, $beneficiaryPartyAccount)) {
+
+			// if the pattern works extend the string to a length of 24 characters
 			$beneficiaryPartyAccount = str_pad($beneficiaryPartyAccount,24," ", STR_PAD_RIGHT);
+
+			// update the value
 			$this->setTextFieldValue("beneficiaryPartyAccount", $beneficiaryPartyAccount);
+
 		} elseif (preg_match($pattern2, $beneficiaryPartyAccount)) {
 			// check iban, again
 			// valid if empty
@@ -2139,7 +2153,10 @@ class DTACH {
 			if (strlen($iban)) {
 				//$this->validationResult["iban"] = True;
 				//if ($this->validationResult["iban"] == True) {
+				// extend the string to a length of 24 characters
 				$beneficiaryPartyAccount = str_pad($beneficiaryPartyAccount,24," ", STR_PAD_RIGHT);
+
+				// update the value
 				$this->setTextFieldValue("beneficiaryPartyAccount", $beneficiaryPartyAccount);
 			}
 		}
