@@ -2033,34 +2033,70 @@ class DTACH {
 	}
 
 	function adjustBeneficiaryPartyAccount827(){
+		// auto-adjust the account of the beneficiary party
+		// TA 827 only
+
+		// retrieve the account of the beneficiary party
 		$beneficiaryPartyAccount = $this->getTextFieldValue("beneficiaryPartyAccount");
-		// TA 827, only
+
+		// retrieve the transfer type
 		$beneficiaryTransferType = $this->getTextFieldValue("beneficiaryTransferType");
+
+		// according to the type of transaction there are differences 
+		// in handling
 		switch($beneficiaryTransferType) {
 			case "bankPayment":
+				// define regex patterns
+				// - /C/CH followed by digits and spaces
 				$pattern1 = "/^\/C\/CH\d+\s*$/";
+
+				// - /C/ followed by digits and spaces
 				$pattern2 = "/^\/C\/\d+\s*$/";
+
+				// -/C/ followed by zeros and digits
 				$pattern3 = "/^\/C\/0+\d+$/";
+
+				// check for pattern 1
 				if (preg_match($pattern1, $beneficiaryPartyAccount)) {
+					// extend the string to a length of 30 characters
 					$beneficiaryPartyAccount = str_pad($beneficiaryPartyAccount,30," ", STR_PAD_RIGHT);
+
+					// update the value
 					$this->setTextFieldValue("beneficiaryPartyAccount", $beneficiaryPartyAccount);
 						
 				} elseif (preg_match($pattern2, $beneficiaryPartyAccount)) {
+					// if pattern 2 works extend the string to a length of 30 characters
 					$beneficiaryPartyAccount = str_pad($beneficiaryPartyAccount,30," ", STR_PAD_RIGHT);
+
+					// update the value
 					$this->setTextFieldValue("beneficiaryPartyAccount", $beneficiaryPartyAccount);
 				} 
 				break;
 			case "postalPayment":
+
+				// define a regex pattern: /C/ followed by 9 digits
 				$pattern1 = "/^\/C\/\d{9}\s*$/";
+
 				if (preg_match($pattern1, $beneficiaryPartyAccount)) {
+
+					// if the pattern works extend the string to a length of 30 characters
 					$beneficiaryPartyAccount = str_pad($beneficiaryPartyAccount,30," ", STR_PAD_RIGHT);
+
+					// update the value
 					$this->setTextFieldValue("beneficiaryPartyAccount", $beneficiaryPartyAccount);
 				} 
 				break;
 			case "postalOrder";
+
+				// define a regex pattern: /C/ followed by spaces
 				$pattern1 = "/^\/C\/\s*$/";
+
 				if (preg_match($pattern1, $beneficiaryPartyAccount)) {
+
+					// if the pattern works extend the string to a length of 30 characters
 					$beneficiaryPartyAccount = str_pad($beneficiaryPartyAccount,30," ", STR_PAD_RIGHT);
+
+					// update the value
 					$this->setTextFieldValue("beneficiaryPartyAccount", $beneficiaryPartyAccount);
 				}
 				break;
