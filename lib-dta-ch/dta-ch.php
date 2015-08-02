@@ -2496,10 +2496,19 @@ class DTACH {
 	}
 
 	function adjustEndBeneficiaryParty(){
-		// 55 - optional, TA 827 only
+		// auto-adjust the party of the end beneficiary
+		// 55 - this is optional, TA 827 only
+
+		// retrieve type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// continue with TA 827, only
 		if ($transactionType == 827) {
+
+			// retrieve the account of the end beneficiary
 			$endBeneficiaryPartyAccount = $this->getTextFieldValue("endBeneficiaryPartyAccount");
+
+			// define a regex as the validation pattern
 			$pattern = '/^\/C\/\d+\s*$/';
 			if (preg_match($pattern, $endBeneficiaryPartyAccount)) {
 				$ba = 0;
@@ -2507,11 +2516,16 @@ class DTACH {
 				$ba = 1;
 			}
 
+			// remove all the spaces from the value
 			$endBeneficiaryPartyAccount = trim($endBeneficiaryPartyAccount);
+
+			// add as many spaces as specified: 30
 			$endBeneficiaryPartyAccount = str_pad($endBeneficiaryPartyAccount ,30," ", STR_PAD_RIGHT);
 			
+			// update the value for account of the party of the end beneficiary
 			$this->setTextFieldValue("endBeneficiaryPartyAccount", $endBeneficiaryPartyAccount);
 
+			// define four indexes for text fields
 			$partyLine = Array(
 				"endBeneficiaryPartyLine1",
 				"endBeneficiaryPartyLine2",
@@ -2519,10 +2533,15 @@ class DTACH {
 				"endBeneficiaryPartyLine4"
 			);
 			foreach($partyLine as $lineKey) {
+				// remove all the spaces from the value
 				$value = trim($this->getTextFieldValue($lineKey));
 				if ($ba == 1) {$value = "";}
 				$value = $this->adjustString($value);
+				
+				// add as many spaces as specified: 24
 				$value = str_pad($value ,24," ", STR_PAD_RIGHT);
+
+				// update the value
 				$this->setTextFieldValue($lineKey, $value);
 			}
 		}
