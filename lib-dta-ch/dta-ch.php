@@ -2731,14 +2731,26 @@ class DTACH {
 	}
 
 	function adjustIban() {
-		// - iban (58)
+		// auto-adjust the IBAN value (58)
 		// TA 836 and 837, only
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// evaluate this for TA 836 and 837, only
 		if (in_array($transactionType, Array(836, 837))) {
+
+			// retrieve the stored value vor IBAN
 			$value = $this->getTextFieldValue("iban");
+
+			// remove all spaces
 			$value = trim($value);
 			$value = $this->adjustString($value);
+
+			// add as many spaces as specified to reach a length of 34 characters
 			$value = str_pad($value ,34," ", STR_PAD_RIGHT);
+
+			// update the IBAN value
 			$this->setTextFieldValue("iban", "$value");
 		}
 		return;
