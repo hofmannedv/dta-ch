@@ -2655,8 +2655,14 @@ class DTACH {
 	}
 
 	function adjustBeneficiarySwiftAddress() {
+		// adjust the SWIFT address of the payment beneficiary
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// continue for TA 830, 836, and 837, only
 		if (in_array($transactionType, Array(830,836,837))) {
+			// retrieve transaction-specific list of fields
 			if ($transactionType == 836) {
 				$itemList = Array(
 				"beneficiaryInstituteLine1" => $this->getTextFieldValue("beneficiaryInstituteLine1"),
@@ -2672,15 +2678,25 @@ class DTACH {
 				);
 			}
 
+			// define the default field length
 			$length = 24;
 			if ($transactionType == 836) {
+				// TA 836 has a specific field length of 35 characters
 				$length = 35;
 			}
-		
+
+			// examine each line		
 			foreach($itemList as $key => $value) {
+
+				// remove spaces at the beginning and at the end of the string
 				$value = trim($value);
 				$value = $this->adjustString($value);
+
+				// extend the string by the according numbers of spaces
+				// as specified 
 				$value = str_pad($value ,$length," ", STR_PAD_RIGHT);
+
+				// update the stored field value
 				$this->setTextFieldValue($key, $value);
 			}
 		}
