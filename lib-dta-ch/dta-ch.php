@@ -2638,8 +2638,13 @@ class DTACH {
 	}
 
 	function validateBeneficiarySwiftAddress() {
+		// validate the SWIFT address of the payment beneficiary
 		// option 57a and 57d, TA 830, 836 and 837 only
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// continue for TA 830, 836, and 837, only
 		if (in_array($transactionType, Array(830,836,837))) {
 			switch ($transactionType) {
 			case 830:
