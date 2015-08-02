@@ -2238,22 +2238,35 @@ class DTACH {
 	}
 
 	function validateBeneficiaryPartyLine() {
-		// covers beneficiaryPartyLines 1 to 4
+		// validate the party description of the beneficiary
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// assume three lines of description
 		$partyLines = Array(
 			"beneficiaryPartyLine1",
 			"beneficiaryPartyLine2",
 			"beneficiaryPartyLine3"
 		);
 
+		// this is true except for TA 836
+		// let's add a fourth line of description
 		if ($transactionType != 836) {
 			$partyLines[] = "beneficiaryPartyLine4";
 		};
 
+		// define the field length
+		// default value is 24 characters
 		$length = 24;
+
+		// set a different size (20) for TA 826
 		if ($transactionType == 826) {$length = 20;}
+
+		// set a different size (35) for TA 836
 		if ($transactionType == 836) {$length = 35;}
 
+		// validate each description line, and check for the correct length
 		foreach($partyLines as $item) {
 			$value = $this->getTextFieldValue($item);
 			if (strlen($value) == $length) {
