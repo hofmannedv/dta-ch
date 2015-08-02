@@ -2537,6 +2537,10 @@ class DTACH {
 		return;
 	}
 	function validateBeneficiarySwiftAddress830(){
+		// validate the SWIFT address of the payment beneficiary
+		// option 57a and 57d, TA 830 only
+
+		// retrieve the SWIFT id, and address lines
 		$beneficiarySwiftAddress = $this->getTextFieldValue("beneficiaryInstituteLine1");
 		$beneficiaryInstituteLine = Array(
 			"beneficiaryInstituteLine2" => $this->getTextFieldValue("beneficiaryInstituteLine2"),
@@ -2545,13 +2549,16 @@ class DTACH {
 			"beneficiaryInstituteLine5" => $this->getTextFieldValue("beneficiaryInstituteLine5")
 		);
 
+		// set a marker to continue validation
 		$stillTrue = True;
-		// validate text length
+
+		// validate SWIFT address for the correct text length
 		if (strlen($beneficiarySwiftAddress) != 24) {
 			$this->validationResult["beneficiaryInstituteLine1"] = False;
 			$stillTrue = False;
 		}
 
+		// validate the the address lines for the correct text length
 		foreach($beneficiaryInstituteLine as $key => $value) {
 			if (strlen($value) != 24) {
 				$this->validationResult[$key] = False;
@@ -2559,22 +2566,40 @@ class DTACH {
 			}
 		}
 
+		// does our marker is already False?
 		if ($stillTrue == False) {
 			return False;
 		}
+
 		// in case we did not encounter an error, continue
 
+		// to be sure re-evaluate the bank address
 		if ($this->validationResult["identificationBankAddress"] == True) {
+
+			// define a regex pattern: /C/ + digits
 			$pattern1 = '/^\/C\/\d+\s*$/';
+
+			// see if the SWIFT address matches the pattern
 			if (preg_match($pattern1, $beneficiarySwiftAddress)) {
 				$this->validationResult["beneficiaryInstituteLine1"] = True;
 			}
 
+			// retrieve the bank address
 			$bank = $this->getTextFieldValue("identificationBankAddress");
+
+			// in case bank is set to A:
 			if ($bank == "A") {
+
+				// define a regex pattern: upper-case letters, followed
+				// by digits and spaces
 				$pattern2 = '/^[A-Z]+\d+\s*$/';
+
+				// combine the single elements of the address into one string
 				$content = trim(implode("", $beneficiaryInstituteLine));
+
+				// see if the content matches the pattern2 
 				if (preg_match($pattern2, $content)) {
+					// check the length for 8, or 11 characters
 					if (in_array(strlen($content), array(8,11))) {
 						$this->validationResult["beneficiaryInstituteLine2"] = True;
 						$this->validationResult["beneficiaryInstituteLine3"] = True;
@@ -2585,6 +2610,7 @@ class DTACH {
 				}
 			}
 
+			// in case bank is set to D: set these lines to True
 			if ($bank == "D") {
 				$this->validationResult["beneficiaryInstituteLine2"] = True;
 				$this->validationResult["beneficiaryInstituteLine3"] = True;
@@ -2593,6 +2619,8 @@ class DTACH {
 				return True;
 			}
 		}
+
+		// ... otherwise return False
 		return False;
 	}
 
