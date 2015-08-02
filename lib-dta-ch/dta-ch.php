@@ -2511,14 +2511,27 @@ class DTACH {
 	}
 
 	function validateConvertionRate() {
+		// validate the convertion rate
 		// this field is optional, and can be empty, too
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// retrieve the stored convertion rate
 		$convertionRate = $this->getTextFieldValue("convertionRate");
+
+		// continue in case it is TA 830, 832, 836 or 837
 		if (in_array($transactionType, Array(830, 832,836,837))) {
+			// remove all the spaces
 			if (trim($convertionRate) == "") {
 				return True;
 			} else {
+				// define a regex for validation
+				// digits, followed by a comma, and up to 6 digits
 				$pattern = '/^\d+,\d{1,6}\s*$/';
+
+				// if the convertion rate matches the pattern, and the
+				// string length of 12 characters is correct return True
 				if (preg_match($pattern, $convertionRate)) {
 					if (strlen($convertionRate) == 12) {
 						return True;
@@ -2526,6 +2539,7 @@ class DTACH {
 				}
 			}
 		}
+		// ... otherwise return False
 		return False;
 	}
 
