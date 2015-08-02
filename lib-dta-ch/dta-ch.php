@@ -2687,18 +2687,6 @@ class DTACH {
 		return;
 	}
 
-	function adjustBankPaymentInstruction() {
-		// - bankPaymentInstruction (72)
-		// for TA 830,832
-		$transactionType = $this->getTransactionType();
-		if (in_array($transactionType, Array(830,832))){
-			$bankPaymentInstruction = $this->getTextFieldValue("bankPaymentInstruction");
-			$bankPaymentInstruction = str_pad($bankPaymentInstruction,30," ",STR_PAD_RIGHT);
-			$this->setTextFieldValue("bankPaymentInstruction", $bankPaymentInstruction);
-		}
-		return;
-	}
-
 	function validateBankPaymentInstruction() {
 		// validate the bank payment instruction 
 		// field: bankPaymentInstruction (72)
@@ -2725,6 +2713,29 @@ class DTACH {
 		}
 		// ... otherwise return False
 		return False;
+	}
+
+	function adjustBankPaymentInstruction() {
+		// auto-adjust the bank payment instruction
+		// field: bankPaymentInstruction (72)
+		// for TA 830,832
+
+		// retrieve type of transaction
+		$transactionType = $this->getTransactionType();
+
+		// validate this for TA 830 and 832, only
+		if (in_array($transactionType, Array(830,832))){
+
+			// retrieve the bank payment instruction
+			$bankPaymentInstruction = $this->getTextFieldValue("bankPaymentInstruction");
+
+			// change the value to 30 spaces
+			$bankPaymentInstruction = str_pad($bankPaymentInstruction,30," ",STR_PAD_RIGHT);
+
+			// update the stored value
+			$this->setTextFieldValue("bankPaymentInstruction", $bankPaymentInstruction);
+		}
+		return;
 	}
 
 	function validateIban(){
