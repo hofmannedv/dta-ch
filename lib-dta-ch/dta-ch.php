@@ -1949,11 +1949,19 @@ class DTACH {
 	}
 
 	function validateBeneficiaryPartyAccount832(){
+		// validate the party account of the beneficiary for TA 830, only
+
+		// retrieve the party account of the beneficiary
 		$beneficiaryPartyAccount = $this->getTextFieldValue("beneficiaryPartyAccount");
+
+		// define the regex pattern: /C/ + 21 spaces
 		$pattern1 = "/^\/C\/\s{21}$/";
 		if (preg_match($pattern1, $beneficiaryPartyAccount)) {
+			// if the party account of the beneficiary matches the
+			// pattern: return True
 			return True;
 		}
+		// .. return False
 		return False;
 	}
 
