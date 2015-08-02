@@ -2957,21 +2957,39 @@ class DTACH {
 	}
 
 	function adjustInformationStructure(){
+		// auto-correct the information structure
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// examine TA 837, only
 		if ($transactionType == 837) {
+
+			// retrieve the information structure
 			$informationStructure = $this->getTextFieldValue("informationStructure");
-			// assume S
+
+			// assume value: S (for structured)
 			$structureList = Array("instructionLine1", "instructionLine2", "instructionLine3");
+			// ... with a length of 35 characters
 			$length = 35;
+
+			// if value is set to U (for unstructured)
 			if ($informationStructure == "U") {
+				// append a fourth line of instructions
 				$structureList[] = "instructionLine4";
+				// ... and change the length to 30 characters, only
 				$length = 30;
 			}
 
+			// validate each line of the information structure
 			foreach($structureList as $key => $value) {
+				// remove all spaces at the beginning and at the end
 				$item = trim($this->getTextFieldValue($value));
 				$item = $this->adjustString($item);
+
+				// adjust the acoording number of spaces at the end
 				$item = str_pad($item,$length," ", STR_PAD_RIGHT);
+
 				$this->setTextFieldValue($value, $item);
 			}
 		}
