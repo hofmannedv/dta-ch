@@ -2597,36 +2597,55 @@ class DTACH {
 	}
 
 	function validateBeneficiarySwiftAddress836(){
+		// validate the SWIFT address of the payment beneficiary
+		// option 57a and 57d, TA 836 only
+
+		// retrieve the bank id, and address lines
 		$bank  = trim($this->getTextFieldValue("identificationBankAddress"));
 		$line1 = trim($this->getTextFieldValue("beneficiaryInstituteLine1"));
 		$line2 = trim($this->getTextFieldValue("beneficiaryInstituteLine2"));
+
+		// retrieve the IBAN
 		$iban  = trim($this->getTextFieldValue("iban"));
 
+		// continue in case we have an IBAN ...
 		if($this->isIban($iban)) {
 			if ($bank == "D"){
+				// ... and bank is marked via D
+				// set identification of bank address to True
 				$this->validationResult["identificationBankAddress"] = True;
+
+				// validate the content of the bank address
 				if (strlen(trim($line1 . $line2)) == 0) {
+					// there is no content: set to True
 					$this->validationResult["beneficiaryInstituteLine1"] = True;
 					$this->validationResult["beneficiaryInstituteLine2"] = True;
 					return True;
 				} else {
+					// ... otherwise: False
 					$this->validationResult["beneficiaryInstituteLine1"] = False;
 					$this->validationResult["beneficiaryInstituteLine2"] = False;
 					return False;
 				}
 			} else {
+				// set identification of bank address to False
 				$this->validationResult["identificationBankAddress"] = False;
+
+				// validate the content of the bank address
 				if (strlen(trim($line1 . $line2)) == 0) {
+					// there is no content: set to True
 					$this->validationResult["beneficiaryInstituteLine1"] = True;
 					$this->validationResult["beneficiaryInstituteLine2"] = True;
 					return False;
 				} else {
+					// ... otherwise: False
 					$this->validationResult["beneficiaryInstituteLine1"] = False;
 					$this->validationResult["beneficiaryInstituteLine2"] = False;
 					return False;
 				}
 			}
 		} else {
+			// mark all the according entries as False
 			$this->validationResult["iban"] = False;
 			$this->validationResult["beneficiaryInstituteLine1"] = False;
 			$this->validationResult["beneficiaryInstituteLine2"] = False;
