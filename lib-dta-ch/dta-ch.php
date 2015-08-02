@@ -2931,20 +2931,34 @@ class DTACH {
 	}
 
 	function validateInformationStructure(){
+		// validate the information structure of a transaction (TA 837, only)
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// validate these fields for TA 837, only
 		if ($transactionType == 837) {
+			// retrieve the information structure
 			$informationStructure = $this->getTextFieldValue("informationStructure");
+			
+			// chaeck for structured (S) or unstructured (U) information
 			if (in_array($informationStructure, Array("S", "U"))) {
 				$this->validationResult["informationStructure"] = True;
 		
 				// assume S
 				$structureList = Array("instructionLine1", "instructionLine2", "instructionLine3");
+				// ... with a length of 35 characters
 				$length = 35;
+
+				// in case it is different (unstructured) add an
+				// additional field, and reduce the string length to 30 	
+				// characters
 				if ($informationStructure == "U") {
 					$structureList[] = "instructionLine4";
 					$length = 30;
 				}
 
+				// validate each line for the correct length
 				foreach($structureList as $key => $value) {
 					$item = $this->getTextFieldValue($value);
 					if(strlen($item) == $length) {
@@ -2953,11 +2967,12 @@ class DTACH {
 				}
 			}
 		}
+		// ... otherwise return, only
 		return;
 	}
 
 	function adjustInformationStructure(){
-		// auto-correct the information structure
+		// auto-correct the information structure of a transaction (TA 837, only)
 
 		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
