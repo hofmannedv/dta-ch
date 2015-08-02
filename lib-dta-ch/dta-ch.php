@@ -2004,8 +2004,16 @@ class DTACH {
 	}
 
 	function validateBeneficiaryPartyAccount(){
+		// validate the party account of the beneficiary
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// set return value to False (default value)
 		$v = False;
+
+		// evaluate the party account of the beneficiary according
+		// to the current type of transaction
 		switch($transactionType) {
 		case 827:
 			$v = $this->validateBeneficiaryPartyAccount827();
@@ -2020,6 +2028,7 @@ class DTACH {
 			$v = $this->validateBeneficiaryPartyAccount832();
 			break;
 		}
+		// return the value of the evaluation
 		return $v;
 	}
 
