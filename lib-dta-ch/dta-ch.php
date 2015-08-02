@@ -2715,18 +2715,31 @@ class DTACH {
 	}
 
 	function validateIban(){
-		// - iban (58)
+		// validate the IBAN value (58)
 		// TA 836 and 837, only
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// evaluate this for TA 836 and 837, only
 		if (in_array($transactionType, Array(836, 837))) {
+
+			// retrieve the stored value vor IBAN
 			$iban = $this->getTextFieldValue("iban");
+
+			// define a regex pattern: two characters followed by digits
 			$pattern = '/^[A-Z]{2}\d+\s*$/';
+
+			// see if the pattern matches, and the string has the length
+			// of 34 characters
 			if (preg_match($pattern, $iban)) {
 				if(strlen($iban) == 34) {
 					return True;
 				}
 			}
 		}
+
+		// ... return False, instead
 		return False;
 	}
 
