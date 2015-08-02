@@ -2802,8 +2802,12 @@ class DTACH {
 			}
 		}
 
+		// purpose: U
 		if ($purposeStructure == "U") {
 			$this->validationResult["purposeStructure"] = True;
+
+			// verify that all the purpose lines have the specified
+			// length of 35 characters
 			$pList = Array("purposeLine1", "purposeLine2", "purposeLine3");
 			foreach($pList as $entry) {
 				$v = $this->getTextFieldValue($entry);
@@ -2811,10 +2815,14 @@ class DTACH {
 					$this->validationResult[$entry] = True;
 				}
 			}
+
+			// return True if all the purpose fields have valid content
 			if ($this->validationResult["purposeLine1"] and $this->validationResult["purposeLine2"] and $this->validationResult["purposeLine3"]) {
 				return True;
 			}
 		}
+
+		// ... otherwise return False
 		return False;
 	}
 
