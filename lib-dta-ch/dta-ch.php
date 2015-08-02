@@ -2848,15 +2848,20 @@ class DTACH {
 	function adjustPurpose836(){
 		// adjust the transaction purpose for TA 836
 
+		// retrieve the purpose structure
 		$purposeStructure = $this->getTextFieldValue("purposeStructure");
+
+		// evaluate structure type: I, and U
 		if ($purposeStructure == "I") {
-			// line 1
+			// remove all spaces from line 1, and add the according
+			// spaces to the string length
 			$v = trim($this->getTextFieldValue("purposeLine1"));
 			$v = $this->adjustString($v);
 			$v = str_pad($v,35," ", STR_PAD_RIGHT);
 			$this->setTextFieldValue("purposeLine1", $v);
 
 			// line 2+3
+			// substitute the value by 35 spaces
 			$v = "";
 			$v = str_pad($v,35," ", STR_PAD_RIGHT);
 			$this->setTextFieldValue("purposeLine2", $v);
@@ -2864,6 +2869,8 @@ class DTACH {
 		}
 
 		if ($purposeStructure == "U") {
+			// remove all spaces from lines 1 to 3, and add the according
+			// spaces to the string length
 			$pList = Array("purposeLine1", "purposeLine2", "purposeLine3");
 			foreach($pList as $entry) {
 				$v = trim($this->getTextFieldValue($entry));
