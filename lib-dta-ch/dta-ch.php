@@ -2105,10 +2105,21 @@ class DTACH {
 	}
 
 	function adjustBeneficiaryPartyAccount830(){
+		// auto-adjust the account of the beneficiary party
+		// TA 830 only
+
+		// retrieve the account of the beneficiary party
 		$beneficiaryPartyAccount = $this->getTextFieldValue("beneficiaryPartyAccount");
+
+		// define a regex pattern: /C/ followed by digits and spaces
 		$pattern1 = "/^\/C\/\d+\s*$/";
+
 		if (preg_match($pattern1, $beneficiaryPartyAccount)) {
+
+			// if the pattern works extend the string to a length of 24 characters
 			$beneficiaryPartyAccount = str_pad($beneficiaryPartyAccount,24," ", STR_PAD_RIGHT);
+
+			// update the value
 			$this->setTextFieldValue("beneficiaryPartyAccount", $beneficiaryPartyAccount);
 		}
 		return;
