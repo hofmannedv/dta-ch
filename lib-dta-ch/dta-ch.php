@@ -2543,13 +2543,23 @@ class DTACH {
 	}
 
 	function validateIdentificationBankAddress() {
+		// validate the identification of the bank address
+
+		// retrieve the type of the transaction
 		$transactionType = $this->getTransactionType();
+
+		// continue in case it is TA 830 or 837
 		if (in_array($transactionType, Array(830,837))) {
+			// retrieve the identification of the bank address
 			$identificationBankAddress = $this->getTextFieldValue("identificationBankAddress");
+
 			if (in_array($identificationBankAddress, Array ("A","D"))) {
+				// if the value is either A or D return True
 				return True;
 			}
 		}
+
+		// ... return False
 		return false;
 	}
 
