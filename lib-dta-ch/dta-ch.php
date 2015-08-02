@@ -1878,13 +1878,28 @@ class DTACH {
 	}
 
 	function validateBeneficiaryPartyAccount827(){
+		// validate the party account of the beneficiary for TA 827, only
+
+		// retrieve the party account of the beneficiary
 		$beneficiaryPartyAccount = $this->getTextFieldValue("beneficiaryPartyAccount");
+
+		// retrieve the transaction type
 		$beneficiaryTransferType = $this->getTextFieldValue("beneficiaryTransferType");
+
+		// validate different transfer types:
+		// bank payment, postal payment, and postal order
+
 		switch($beneficiaryTransferType) {
 			case "bankPayment":
+				// define different regex patterns
+				// - like /C/CH1234567890
 				$pattern1 = "/^\/C\/CH\d+\s*$/";
+				// - like /C/1234567890
 				$pattern2 = "/^\/C\/\d+\s*$/";
+				// - like /C/00001234567890
 				$pattern3 = "/^\/C\/0+\d+$/";
+
+				// validate the string length: 30 characters are needed
 				if (strlen($beneficiaryPartyAccount) == 30) {
 					if (preg_match($pattern1, $beneficiaryPartyAccount)) {
 						return True;
@@ -1896,18 +1911,22 @@ class DTACH {
 				}
 				break;
 			case "postalPayment":
+				// define regex pattern: /C/ + 9 digits + 18 spaces
 				$pattern1 = "/^\/C\/\d{9}\s{18}$/";
 				if (preg_match($pattern1, $beneficiaryPartyAccount)) {
 					return True;
 				} 
 				break;
 			case "postalOrder";
+				// define regex pattern: /C/ + 27 spaces
 				$pattern1 = "/^\/C\/\s{27}$/";
 				if (preg_match($pattern1, $beneficiaryPartyAccount)) {
 					return True;
 				}
 				break;
 		}
+
+		// no match, or invalid: return False
 		return False;
 	}
 
