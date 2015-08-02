@@ -2509,25 +2509,40 @@ class DTACH {
 	}
 
 	function validateBeneficiaryInstitution() {
+		// validate the institution of the beneficiary
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// continue if it is TA 830 or 837
 		if (in_array($transactionType, Array(830,837))) {
+
+			// retrieve the institution of the beneficiary
 			$beneficiaryInstitution = $this->getTextFieldValue("beneficiaryInstitution");
+
+			// remove all the spaces, and see if the remaining string is empty
 			if (trim($beneficiaryInstitution) == "") {
 				return True;
 			}
 
+			// if not, define a regex pattern: /C/ + digits
 			$pattern = '/^\/C\/\d+\s*$/';
+
+			// see if the pattern matches, and the string has a 
+			// length of 24 characters
 			if (preg_match($pattern, $beneficiaryInstitution)) {
 				if (strlen($beneficiaryInstitution) == 24) {
 					return True;
 				}
 			}
 		}
+
+		// ... return False
 		return False;
 	}
 
 	function adjustBeneficiaryInstitution() {
-		// adjust the institution of the beneficiary
+		// auto-adjust the institution of the beneficiary
 
 		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
