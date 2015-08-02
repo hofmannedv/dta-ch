@@ -2437,36 +2437,55 @@ class DTACH {
 	}
 
 	function validateEndBeneficiaryParty(){
+		// validate the party of the end beneficiary
 		// 55 - this is optional, TA 827 only
+
+		// retrieve type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// continue with TA 827, only
 		if ($transactionType == 827) {
+
+			// retrieve the account of the end beneficiary
 			$endBeneficiaryPartyAccount = $this->getTextFieldValue("endBeneficiaryPartyAccount");
+
+			// define a regex as the validation pattern
 			$pattern = '/^\/C\/\d+\s*$/';
+
+			// continue if the pattern matches the account of the end beneficiary
 			if (preg_match($pattern, $endBeneficiaryPartyAccount)) {
+				// validate the string length
 				if (strlen($endBeneficiaryPartyAccount) == 30) {
 					$this->validationResult["endBeneficiaryPartyAccount"] = True;
 					$ba = 0;
 				}
 			} else {
+				// if the the account of the end beneficiary is empty
 				if (trim($endBeneficiaryPartyAccount) == "") {
 					$this->validationResult["endBeneficiaryPartyAccount"] = True;
 					$ba = 1;
 				}
 			}
 
+			// define four indexes for text fields
 			$partyLine = Array(
 				"endBeneficiaryPartyLine1",
 				"endBeneficiaryPartyLine2",
 				"endBeneficiaryPartyLine3",
 				"endBeneficiaryPartyLine4"
 			);
+			
+			// go through the text fields line by line
 			foreach($partyLine as $lineKey) {
+				// retrieve the value
 				$value = $this->getTextFieldValue($lineKey);
 				if (strlen($value) == 24) {
+					// the length of the string is correct
 					if ($ba == 0) {
 						$this->validationResult[$lineKey] = True;
 					} elseif ($ba == 1) {
 						if (trim($value) == "") {
+							// the string is empty
 							$this->validationResult[$lineKey] = True;
 						}
 					}
