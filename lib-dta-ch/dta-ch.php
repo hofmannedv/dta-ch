@@ -2915,12 +2915,20 @@ class DTACH {
 	}
 
 	function validateRulesForCharges(){
-		// rules for charges (71ia)
+		// validate the rules for charges (71ia)
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// set values for charges
 		$chargesValues = array(0,1,2);
 
+		// examine this field for TA 836 and 837, only
 		if (in_array($transactionType, Array(837,836))) {
+			// retrieve the rules for Charges
 			$rulesForCharges = $this->getTextFieldValue("rulesForCharges");
+
+			// is value in the list?
 			if (in_array($rulesForCharges, $chargesValues)) {
 				$this->validationResult["rulesForCharges"] = True;
 				return True;
