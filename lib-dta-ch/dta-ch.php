@@ -1931,13 +1931,20 @@ class DTACH {
 	}
 
 	function validateBeneficiaryPartyAccount830(){
+		// validate the party account of the beneficiary for TA 830, only
+
+		// retrieve the party account of the beneficiary
 		$beneficiaryPartyAccount = $this->getTextFieldValue("beneficiaryPartyAccount");
+
+		// define the regex pattern: /C/ + digits + spaces
 		$pattern1 = "/^\/C\/\d+\s*$/";
 		if (preg_match($pattern1, $beneficiaryPartyAccount)) {
+			// if the length of the party account is 24 characters: return True
 			if(strlen($beneficiaryPartyAccount) == 24) {
 				return True;
 			}
 		}
+		// ... otherwise: return False
 		return False;
 	}
 
