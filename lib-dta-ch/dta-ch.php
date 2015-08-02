@@ -2335,16 +2335,25 @@ class DTACH {
 	}
 
 	function validateBeneficiaryTransferType(){
-		// beneficiaryTransferType
+		// validate the transfer type of the beneficiary
+
+		// retrieve the value of the transfer type of the beneficiary
 		$beneficiaryTransferType = $this->getTextFieldValue("beneficiaryTransferType");
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
-		// TA 827, only
+
+		// continue with TA 827, only
 		if ($transactionType == 827) {
+			// define a list of possibilites
 			$v = Array("bankPayment", "postalPayment", "postalOrder");
 			if (in_array($beneficiaryTransferType, $v)) {
+				// if the transfer type is in the list return True
 				return True;
 			}
 		}
+
+		// ... otherwise return False
 		return False;
 	}
 
