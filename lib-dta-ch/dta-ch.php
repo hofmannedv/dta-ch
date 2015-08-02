@@ -2700,17 +2700,30 @@ class DTACH {
 	}
 
 	function validateBankPaymentInstruction() {
-		// - bankPaymentInstruction (72)
+		// validate the bank payment instruction 
+		// field: bankPaymentInstruction (72)
 		// for TA 830,832
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// validate this for TA 830 and 832, only
 		if (in_array($transactionType, Array(830,832))){
+
+			// retrieve the bank payment instruction
 			$bankPaymentInstruction = $this->getTextFieldValue("bankPaymentInstruction");
+
+			// remove all spaces
 			$value = trim($bankPaymentInstruction);
+
+			// valid instructions are "CHG/OUR", "CHG/BEN", and ""
+			// if we have one of those the entry is valid
 			if (in_array($value, Array("CHG/OUR", "CHG/BEN", ""))) {
 				$this->validationResult["bankPaymentInstruction"] = True;
 				return True;
 			}
 		}
+		// ... otherwise return False
 		return False;
 	}
 
