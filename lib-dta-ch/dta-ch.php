@@ -2530,13 +2530,29 @@ class DTACH {
 	}
 
 	function adjustConvertionRate() {
+		// auto-adjust the convertion rate
+
+		// retrieve the type of the transaction
 		$transactionType = $this->getTransactionType();
+
+		// retrieve the convertion rate
 		$convertionRate = $this->getTextFieldValue("convertionRate");
+
+		// continue in case it is TA 830, 832, 836 or 837
 		if (in_array($transactionType, Array(830, 832,836,837))) {
+
+			// define a pattern of a digit, and a comma
 			$pattern = '/[^\d,]/';
+
+			// remove all the characters that do not match the pattern
 			$convertionRate = preg_replace($pattern, '', $convertionRate);
+
+			// extend the value by spaces to reach the needed length of
+			// 12 characters
 			// $convertionRate = trim($convertionRate);
 			$convertionRate = str_pad($convertionRate ,12," ", STR_PAD_RIGHT);
+
+			// update the saved value
 			$this->setTextFieldValue("convertionRate", $convertionRate);
 		}
 		return;
