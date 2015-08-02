@@ -4054,6 +4054,7 @@ class DTACH {
 		$itemSelector = 0;
 		$asciiString = "";
 		while($i<strlen($dtaRecord)){
+			// read data from DTA record with a length of three characters
 			$partialString = substr($dtaRecord,$i,3);
 
 			if ($j == 0) {
@@ -4063,13 +4064,13 @@ class DTACH {
 				//echo "<pre>\n";
 			}
 
-			// default color list
+			// define the default color list
 			$colorList = Array();
 
 			// retrieve type of transaction
 			$taId = $this->getTransactionType();
 
-			// load pre-defined string chunks
+			// load pre-defined string chunks with associated colours
 			switch($taId) {
 				case 826:
 				$colorList = Array(
