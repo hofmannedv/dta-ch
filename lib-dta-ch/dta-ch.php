@@ -1854,16 +1854,26 @@ class DTACH {
 	}
 
 	function validateBeneficiaryPartyIdentification(){
+		// validate the identification of the beneficiary party
+
+		// retrieve the transaction type
 		$transactionType = $this->getTransactionType();
+
 		// TA 826, only
 		if ($transactionType == 826) {
+			// define a regex pattern: /C/123456789 or /C/000012345
 			$pattern = '/^\/C\/((\d{9})|(0000\d{5}))$/';
 
+			// retrieve the identification of the beneficiary party
 			$beneficiaryPartyIdentification = $this->getTextFieldValue("beneficiaryPartyIdentification");
+
+			// see if the pattern, and the identification of the
+			// beneficiary party match
 			if (preg_match($pattern, $beneficiaryPartyIdentification)) {
 				return True;			
 			} 
 		}
+		// no match: return False
 		return False;
 	}
 
