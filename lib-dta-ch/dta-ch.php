@@ -2184,6 +2184,9 @@ class DTACH {
 	}
 
 	function adjustBeneficiaryPartyAccount(){
+		// auto-adjust the account of the beneficiary party
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
 		switch($transactionType) {
 		case 827:
