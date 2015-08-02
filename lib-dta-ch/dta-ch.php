@@ -3314,7 +3314,7 @@ class DTACH {
 	function getFullText() {
 		// fill transaction details
 
-		// define the output format
+		// retrieve the output format
 		$dataFormat = $this->getDataFormat();
 
 		// retrieve the type of transaction
@@ -3328,12 +3328,15 @@ class DTACH {
 		case 826:
 			// reference number
 			// $v = "20:";
+			// retrieve the identification id
 			$v .= $this->getTextFieldValue("orderingPartyIdentification");
+			// retrieve the transaction number
 			$v .= $this->getTextFieldValue("orderingPartyTransactionNumber");
 			$textString .= $this->toHex($v); // . "0D 25 7A ";
 
 			// account to be debited
 			// $v = "25:";
+			// retrieve the account information without, and with IBAN
 			$a1 = $this->getTextFieldValue("accountWithoutIban");
 			$a2 = $this->getTextFieldValue("accountWithIban");
 			if (trim($a1) == "") {
@@ -3344,13 +3347,14 @@ class DTACH {
 			$textString .= $this->toHex($v); // . "0D 25 7A ";
 
 			// payment amount
-			// - value date
-			// - ISO currency code
-			// - amount
 			// $v = "32A:";
+			// retrieve the value date of the payment
 			$v = $this->getTextFieldValue("paymentValueDate");
+			// retrieve the ISO currency code
 			$v .= $this->getTextFieldValue("paymentCurrencyCode");
+			// retrieve the payment amount
 			$v .= $this->getTextFieldValue("paymentAmount");
+
 			$textString .= $this->toHex($v);
 
 			// 14x spaces
@@ -3380,6 +3384,7 @@ class DTACH {
 
 			// beneficiary
 			// $v = "59:";
+			// retrieve the indentification of the beneficiary
 			$v = $this->getTextFieldValue("beneficiaryPartyIdentification");
 			$textString .= $this->toHex($v);
 			$v = $this->getTextFieldValue("beneficiaryPartyLine1");
@@ -3393,8 +3398,11 @@ class DTACH {
 
 			// reason for payment
 			//$v = "70:";
+			// retrieve the ISR reference number
 			$v = $this->getTextFieldValue("isrReferenceNumber");
+			// retrieve the ISR check digit
 			$v .= $this->getTextFieldValue("isrCheckDigit");
+
 			$textString .= $this->toHex($v);
 		
 			// 5x spaces
@@ -3405,12 +3413,15 @@ class DTACH {
 		case 827:
 			// reference number
 			// $v = "20:";
+			// retrieve the identification of the ordering party
 			$v .= $this->getTextFieldValue("orderingPartyIdentification");
+			// retrieve the transaction number of the ordering party
 			$v .= $this->getTextFieldValue("orderingPartyTransactionNumber");
 			$textString .= $this->toHex($v); // . "0D 25 7A ";
 
 			// account to be debited
 			// $v = "25:";
+			// retrieve the account information without, and with IBAN
 			$a1 = $this->getTextFieldValue("accountWithoutIban");
 			$a2 = $this->getTextFieldValue("accountWithIban");
 			if (trim($a1) == "") {
@@ -3421,12 +3432,12 @@ class DTACH {
 			$textString .= $this->toHex($v); // . "0D 25 7A ";
 
 			// payment amount
-			// - value date
-			// - ISO currency code
-			// - amount
 			// $v = "32A:";
+			// retrieve payment value date
 			$v = $this->getTextFieldValue("paymentValueDate");
+			// retrieve payment ISO currency code
 			$v .= $this->getTextFieldValue("paymentCurrencyCode");
+			// retrieve payment amount
 			$v .= $this->getTextFieldValue("paymentAmount");
 			$textString .= $this->toHex($v);
 
@@ -3471,7 +3482,7 @@ class DTACH {
 			// continue with segment #4
 			$textString .= "00 04 ";
 
-			// reason for payment
+			// reason for payment / message of the beneficiary
 			//$v = "70:";
 			$v = $this->getTextFieldValue("beneficiaryMessageLine1");
 			$v .= $this->getTextFieldValue("beneficiaryMessageLine2");
@@ -3486,7 +3497,7 @@ class DTACH {
 			// continue with segment #5
 			$textString .= "00 05 ";
 
-			// en beneficiary (55)
+			// end beneficiary (55)
 			//$v = "70:";
 			$v = $this->getTextFieldValue("endBeneficiaryPartyAccount");
 			$v .= $this->getTextFieldValue("endBeneficiaryPartyLine1");
@@ -3499,12 +3510,15 @@ class DTACH {
 		case 830:
 			// reference number
 			// $v = "20:";
+			// retrieve the identification of the ordering party
 			$v .= $this->getTextFieldValue("orderingPartyIdentification");
+			// retrieve the transaction number of the ordering party
 			$v .= $this->getTextFieldValue("orderingPartyTransactionNumber");
 			$textString .= $this->toHex($v); // . "0D 25 7A ";
 
 			// account to be debited
 			// $v = "25:";
+			// retrieve the account with, and without IBAN
 			$a1 = $this->getTextFieldValue("accountWithoutIban");
 			$a2 = $this->getTextFieldValue("accountWithIban");
 			if (trim($a1) == "") {
@@ -3515,12 +3529,12 @@ class DTACH {
 			$textString .= $this->toHex($v); // . "0D 25 7A ";
 
 			// payment amount
-			// - value date
-			// - ISO currency code
-			// - amount
 			// $v = "32A:";
+			// retrieve the payment value date
 			$v = $this->getTextFieldValue("paymentValueDate");
+			// retrieve the payment ISO currency code
 			$v .= $this->getTextFieldValue("paymentCurrencyCode");
+			// retrieve the payment amount
 			$v .= $this->getTextFieldValue("paymentAmount");
 			$textString .= $this->toHex($v);
 
@@ -3559,6 +3573,7 @@ class DTACH {
 			$option = "A";
 			$s = $this->getTextFieldValue("beneficiaryInstituteLine1");
 			if(trim($s) == "") {
+				// no information, so assume D
 				$option = "D";
 			}
 			$textString .= $this->toHex($option);
@@ -3621,12 +3636,15 @@ class DTACH {
 		case 832:
 			// reference number
 			// $v = "20:";
+			// retrieve identification of the ordering party
 			$v .= $this->getTextFieldValue("orderingPartyIdentification");
+			// retrieve the transaction number of the ordering party
 			$v .= $this->getTextFieldValue("orderingPartyTransactionNumber");
 			$textString .= $this->toHex($v); // . "0D 25 7A ";
 
 			// account to be debited
 			// $v = "25:";
+			// retrieve account information without, and with IBAN
 			$a1 = $this->getTextFieldValue("accountWithoutIban");
 			$a2 = $this->getTextFieldValue("accountWithIban");
 			if (trim($a1) == "") {
@@ -3637,12 +3655,12 @@ class DTACH {
 			$textString .= $this->toHex($v); // . "0D 25 7A ";
 
 			// payment amount
-			// - value date
-			// - ISO currency code
-			// - amount
 			// $v = "32A:";
+			// retrieve the payment value date
 			$v = $this->getTextFieldValue("paymentValueDate");
+			// retrieve the payment ISO currency code
 			$v .= $this->getTextFieldValue("paymentCurrencyCode");
+			// retrieve the payment amount
 			$v .= $this->getTextFieldValue("paymentAmount");
 			$textString .= $this->toHex($v);
 
@@ -3724,12 +3742,15 @@ class DTACH {
 		case 836:
 			// reference number
 			// $v = "20:";
+			// retrieve the identification if the ordering party
 			$v .= $this->getTextFieldValue("orderingPartyIdentification");
+			// retrieve the transaction number of the ordering party
 			$v .= $this->getTextFieldValue("orderingPartyTransactionNumber");
 			$textString .= $this->toHex($v); // . "0D 25 7A ";
 
 			// account to be debited
 			// $v = "25:";
+			// retrieve the account information without, and with IBAN
 			$a1 = $this->getTextFieldValue("accountWithoutIban");
 			$a2 = $this->getTextFieldValue("accountWithIban");
 			if (trim($a1) == "") {
@@ -3740,12 +3761,12 @@ class DTACH {
 			$textString .= $this->toHex($v); // . "0D 25 7A ";
 
 			// payment amount
-			// - value date
-			// - ISO currency code
-			// - amount
 			// $v = "32A:";
+			// retrieve the payment value date
 			$v = $this->getTextFieldValue("paymentValueDate");
+			// retrieve the payment ISO currency code
 			$v .= $this->getTextFieldValue("paymentCurrencyCode");
+			// retrieve the payment amount
 			$v .= $this->getTextFieldValue("paymentAmount");
 			$textString .= $this->toHex($v);
 
@@ -3782,6 +3803,7 @@ class DTACH {
 			$option = "D";
 			$s = $this->getTextFieldValue("beneficiaryInstituteLine2");
 			if(trim($s) == "") {
+				// if option is not set assume A
 				$option = "A";
 			}
 			$textString .= $this->toHex($option);
@@ -3845,12 +3867,15 @@ class DTACH {
 		case 837:
 			// reference number
 			// $v = "20:";
+			// retrieve the identification of the ordering party
 			$v .= $this->getTextFieldValue("orderingPartyIdentification");
+			// retrieve the tansaction number of the ordering party
 			$v .= $this->getTextFieldValue("orderingPartyTransactionNumber");
 			$textString .= $this->toHex($v); // . "0D 25 7A ";
 
 			// account to be debited
 			// $v = "25:";
+			// retrieve the account information without, and with IBAN
 			$a1 = $this->getTextFieldValue("accountWithoutIban");
 			$a2 = $this->getTextFieldValue("accountWithIban");
 			if (trim($a1) == "") {
@@ -3861,12 +3886,12 @@ class DTACH {
 			$textString .= $this->toHex($v); // . "0D 25 7A ";
 
 			// payment amount
-			// - value date
-			// - ISO currency code
-			// - amount
 			// $v = "32A:";
+			// retrieve the payment value date
 			$v = $this->getTextFieldValue("paymentValueDate");
+			// retrieve the payment ISO currency code
 			$v .= $this->getTextFieldValue("paymentCurrencyCode");
+			// retrieve the payment amount
 			$v .= $this->getTextFieldValue("paymentAmount");
 			$textString .= $this->toHex($v);
 
@@ -3902,6 +3927,7 @@ class DTACH {
 			$option = "D";
 			$s = $this->getTextFieldValue("beneficiaryInstituteLine1");
 			if(trim($s) == "") {
+				// if option is not set assume A
 				$option = "A";
 			}
 			$textString .= $this->toHex($option);
@@ -3986,13 +4012,15 @@ class DTACH {
 			$v .= $this->getTextFieldValue("instructionLine3");
 			$textString .= $this->toHex($v);
 
+			// in case the information structure is defined as
+			// unstructured ("U") add a fourth line
 			if($this->getTextFieldValue("informationStructure") == "U") {
 				$v = $this->getTextFieldValue("instructionLine4");
 
-				// 5x spaces
+				// add 5x spaces
 				$v .= str_repeat(" ", 5);
 			} else {
-				// 20x spaces
+				// add 20x spaces
 				$v = str_repeat(" ", 20);
 			}
 
@@ -4002,7 +4030,7 @@ class DTACH {
 
 		case 890:
 
-			// total amount (90)
+			// retrieve the total amount (90)
 			$v = $this->getTextFieldValue("total");
 			$textString .= $this->toHex($v);
 
