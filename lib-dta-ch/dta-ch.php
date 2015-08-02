@@ -2904,6 +2904,10 @@ class DTACH {
 	}
 
 	function adjustPurpose() {
+		// auto-adjust the transaction purpose
+
+		// retrieve the type of transaction for TA 836 and 837
+		// and call the TA-specific adjustment function
 		$transactionType = $this->getTransactionType();
 		if ($transactionType == 836) {
 			return $this->adjustPurpose836();
