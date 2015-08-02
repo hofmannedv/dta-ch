@@ -2554,16 +2554,32 @@ class DTACH {
 	}
 
 	function adjustIdentificationBankAddress() {
+		// auto-adjust the identification of the bank address
+
+		// retrieve the type of the transaction
 		$transactionType = $this->getTransactionType();
+
+		// continue in case it is TA 830 or 837
 		if (in_array($transactionType, Array(830,837))) {
+
+			// retrieve the identification of the bank address
 			$identificationBankAddress = $this->getTextFieldValue("identificationBankAddress");
+
+			// remove all the spaces both at the beginning and at the end
 			$identificationBankAddress = trim($identificationBankAddress);
+
+			// define a regex pattern: A or D
 			$pattern = '/^[AD]$/';
+
+			// compare the saved value with the pattern
 			if (preg_match($pattern, $identificationBankAddress)) {
-				// do nothing
+				// do nothing -- everything is OK
 			} else {
+				// incorrect value. Reset to A
 				$identificationBankAddress = "A";
 			}
+
+			// update the identification of the bank address
 			$this->setTextFieldValue("identificationBankAddress", $identificationBankAddress);
 		}
 		return;	
