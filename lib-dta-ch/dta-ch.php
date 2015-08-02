@@ -4471,7 +4471,7 @@ class DTACH {
 		// fill dta object based on csv line
 
 		if (trim($csvLine) == "") {
-			// we got empty spaces, only
+			// we got empty spaces, only, so return False
 			return False;
 		}
 		
@@ -4479,6 +4479,7 @@ class DTACH {
 		$transactionDetails = explode(";", $csvLine);
 
 		// validate number of fields
+		// define the according value per transaction
 		$fieldList = array(
 			826 => 27,
 			827 => 35,
