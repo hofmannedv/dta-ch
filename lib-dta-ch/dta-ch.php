@@ -2527,15 +2527,30 @@ class DTACH {
 	}
 
 	function adjustBeneficiaryInstitution() {
+		// adjust the institution of the beneficiary
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// continue if it is TA 830 or 837
 		if (in_array($transactionType, Array(830,837))) {
+
+			// retrieve the institution of the beneficiary
 			$beneficiaryInstitution = $this->getTextFieldValue("beneficiaryInstitution");
+
+			// remove all the spaces at the beginning, and at the end
 			$beneficiaryInstitution = trim($beneficiaryInstitution);
+
+			// extend the string by spaces at the end to have a 
+			// length of 24 characters
 			$beneficiaryInstitution = str_pad($beneficiaryInstitution ,24," ", STR_PAD_RIGHT);
+
+			// update the value for the institution of the beneficiary
 			$this->setTextFieldValue("beneficiaryInstitution", $beneficiaryInstitution);
 		}
 		return;
 	}
+
 	function validateBeneficiarySwiftAddress830(){
 		// validate the SWIFT address of the payment beneficiary
 		// option 57a and 57d, TA 830 only
