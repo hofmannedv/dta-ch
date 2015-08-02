@@ -2762,18 +2762,31 @@ class DTACH {
 	function validatePurpose836(){
 		// validate transaction purpose for TA 836
 
+		// retrieve the purpose information
 		$purposeStructure = $this->getTextFieldValue("purposeStructure");
+
+		// purpose: I
 		if ($purposeStructure == "I") {
 			$this->validationResult["purposeStructure"] = True;
+
 			// line 1
+			// remove spaces at the beginning and at the end of the string
 			$v = trim($this->getTextFieldValue("purposeLine1"));
+
+			// define a regex pattern for twenty upper-case characters and digits
 			$pattern = '/^[A-Z\d]{20}\s*$/';
+
+			// see if this pattern matches with the purpose description
 			if (preg_match($pattern, $v)) {
 				$this->validationResult["purposeLine1"] = True;
 			}
 
 			// line 2+3
+			// these two lines have to be empty
+			// define a regex pattern for 35 spaces
 			$pattern = '/^\s{35}$/';
+
+			// see if this pattern matches with purpose lines 2 and 3
 			$v = $this->getTextFieldValue("purposeLine2");
 			if (preg_match($pattern, $v)) {
 				$this->validationResult["purposeLine2"] = True;
@@ -2782,6 +2795,8 @@ class DTACH {
 			if (preg_match($pattern, $v)) {
 				$this->validationResult["purposeLine3"] = True;
 			}
+
+			// return True if all lines have valid content
 			if ($this->validationResult["purposeLine1"] and $this->validationResult["purposeLine2"] and $this->validationResult["purposeLine3"]) {
 				return True;
 			}
