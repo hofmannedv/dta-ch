@@ -1966,21 +1966,32 @@ class DTACH {
 	}
 
 	function validateBeneficiaryPartyAccount837(){
+		// validate the party account of the beneficiary for TA 837, only
+
+		// retrieve the party account of the beneficiary
 		$beneficiaryPartyAccount = $this->getTextFieldValue("beneficiaryPartyAccount");
+
+		// verify the string length: 24 characters
 		if(strlen($beneficiaryPartyAccount) == 24) {
+			// define regex patterns
+			// - /C/ + digits + spaces
 			$pattern1 = "/^\/C\/\d+\s*$/";
+			// - /C/ + spaces
 			$pattern2 = "/^\/C\/\s*$/";
+
+			// retrieve the stored IBAN
 			$iban = trim($this->getTextFieldValue("iban"));
+
+			// see if the party account of the beneficiary matches pattern1
 			if (preg_match($pattern1, $beneficiaryPartyAccount)) {
-				// check iban, again
-				// valid if empty
+				// check for an empty IBAN field
 				if (strlen($iban) == 0) {
 					$this->validationResult["iban"] = True;
 					return True;
 				}
 			} elseif (preg_match($pattern2, $beneficiaryPartyAccount)) {
-				// check iban, again
-				// valid if not empty
+				// see if the party account of the beneficiary matches pattern2
+				// check for an non-empty IBAN field
 				if (strlen($iban)) {
 					//$this->validationResult["iban"] = True;
 					//if ($this->validationResult["iban"] == True) {
@@ -1988,6 +1999,7 @@ class DTACH {
 				}
 			}
 		}
+		// .. otherwise return False
 		return False;
 	}
 
