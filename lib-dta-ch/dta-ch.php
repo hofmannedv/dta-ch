@@ -2317,12 +2317,17 @@ class DTACH {
 	}
 
 	function adjustBeneficiaryTransactionType(){
+		// auto-adjust the transaction type of the beneficiary
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
-		// TA 827, only
+
+		// continue in case of TA 827, only
 		if ($transactionType == 827) {
 			if ($this->validateBeneficiaryTransferType() == False) {
-				// it has to be either a bankPayment, a postalPayment, or a postalOrder
-				// set to bankPayment
+				// it has to be either a bank payment, a postal payment,
+				// or a postal order
+				// if it is none of those set the to value to bank payment
 				$this->setTextFieldValue("beneficiaryTransferType", "bankPayment");
 			}
 		}
