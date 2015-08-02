@@ -2358,7 +2358,12 @@ class DTACH {
 	}
 
 	function validateBeneficiaryMessageLine(){
+		// validate the message line(s) for the beneficiary
+
+		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
+
+		// define a list of indexes for the message lines
 		$messageLines = Array(
 			"beneficiaryMessageLine1",
 			"beneficiaryMessageLine2",
@@ -2366,12 +2371,20 @@ class DTACH {
 			"beneficiaryMessageLine4"
 		);
 
+		// continue if the type of transaction is either TA 827, 830, or 832
 		if (in_array($transactionType, Array(827,830,832))) {
+
+			// define default length: 28 (valid vor TA 827
 			$length = 28; // for TA 827
+
+			// for both TA 830 and 832 the length is 30 characters
 			if (in_array($transactionType, Array(830,832))) {$length = 30;}
 
+			// go through the message text line by line
 			foreach($messageLines as $item) {
 				$value = $this->getTextFieldValue($item);
+
+				// if the length fits to the given length its OK
 				if (strlen($value) == $length) {
 					$this->validationResult[$item] = True;
 				}
