@@ -2745,7 +2745,11 @@ class DTACH {
 	}
 
 	function validatePurpose(){
+		// validate transaction purpose for both TA 836 and 837
+
+		// retrieve type of transaction
 		$transactionType = $this->getTransactionType();
+
 		if ($transactionType == 836) {
 			return $this->validatePurpose836();
 		}
@@ -2756,6 +2760,8 @@ class DTACH {
 	}
 
 	function validatePurpose836(){
+		// validate transaction purpose for TA 836
+
 		$purposeStructure = $this->getTextFieldValue("purposeStructure");
 		if ($purposeStructure == "I") {
 			$this->validationResult["purposeStructure"] = True;
@@ -2798,6 +2804,8 @@ class DTACH {
 	}
 
 	function validatePurpose837(){
+		// validate transaction purpose for TA 837
+
 		$purposeStructure = $this->getTextFieldValue("purposeStructure");
 		switch($purposeStructure) {
 		case "I":
