@@ -43,7 +43,7 @@ function processSingleTransaction ($transactionData) {
 	return $dta;
 }
 
-function processMultipleTransaction ($transactionData) {
+function processMultipleTransactions ($transactionData) {
 	// process multiple transactions
 
 	// define result list
@@ -59,5 +59,110 @@ function processMultipleTransaction ($transactionData) {
 	// return list of transactions
 	return $dtaList;
 }
+
+function calculateTotal ($dtaList) {
+	// investigate the total of the transactions
+
+	// assume a value of 0.0
+	$totalValue = 0.0;
+
+	foreach ($dtaList as $dta) {
+		// retrieve the payment amount of the according dta
+		$paymentAmount = $dta->getTextFieldValue("paymentAmount");
+
+		// substitute "," by "."
+		$paymentAmount = preg_replace('/,/' , '.', $paymentAmount);
+
+		// calculate the total
+		$totalValue += $paymentAmount;
+	}
+
+	return $totalValue;
+}
+
+function sortTransactions ($dtaList) {
+	// sort transaction list
+
+	// - by requested processing date, first
+	$dateList = array();
+	foreach ($dtaList as $dta) {
+		$dateList[] = $dta->getRequestedProcessingDate();
+	}
+	array_multisort($dateList, $dtaList);
+	//var_dump($dateList);
+	$transactionList = $dtaList;
+		
+	// - by ordering party identification, second, per processing date
+	$dateSegments = array_unique($dateList);
+	// var_dump($dateSegments);
+	$piList = array();
+	foreach ($transactionList as $dta) {
+		foreach ($dateSegments as $dtaDate) {
+			if ($dta->getRequestedProcessingDate() == $dtaDate) {
+				$piList[$dtaDate][] = $dta;
+			}
+		}
+	}
+
+	// ... now we have a list piList(date) = dta_1...dta_n
+	$newTransactionList = array();
+	foreach ($piList as $dtaList) {
+		$piSpecific = array();
+		foreach ($dtaList as $dta) {
+			$piSpecific[] = $dta->getTextFieldValue("orderingPartyIdentification");
+		}
+		array_multisort($piSpecific, $dtaList);
+
+		// ... sort by bank clearing number of the beneficiary bank, third
+		$piSegments = array_unique($piSpecific);
+		$clearingList = array();
+		foreach ($dtaList as $dta) {
+			foreach ($piSegments as $pi){
+				if ($dta->getTextFieldValue("orderingPartyIdentification") == $pi) {
+					$clearingList[$pi][] = $dta;
+				}
+			}
+		}
+	
+		// ... now we have a list clearingList(pi) = dta_1...dta_n
+		$clearingSpecific = array();
+		foreach ($dtaList as $dta) {
+			$clearingSpecific[] = $dta->getBankClearingNumberReceiver();
+		}
+		array_multisort($clearingSpecific, $dtaList);
+
+		$newTransactionList = array_merge($newTransactionList, $dtaList);
+	}
+
+	// ... now we have a sorted list by processing date, and by ordering party identification
+	return $newTransactionList;
+}
+
+function createTA890 ($transactionList) {
+	return;
+}
+
+// define transaction list
+$transactionData = array();
+
+// - entry one
+$transactionData[] = "826;131220;;12345;131220;Bank 44;ABC12;;1;6;ABC01;12345678901;56789;;CHF;123,45;Felix Z;Markt 1;1234 Zürich;;/C/123456789;Hans Wurst;Taufgraben 1;1234 Bern;;1234567890123456;34";
+
+// - entry two
+$transactionData[] = "827;131220;1234;12345;131220;Bank 44;ABC12;;1;6;ABC01;12345678901;56789;;CHF;123,45;Felix Z;Markt 1;1234 Zürich;;/C/123456789          ;Hans Wurst;Taufgraben 1;1234 Bern;;bankPayment;Das;ist;ein;Test;/C/456789;Holger Klein;Vor dem Tor 1;4132 Muttenz;";
+
+// process the transaction list
+$dtaList = processMultipleTransactions ($transactionData);
+
+// calculate total for all transactions
+$dtaTotal = calculateTotal ($dtaList);
+
+// sort transaction list according to the SIX specification
+$sortedDtaList = sortTransactions ($dtaList);
+
+// create TA 890 record holding the total
+$ta890 = createTA890 ($sortedDtaList);
+
+// --------------------------------------------
 
 ?>
