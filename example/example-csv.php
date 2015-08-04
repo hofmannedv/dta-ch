@@ -178,17 +178,26 @@ function sortTransactions ($dtaList) {
 		}
 	
 		// ... now we have a list clearingList[entry] = [dta_1...dta_n]
+
+		// define an unsorted list
 		$clearingSpecific = array();
-		foreach ($dtaList as $dta) {
+
+		// go through the current date segment entry by entry
+		foreach ($dateSegment as $dta) {
+			// retrieve the bank clearing number of the payment receiver
 			$clearingSpecific[] = $dta->getBankClearingNumberReceiver();
 		}
-		array_multisort($clearingSpecific, $dtaList);
 
-		$newTransactionList = array_merge($newTransactionList, $dtaList);
+		// sort both the bank clearing number of the payment receiver
+		// and the date segment
+		array_multisort($clearingSpecific, $dateSegment);
+
+		// update the list of sorted transactions
+		$sortedTransactionList = array_merge($sortedTransactionList, $dateSegment);
 	}
 
 	// ... now we have a sorted list by processing date, and by ordering party identification
-	return $newTransactionList;
+	return $sortedTransactionList;
 }
 
 function createTA890 ($transactionList) {
