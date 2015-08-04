@@ -203,7 +203,7 @@ function sortTransactions ($dtaList) {
 function createTA890 ($dataFormat, $dataFileSenderIdentification, $totalValue) {
 	// creating total record TA 890 to complete the transaction
 
-	// create dtach object, and initialze it
+	// create dtach object, and initialize it
 	$dta = new DTACH();
 
 	// fill object with data
@@ -254,7 +254,14 @@ $dtaTotal = calculateTotal ($dtaList);
 $sortedDtaList = sortTransactions ($dtaList);
 
 // create TA 890 record holding the total for all transactions
-$ta890 = createTA890 ($sortedDtaList);
+// - set data format: fixed
+$dataFormat = "fixed";
+// - retrieve the data file sender identification from the first
+//   transaction
+$dataFileSenderIdentification = $dtaList[0]->setDataFileSenderIdentification();
+
+// - create the TA 890 record
+$ta890 = createTA890 ($dataFormat, $dataFileSenderIdentification, $totalValue);
 
 // --------------------------------------------
 
