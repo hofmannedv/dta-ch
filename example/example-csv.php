@@ -135,12 +135,19 @@ function sortTransactions ($dtaList) {
 	// go through the list of transactions per date segment
 	foreach ($piList as $dateSegment) {
 
-		
+		// define a list of date-specific identifications of 
+		// the ordering party
 		$piSpecific = array();
-		foreach ($dtaList as $dta) {
+
+		// go through the entries in the current date segment
+		foreach ($dateSegment as $dta) {
+			// retrieve the identification of the ordering party
 			$piSpecific[] = $dta->getTextFieldValue("orderingPartyIdentification");
 		}
-		array_multisort($piSpecific, $dtaList);
+
+		// sort both the identifications of the ordering party, 
+		// and the date segment
+		array_multisort($piSpecific, $dateSegment);
 
 		// ... sort by bank clearing number of the beneficiary bank, third
 		$piSegments = array_unique($piSpecific);
