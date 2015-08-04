@@ -107,13 +107,23 @@ function sortTransactions ($dtaList) {
 	$dateSegments = array_unique($dateList);
 	// var_dump($dateSegments);
 
-
-	// - step 2: sort by ordering party id per processing date -----------
+	// - step 3: sort by ordering party id per processing date -----------
 	$piList = array();
-	foreach ($transactionList as $dta) {
+	foreach ($dtaList as $dta) {
+
+		// retrieve the date of transaction
+		$currentDate = $dta->getRequestedProcessingDate();
+
+		// find the according date segment
 		foreach ($dateSegments as $dtaDate) {
-			if ($dta->getRequestedProcessingDate() == $dtaDate) {
+			// if both dates match ...
+			if ($currentDate == $dtaDate) {
+
+				// ... extend the list by the current transaction
 				$piList[$dtaDate][] = $dta;
+
+				// quit searching, and end the inner foreach loop
+				break
 			}
 		}
 	}
