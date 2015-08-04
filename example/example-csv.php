@@ -200,8 +200,26 @@ function sortTransactions ($dtaList) {
 	return $sortedTransactionList;
 }
 
-function createTA890 ($transactionList) {
-	return;
+function createTA890 ($dataFormat, $dataFileSenderIdentification) {
+	// creating total record TA 890 to complete the transaction
+
+	// create dtach object, and initialze it
+	$dta = new DTACH();
+
+	// fill object with data
+	// - set data format
+	$dta->setDataFormat($dataFormat);
+
+	// - bank clearing number
+	//   left empty
+
+	// - data file sender identification
+	$dta->setDataFileSenderIdentification($dataFileSenderIdentification);
+
+	// - transaction type = 890
+	$dta->setTransactionType(890);
+
+	return $dta;
 }
 
 // define transaction list
@@ -222,7 +240,7 @@ $dtaTotal = calculateTotal ($dtaList);
 // sort transaction list according to the SIX specification
 $sortedDtaList = sortTransactions ($dtaList);
 
-// create TA 890 record holding the total
+// create TA 890 record holding the total for all transactions
 $ta890 = createTA890 ($sortedDtaList);
 
 // --------------------------------------------
