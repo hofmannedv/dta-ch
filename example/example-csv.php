@@ -296,11 +296,22 @@ foreach ($sortedDtaList as $dta) {
 	// prepare the transaction string
 	$dta->outputFullRecord();
 
-	// extend the file content by the new data
-	$fileContent .= $dta->getFullRecord();
+	// extend the file content by the new ascii data
+	$fileContent .= $dta->getFullAsciiRecord();
 }
 
+// create temporary file
+// - define file name
+$dtaFileName = "dta-" . date("dmyhis");
 
+// - open file for writing
+$fileHandle = fopen($dtaFileName, "w");
+
+// - if file handle: save data, and close the file
+if ($fileHandle) {
+	$retVal = fputs($fileHandle, $fileContent);
+	$retVal = fclose($fileHandle);
+}
 
 // --------------------------------------------
 
