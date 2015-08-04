@@ -200,7 +200,7 @@ function sortTransactions ($dtaList) {
 	return $sortedTransactionList;
 }
 
-function createTA890 ($dataFormat, $dataFileSenderIdentification) {
+function createTA890 ($dataFormat, $dataFileSenderIdentification, $totalValue) {
 	// creating total record TA 890 to complete the transaction
 
 	// create dtach object, and initialze it
@@ -218,6 +218,19 @@ function createTA890 ($dataFormat, $dataFileSenderIdentification) {
 
 	// - transaction type = 890
 	$dta->setTransactionType(890);
+
+	// - validate total value
+	$paymentAmount = "$totalValue";
+	$paymentAmount = preg_replace('/\./', ',', $paymentAmount);
+
+	// add further text field holding the total value
+	$dta->addTextField("total", $paymentAmount);
+
+	// adjust and validate new dta entry
+	$dta->adjustHeader();
+	$dta->adjustDataFields();
+	$dta->validateHeader();
+	$dta->validateDataFields();
 
 	return $dta;
 }
