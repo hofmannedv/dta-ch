@@ -142,20 +142,37 @@ function sortTransactions ($dtaList) {
 		// go through the entries in the current date segment
 		foreach ($dateSegment as $dta) {
 			// retrieve the identification of the ordering party
-			$piSpecific[] = $dta->getTextFieldValue("orderingPartyIdentification");
+			$dateSpecificIdentifications[] = $dta->getTextFieldValue("orderingPartyIdentification");
 		}
 
 		// sort both the identifications of the ordering party, 
 		// and the date segment
-		array_multisort($piSpecific, $dateSegment);
+		array_multisort($dateSpecificIdentifications, $dateSegment);
 
-		// ... sort by bank clearing number of the beneficiary bank, third
-		$piSegments = array_unique($piSpecific);
+		// next, sort the entries in the current date segment by
+		// the bank clearing number of the beneficiary bank
+
+		// retrieve the unique entries of date-specific 
+		// identifications of the ordering party
+		$uniqueEntries = array_unique($dateSpecificIdentifications);
+
+		// define a clearing list
 		$clearingList = array();
-		foreach ($dtaList as $dta) {
-			foreach ($piSegments as $pi){
-				if ($dta->getTextFieldValue("orderingPartyIdentification") == $pi) {
-					$clearingList[$pi][] = $dta;
+
+		// go through the entries in the current date segment
+		foreach ($dateSegment as $dta) {
+			
+			// retrieve the identification of the ordering party
+			$id = $dta->getTextFieldValue("orderingPartyIdentification");
+
+			// go through the unique entries one by one
+			foreach ($uniqueEntries as $entry){
+
+				if ($id == $entry) {
+					$clearingList[$entry][] = $dta;
+
+					// quit searching, and end the inner foreach loop
+					break
 				}
 			}
 		}
