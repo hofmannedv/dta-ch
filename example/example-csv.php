@@ -284,6 +284,24 @@ foreach ($sortedDtaList as $key => $dta) {
 	$nr++;
 }
 
+// export dta list to plain text file
+// transform each dta object into transaction data
+// prepare output, simultaniously
+
+// - start with an empty file
+$fileContent = "";
+
+// go through the list of sorted dta entries one by one
+foreach ($sortedDtaList as $dta) {
+	// prepare the transaction string
+	$dta->outputFullRecord();
+
+	// extend the file content by the new data
+	$fileContent .= $dta->getFullRecord();
+}
+
+
+
 // --------------------------------------------
 
 ?>
