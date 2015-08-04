@@ -4533,6 +4533,40 @@ class DTACH {
 		return $record;
 	}
 
+	function getFullAsciiRecord() {
+		// create full transaction record as ascii data
+
+		// start with empty ascii data
+		$asciiData = "";
+
+		// retrieve full record
+		$currentData = $this->getFullRecord();
+
+		// prepare the data
+		$stringLength = strlen($currentData);
+
+		// go through it step by step
+		$i = 2;
+		$partLength = 3;
+
+		while ($i <= $stringLength) {
+			// retrieve partial string
+			$partialString = substr($currentData,$i-2,$partLength);
+
+			// convert partial string to ascii
+			$asciiValue = base_convert(trim($partialString), 16, 10);
+
+			// extend the ascii data
+			$asciiData .= chr($asciiValue);
+
+			// go to the next piece of data
+			$i += $partLength;
+		}
+
+		// return ascii data
+		return $asciiData;
+	}
+
 	function outputFullRecord() {
 		// visualize a single transaction record as coloured HTML table
 
