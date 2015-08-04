@@ -63,9 +63,10 @@ function processMultipleTransactions ($transactionData) {
 function calculateTotal ($dtaList) {
 	// investigate the total of the transactions
 
-	// assume a value of 0.0
+	// assume a total value of 0.0
 	$totalValue = 0.0;
 
+	// go through the list of transactions one by one
 	foreach ($dtaList as $dta) {
 		// retrieve the payment amount of the according dta
 		$paymentAmount = $dta->getTextFieldValue("paymentAmount");
@@ -77,6 +78,7 @@ function calculateTotal ($dtaList) {
 		$totalValue += $paymentAmount;
 	}
 
+	// return the total value
 	return $totalValue;
 }
 
