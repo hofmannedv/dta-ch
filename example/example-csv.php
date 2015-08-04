@@ -85,7 +85,7 @@ function calculateTotal ($dtaList) {
 function sortTransactions ($dtaList) {
 	// sort transaction list
 
-	// step 1: sort by requested processing date
+	// - step 1: sort by requested processing date -----------------------
 	
 	// define an array of dates based on the processing date of a transaction
 	$dateList = array();
@@ -100,12 +100,15 @@ function sortTransactions ($dtaList) {
 
 	//var_dump($dateList);
 
-
+	// ?
 	$transactionList = $dtaList;
 		
-	// step 2: sort by ordering party identification per processing date
+	// - step 2: identify unique date segments ---------------------------
 	$dateSegments = array_unique($dateList);
 	// var_dump($dateSegments);
+
+
+	// - step 2: sort by ordering party id per processing date -----------
 	$piList = array();
 	foreach ($transactionList as $dta) {
 		foreach ($dateSegments as $dtaDate) {
