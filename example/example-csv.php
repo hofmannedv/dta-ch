@@ -128,7 +128,7 @@ function sortTransactions ($dtaList) {
 		}
 	}
 
-	// the result is a list piList(date) = dta_1...dta_n
+	// the result is a list piList[dtaDate] = [dta_1...dta_n]
 	// create a list of sorted transactions
 	$sortedTransactionList = array();
 
@@ -177,7 +177,7 @@ function sortTransactions ($dtaList) {
 			}
 		}
 	
-		// ... now we have a list clearingList(pi) = dta_1...dta_n
+		// ... now we have a list clearingList[entry] = [dta_1...dta_n]
 		$clearingSpecific = array();
 		foreach ($dtaList as $dta) {
 			$clearingSpecific[] = $dta->getBankClearingNumberReceiver();
