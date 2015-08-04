@@ -98,13 +98,13 @@ function sortTransactions ($dtaList) {
 	// of dateList, afterwards
 	array_multisort($dateList, $dtaList);
 
+	// output interim result if needed
 	//var_dump($dateList);
 
-	// ?
-	$transactionList = $dtaList;
-		
 	// - step 2: identify unique date segments ---------------------------
 	$dateSegments = array_unique($dateList);
+
+	// output interim result if needed
 	// var_dump($dateSegments);
 
 	// - step 3: sort by ordering party id per processing date -----------
@@ -128,9 +128,14 @@ function sortTransactions ($dtaList) {
 		}
 	}
 
-	// ... now we have a list piList(date) = dta_1...dta_n
-	$newTransactionList = array();
-	foreach ($piList as $dtaList) {
+	// the result is a list piList(date) = dta_1...dta_n
+	// create a list of sorted transactions
+	$sortedTransactionList = array();
+
+	// go through the list of transactions per date segment
+	foreach ($piList as $dateSegment) {
+
+		
 		$piSpecific = array();
 		foreach ($dtaList as $dta) {
 			$piSpecific[] = $dta->getTextFieldValue("orderingPartyIdentification");
