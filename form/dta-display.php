@@ -227,10 +227,11 @@
 
 		// adjust numbering of the dta records
 		$nr = 1;
-		foreach ($transactionList as $dta) {
+		foreach ($transactionList as $key => $dta) {
 			$number = strval($nr);
 			$number = str_pad($number, 5, "0", STR_PAD_LEFT);
 			$dta->setEntrySequenceNumber($number);
+			$transactionList[$key] = $dta;
 			$nr++;
 		}
 
