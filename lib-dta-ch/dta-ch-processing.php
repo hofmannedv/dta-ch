@@ -342,5 +342,25 @@ class DTACHProcessing {
 
 	}
 
+	function exportDtaToPlaintext ($sortedDtaList) {
+		// export dta list to plain text file
+		// transform each dta object into transaction data
+		// prepare output, simultaniously
+	
+		// start with an empty file content
+		$fileContent = "";
+
+		// go through the list of sorted dta entries one by one
+		foreach ($sortedDtaList as $dta) {
+			// prepare the transaction string
+			$dta->outputFullRecord();
+
+			// extend the file content by the new ascii data
+			$fileContent .= $dta->getFullAsciiRecord();
+		}
+
+		// return transaction data as plain text
+		return $fileContent;
+	}
 }
 ?>
