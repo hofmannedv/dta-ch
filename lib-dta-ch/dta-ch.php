@@ -1979,20 +1979,17 @@ class DTACH {
 			// - /C/ + spaces
 			$pattern2 = "/^\/C\/\s*$/";
 
-			// retrieve the stored IBAN
-			$iban = trim($this->getIban());
-
 			// see if the party account of the beneficiary matches pattern1
 			if (preg_match($pattern1, $beneficiaryPartyAccount)) {
 				// check for an empty IBAN field
-				if (strlen($iban) == 0) {
+				if isEmptyIban() {
 					$this->validationResult["iban"] = True;
 					return True;
 				}
 			} elseif (preg_match($pattern2, $beneficiaryPartyAccount)) {
 				// see if the party account of the beneficiary matches pattern2
-				// check for an non-empty IBAN field
-				if (strlen($iban)) {
+				// check for an non-empty IBAN field with an valid IBAN number
+				if (isEmptyIban() == False) {
 					//$this->validationResult["iban"] = True;
 					//if ($this->validationResult["iban"] == True) {
 					return True;
@@ -2147,10 +2144,9 @@ class DTACH {
 			$this->setTextFieldValue("beneficiaryPartyAccount", $beneficiaryPartyAccount);
 
 		} elseif (preg_match($pattern2, $beneficiaryPartyAccount)) {
-			// check iban, again
+			// check IBAN, again
 			// valid if empty
-			$iban = trim($this->getIban());
-			if (strlen($iban)) {
+			if (isEmptyIban() == False) {
 				//$this->validationResult["iban"] = True;
 				//if ($this->validationResult["iban"] == True) {
 				// extend the string to a length of 24 characters
@@ -3077,6 +3073,23 @@ class DTACH {
 		// set the value for IBAN
 		$this->setTextFieldValue("iban", $value);
 		return;
+	}
+
+	function isEmptyIban(){
+		// retrieve the stored value vor IBAN, and see if the value is empty
+
+		// retrieve the stored value vor IBAN
+		$iban = getIban();
+
+		// remove all spaces at the beginning, and at the end
+		$iban = trim($iban);
+
+		// see if the remaining string is empty
+		if (strlen($iban) == 0) {
+			return True;
+		}
+		
+		return False;
 	}
 
 	function validateIban(){
