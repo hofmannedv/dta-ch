@@ -40,11 +40,11 @@ class DTACHProcessing {
 			};
 
 		// store the transactions to be processed
-		// we expect an array
+		// we expect an array of strings
 		if(is_array($transactions)) {
 			$this->$transactionList = $transactions;
 		} else {
-			$this->$transactionList = Array($transactions);
+			$this->$transactionList = Array("$transactions");
 		}
 
 		return;
