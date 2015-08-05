@@ -1495,19 +1495,115 @@ class DTACH {
 	}
 
 	function isIban($accountNumber) {
-		// validate IBAN number
+		// validate the transmitted IBAN number
 
-		// define regex validation pattern: 
-		// two characters followed by either digits, or a mixture of 
-		// digits and characters
+		// trim the transmitted account number
+		$accountNumber = trim($accountNumber);
+
+		// step 1: simple regex pattern check ----------------------------
+		// two characters (country code) followed by either digits, 
+		// or a mixture of digits and characters
+		//
+		// for the IBAN specification, see:
+		// EN: https://en.wikipedia.org/wiki/International_Bank_Account_Number
+		// GE: https://de.wikipedia.org/wiki/IBAN
+		//
+		// define regex validation pattern
 		$ibanPattern = '/^[A-Z]{2}[\dA-Z]+\s*$/';
 
 		// validate the trimmed account number
-		if (preg_match($ibanPattern, trim($accountNumber))) {
-			// valid according to the pattern
+		if (preg_match($ibanPattern, $accountNumber) == False) {
+			// invalid according to the pattern
+			return False;
+		}
+
+		// step 2: validate the length for selected European countries ---
+		$ibanCountryLengthList = array(
+			"AL" => 28,
+			"AD" => 24,
+			"BE" => 16,
+			"BA" => 20,
+			"BG" => 22,
+			"DK" => 18,
+			"DE" => 22,
+			"EE" => 20,
+			"FO" => 18,
+			"FI" => 18,
+			"FR" => 27,
+			"GI" => 23,
+			"GR" => 27,
+			"GL" => 18,
+			"IE" => 22,
+			"IS" => 26,
+			"IT" => 27,
+			"XK" => 20,
+			"HR" => 21,
+			"LV" => 21,
+			"LI" => 21,
+			"LT" => 20,
+			"LU" => 20,
+			"MT" => 31,
+			"MK" => 19,
+			"MD" => 24,
+			"MC" => 27,
+			"ME" => 22,
+			"NL" => 18,
+			"NO" => 15,
+			"AT" => 20,
+			"PL" => 28,
+			"PT" => 25,
+			"RO" => 24,
+			"SM" => 27,
+			"SE" => 24,
+			"CH" => 21,
+			"RS" => 22,
+			"SK" => 24,
+			"SI" => 19,
+			"ES" => 24,
+			"CZ" => 24,
+			"TR" => 26,
+			"HU" => 28,
+			"GB" => 22,
+			"CY" => 28
+		);
+		
+		// isolate the IBAN ISO country code
+		$ibanCountryCode = substr($accountNumber, 0, 2);
+
+		// let's find the according IBAN length for the given country
+		if (array_key_exists($ibanCountryCode, $ibanCountryLengthList)) {
+			// retrieve the length for the given country
+			$ibanCountryLength = $ibanCountryLengthList[$ibanCountryCode];
+
+			// compare the length
+			if (strlen($accountNumber) != $ibanCountryLength) {
+				// ... length mismatch, return False as error code
+				return False;
+			}
+		}
+
+		// step 3: validate the control digits ---------------------------
+
+		// isolate the IBAN control digits
+		$ibanControlDigits = substr($accountNumber, 2, 2);
+
+		$iban = substr($accountNumber, 4) . $ibanCountryCode . $ibanControlDigits;
+		
+		// define a list of characters, and its substitutes
+		$search = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+		$replace = array("10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36");
+
+		// replace all the occurences
+		$iban = substr_replace($search, $replace, $iban);
+
+		// step 4: validate the control remainder ------------------------
+		
+		// for a valid IBAN, IBAN mod 97 has to result in 1
+		if (intval($iban) % 97) == 1) {
 			return True;
 		}
-		// invalid according to the pattern
+
+		// invalid IBAN value
 		return False;
 	}
 
