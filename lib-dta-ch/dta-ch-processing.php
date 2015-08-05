@@ -14,7 +14,7 @@ email frank.hofmann@efho.de
 require_once 'dta-ch.php';
 
 class DTACHProcessing {
-	function __construct($transactions, $outputDataFormat, $transactionDeliveryDate) {
+	function __construct($transactions, $outputDataFormat, $transactionDeliveryDate, $skipAdjustments) {
 
 		// define data format
 		// - assume fixed (default value)
@@ -48,6 +48,16 @@ class DTACHProcessing {
 			// handle the given variable as an array
 			$this->$transactionList = Array("$transactions");
 		}
+
+		// auto-correct the values (do not skip)
+		// - set the default value to: yes
+		$this->adjustData = "yes";
+
+		// - check for either yes, or no
+		if(in_array($skipAdjustments, Array("no", "yes"))) {
+			// set adjust data, accordingly
+			$this->adjustData = $skipAdjustments;
+		};
 
 		return;
 	}
@@ -83,6 +93,7 @@ class DTACHProcessing {
 		$dta->validateHeader();
 		$dta->validateDataFields();
 
+		// return the prepared transaction object
 		return $dta;
 	}
 
