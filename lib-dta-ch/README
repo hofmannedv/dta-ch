@@ -1,5 +1,9 @@
 README:
 ------
 
-* dta-ch.php: transaction library class
+* dta-ch.php: 
+  transaction library class for single DTA objects
+
+* dta-ch-processing.php:
+  support class to prepare single transactions
 
