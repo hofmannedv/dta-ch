@@ -164,6 +164,16 @@ class DTACHProcessing {
 
 	};
 
+	function identifyUniqueDateSegments ($dateList) {
+		// identify unique date segments in the transaction list
+		$dateSegments = array_unique($dateList);
+
+		// output interim result if needed
+		// var_dump($dateSegments);
+
+		return $dateSegments;
+	};
+
 	function sortTransactions ($dtaList) {
 		// sort transaction list
 
@@ -172,10 +182,8 @@ class DTACHProcessing {
 		$dateList = sortTransactionsByDate ($dtaList);
 
 		// - step 2: identify unique date segments ---------------------------
-		$dateSegments = array_unique($dateList);
 
-		// output interim result if needed
-		// var_dump($dateSegments);
+		$dateSegments = identifyUniqueDateSegments ($dateList);
 
 		// - step 3: sort by ordering party id per processing date -----------
 		$piList = array();
