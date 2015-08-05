@@ -10,9 +10,73 @@ email frank.hofmann@efho.de
 -----------------------------------------------------------
 */
 
-class DTACHProcessing {
-	function __construct() {
+// include dta-ch object class for payments
+require_once 'dta-ch.php';
 
+class DTACHProcessing {
+	function __construct($transactions, $outputDataFormat, $transactionDeliveryDate) {
+
+		// define data format
+		// - assume fixed (default value)
+		$this->dataFormat = "fixed";
+
+		// - check for either fixed, or variable
+		if(in_array($outputDataFormat, Array("fixed", "variable"))) {
+			// set data format, accordingly
+			$this->dataFormat = $outputDataFormat;
+		};
+
+		// define date of delivery
+		// - set the default date of delivery: today
+		$this->dateOfDelivery = date("ymd");
+
+		if($transactionDeliveryDate) {
+			// validate the given date
+			// define regex date pattern
+			$datePattern = '/^\d{2}((0[1-9])|(1[0-2]))((0[1-9])|([1,2]\d)|(3[0,1]))$/';
+
+			if (preg_match($datePattern, $transactiondeliveryDate) == True) {
+				$this->dateOfDelivery = $transactionDeliveryDate;
+			};
+
+		// store the transactions to be processed
+		// we expect an array
+		if(is_array($transactions)) {
+			$this->$transactionList = $transactions;
+		} else {
+			$this->$transactionList = Array($transactions);
+		}
+
+		return;
 	}
+
+	function processSingleTransaction () {
+		// process a single transaction
+
+		// create dta-ch object
+		// initialize a new dta-ch object
+		$dta = new DTACH();
+
+		// fill object with data
+		$dta->setDataFormat($this->$dataFormat);
+
+		// set date of delivery: today
+		$dateOfDelivery = date("ymd");
+	$dta->setDateOfDelivery($dateOfDelivery);
+
+	// - import transaction data as csv data
+	$importValue = $dta->importCsv($transactionData);
+
+	// - auto-adjust data: header, and data fields
+	$dta->adjustHeader();
+	$dta->adjustDataFields();
+
+	// - validate data: header, and data fields
+	$dta->validateHeader();
+	$dta->validateDataFields();
+
+	return $dta;
+}
+
 }
 ?>
