@@ -320,5 +320,27 @@ class DTACHProcessing {
 		return $dta;
 	}
 
+	function numberTransactions ($sortedDtaList) {
+		// adjust numbering of the single dta records
+
+		$nr = 1;
+		foreach ($sortedDtaList as $key => $dta) {
+			// convert the integer value into string, and extend it by 
+			// leading zeros
+			$number = strval($nr);
+			$number = str_pad($number, 5, "0", STR_PAD_LEFT);
+
+			// set the sequence number of the current dta entry
+			$dta->setEntrySequenceNumber($number);
+
+			// update the transaction value
+			$sortedDtaList[$key] = $dta;
+
+			// increase the number by one
+			$nr++;
+		}
+
+	}
+
 }
 ?>
