@@ -1480,17 +1480,25 @@ class DTACH {
 		// retrieve the account information with IBAN
 		$accountWithIban = $this->getTextFieldValue("accountWithIban");
 
-		// define a regex pattern for IBANs that are valid for either
-		// Switzerland, or Liechtenstein
-		$pattern = '/^((CH)|(LI))\d+\s{3,}$/';
+		// does the length fit?
+		if (strlen($accountWithIban) == $length) {
 
-		// validate the account information
-		if (preg_match($pattern, $accountWithIban)) {
-			// does the length fit?
-			if (strlen($accountWithIban) == $length) {
-				return True;
+			// remove all leading and trailing spaces
+			$iban = trim($accountWithIban);
+
+			// define a regex pattern for IBANs that are valid for either
+			// Switzerland, or Liechtenstein
+			$ibanPattern = '/^((CH)|(LI))\d+[\dA-Z]+$/';
+
+			// validate the account information
+			if (preg_match($ibanPattern, $iban)) {
+				// the pattern looks good, so let's continue
+				if isIban($iban) {
+					return True;
+				}
 			}
 		}
+
 		return False;
 	}
 
