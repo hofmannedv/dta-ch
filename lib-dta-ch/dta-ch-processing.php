@@ -52,33 +52,39 @@ class DTACHProcessing {
 		return;
 	}
 
-	function processSingleTransaction () {
+	function processSingleTransaction ($transactionData) {
 		// process a single transaction
 
 		// create dta-ch object
 		// initialize a new dta-ch object
 		$dta = new DTACH();
 
-		// fill object with data
-		$dta->setDataFormat($this->$dataFormat);
+		// fill object with data format
+		$dataFormat = $this->$dataFormat;
+		$dta->setDataFormat($dataFormat);
 
-		// set date of delivery: today
-		$dateOfDelivery = date("ymd");
-	$dta->setDateOfDelivery($dateOfDelivery);
+		// set date of delivery
+		$dateOfDelivery = $this->dateOfDelivery;
+		$dta->setDateOfDelivery($dateOfDelivery);
 
-	// - import transaction data as csv data
-	$importValue = $dta->importCsv($transactionData);
+		// import transaction data as csv data
+		$importValue = $dta->importCsv($transactionData);
 
-	// - auto-adjust data: header, and data fields
-	$dta->adjustHeader();
-	$dta->adjustDataFields();
+		// check for import error, and return with error code
+		if ($importValue == False) {
+			return False;
+		};
 
-	// - validate data: header, and data fields
-	$dta->validateHeader();
-	$dta->validateDataFields();
+		// auto-adjust data: header, and data fields
+		$dta->adjustHeader();
+		$dta->adjustDataFields();
 
-	return $dta;
-}
+		// validate data: header, and data fields
+		$dta->validateHeader();
+		$dta->validateDataFields();
+
+		return $dta;
+	}
 
 }
 ?>
