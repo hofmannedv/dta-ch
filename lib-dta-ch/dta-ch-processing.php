@@ -142,5 +142,133 @@ class DTACHProcessing {
 		return $totalValue;
 	}
 
+	function sortTransactionsByDate ($dtaList) {
+		// the transactions by the requested processing date
+
+		// define an array of dates based on the processing date of a transaction
+		$dateList = array();
+		// go through the list of transactions one after the other
+		foreach ($dtaList as $dta) {
+			$dateList[] = $dta->getRequestedProcessingDate();
+		}
+
+		// sort the dateList first, and dtaList according to the order 
+		// of dateList, afterwards
+		array_multisort($dateList, $dtaList);
+
+		// output interim result if needed
+		//var_dump($dateList);
+
+		// return the sorted list
+		return $dateList;
+
+	};
+
+	function sortTransactions ($dtaList) {
+		// sort transaction list
+
+		// - step 1: sort by requested processing date -----------------------
+	
+		$dateList = sortTransactionsByDate ($dtaList);
+
+		// - step 2: identify unique date segments ---------------------------
+		$dateSegments = array_unique($dateList);
+
+		// output interim result if needed
+		// var_dump($dateSegments);
+
+		// - step 3: sort by ordering party id per processing date -----------
+		$piList = array();
+		foreach ($dtaList as $dta) {
+
+			// retrieve the date of transaction
+			$currentDate = $dta->getRequestedProcessingDate();
+
+			// find the according date segment
+			foreach ($dateSegments as $dtaDate) {
+				// if both dates match ...
+				if ($currentDate == $dtaDate) {
+
+					// ... extend the list by the current transaction
+					$piList[$dtaDate][] = $dta;
+
+					// quit searching, and end the inner foreach loop
+					break
+				}
+			}
+		}
+
+		// the result is a list piList[dtaDate] = [dta_1...dta_n]
+		// create a list of sorted transactions
+		$sortedTransactionList = array();
+
+		// go through the list of transactions per date segment
+		foreach ($piList as $dateSegment) {
+
+			// define a list of date-specific identifications of 
+			// the ordering party
+			$piSpecific = array();
+
+			// go through the entries in the current date segment
+			foreach ($dateSegment as $dta) {
+				// retrieve the identification of the ordering party
+				$dateSpecificIdentifications[] = $dta->getTextFieldValue("orderingPartyIdentification");
+			}
+
+			// sort both the identifications of the ordering party, 
+			// and the date segment
+			array_multisort($dateSpecificIdentifications, $dateSegment);
+
+			// next, sort the entries in the current date segment by
+			// the bank clearing number of the beneficiary bank
+
+			// retrieve the unique entries of date-specific 
+			// identifications of the ordering party
+			$uniqueEntries = array_unique($dateSpecificIdentifications);
+
+			// define a clearing list
+			$clearingList = array();
+
+			// go through the entries in the current date segment
+			foreach ($dateSegment as $dta) {
+			
+				// retrieve the identification of the ordering party
+				$id = $dta->getTextFieldValue("orderingPartyIdentification");
+
+				// go through the unique entries one by one
+				foreach ($uniqueEntries as $entry){
+
+					if ($id == $entry) {
+						$clearingList[$entry][] = $dta;
+
+						// quit searching, and end the inner foreach loop
+						break
+					}
+				}
+			}
+	
+			// ... now we have a list clearingList[entry] = [dta_1...dta_n]
+
+			// define an unsorted list
+			$clearingSpecific = array();
+
+			// go through the current date segment entry by entry
+			foreach ($dateSegment as $dta) {
+				// retrieve the bank clearing number of the payment receiver
+				$clearingSpecific[] = $dta->getBankClearingNumberReceiver();
+			}
+
+			// sort both the bank clearing number of the payment receiver
+			// and the date segment
+			array_multisort($clearingSpecific, $dateSegment);
+
+			// update the list of sorted transactions
+			$sortedTransactionList = array_merge($sortedTransactionList, $dateSegment);
+		}
+
+		// ... now we have a sorted list by processing date, and by ordering party identification
+		return $sortedTransactionList;
+	}
+
 }
 ?>
