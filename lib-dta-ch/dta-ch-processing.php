@@ -278,5 +278,47 @@ class DTACHProcessing {
 		return $sortedTransactionList;
 	}
 
+	function createTA890 ($dataFileSenderIdentification, $totalValue) {
+		// creating total record TA 890 to complete the transaction
+
+		// create dtach object, and initialize it
+		$dta = new DTACH();
+
+		// fill object with data
+		// - set data format
+		$dataFormat = $this->dataFormat;
+		$dta->setDataFormat($dataFormat);
+
+		// - bank clearing number
+		//   left empty
+
+		// - data file sender identification
+		$dta->setDataFileSenderIdentification($dataFileSenderIdentification);
+
+		// - transaction type = 890
+		$dta->setTransactionType(890);
+
+		// - validate total value
+		$paymentAmount = "$totalValue";
+		$paymentAmount = preg_replace('/\./', ',', $paymentAmount);
+
+		// add further text field holding the total value
+		$dta->addTextField("total", $paymentAmount);
+
+		// auto-adjust data: header, and data fields
+		// skip if disabled
+		if ($this->adjustData == "yes") {
+			$dta->adjustHeader();
+			$dta->adjustDataFields();
+		};
+
+		// validate new dta entry
+		$dta->validateHeader();
+		$dta->validateDataFields();
+
+		// return TA 890
+		return $dta;
+	}
+
 }
 ?>
