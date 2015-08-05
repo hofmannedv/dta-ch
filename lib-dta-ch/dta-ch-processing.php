@@ -86,8 +86,11 @@ class DTACHProcessing {
 		};
 
 		// auto-adjust data: header, and data fields
-		$dta->adjustHeader();
-		$dta->adjustDataFields();
+		// skip if disabled
+		if ($this->adjustData == "yes") {
+			$dta->adjustHeader();
+			$dta->adjustDataFields();
+		};
 
 		// validate data: header, and data fields
 		$dta->validateHeader();
