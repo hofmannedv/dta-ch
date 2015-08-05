@@ -340,6 +340,8 @@ class DTACHProcessing {
 			$nr++;
 		}
 
+		return $sortedDtaList;
+
 	}
 
 	function exportDtaToPlaintext ($sortedDtaList) {
