@@ -258,7 +258,7 @@ $sortedDtaList = sortTransactions ($dtaList);
 $dataFormat = "fixed";
 // - retrieve the data file sender identification from the first
 //   transaction
-$dataFileSenderIdentification = $dtaList[0]->setDataFileSenderIdentification();
+$dataFileSenderIdentification = $dtaList[0]->getDataFileSenderIdentification();
 
 // - create the TA 890 record
 $ta890 = createTA890 ($dataFormat, $dataFileSenderIdentification, $totalValue);
