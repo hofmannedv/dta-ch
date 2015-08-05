@@ -1498,11 +1498,12 @@ class DTACH {
 		// validate IBAN number
 
 		// define regex validation pattern: 
-		// two characters followed by digits
-		$pattern = '/[A-Z][A-Z]\d+$/';
+		// two characters followed by either digits, or a mixture of 
+		// digits and characters
+		$ibanPattern = '/^[A-Z]{2}[\dA-Z]+\s*$/';
 
-		// validate the account number
-		if (preg_match($pattern, trim($accountNumber))) {
+		// validate the trimmed account number
+		if (preg_match($ibanPattern, trim($accountNumber))) {
 			// valid according to the pattern
 			return True;
 		}
@@ -3105,13 +3106,9 @@ class DTACH {
 			// retrieve the stored value vor IBAN
 			$iban = $this->getIban();
 
-			// define a regex pattern: 
-			// two characters followed by either digits, or characters
-			$ibanPattern = '/^[A-Z]{2}[\dA-Z]+\s*$/';
-
-			// see if the pattern matches, and the string has the length
-			// of 34 characters
-			if (preg_match($ibanPattern, $iban)) {
+			// check for a valid IBAN
+			if isIban($iban) {
+				// check for the correct string length
 				if(strlen($iban) == 34) {
 					return True;
 				}
