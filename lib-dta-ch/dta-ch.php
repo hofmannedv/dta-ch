@@ -3094,8 +3094,8 @@ class DTACH {
 	}
 
 	function validateIban(){
-		// validate the IBAN value (58)
-		// TA 836 and 837, only
+		// validate the IBAN value (58) with a specific field length
+		// used for TA 836 and 837, only
 
 		// retrieve the type of transaction
 		$transactionType = $this->getTransactionType();
