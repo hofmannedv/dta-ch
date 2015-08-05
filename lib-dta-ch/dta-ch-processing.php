@@ -100,5 +100,25 @@ class DTACHProcessing {
 		return $dta;
 	}
 
+	function processMultipleTransactions () {
+		// process multiple transactions
+
+		// define result list
+		$dtaList = array();
+
+		// retrieve transaction data
+		$transactionData = $this->transactionList;
+
+		// go through the list of transactions one by one
+		foreach ($transactionData as $singleTransaction) {
+			$dta = processSingleTransaction ($singleTransaction);
+
+			// add new dta to dta list
+			$dtaList[] = $dta;
+
+		// return list of transactions
+		return $dtaList;
+	}
+
 }
 ?>
