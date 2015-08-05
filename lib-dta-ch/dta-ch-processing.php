@@ -38,12 +38,14 @@ class DTACHProcessing {
 			if (preg_match($datePattern, $transactiondeliveryDate) == True) {
 				$this->dateOfDelivery = $transactionDeliveryDate;
 			};
+		}
 
 		// store the transactions to be processed
 		// we expect an array of strings
 		if(is_array($transactions)) {
 			$this->$transactionList = $transactions;
 		} else {
+			// handle the given variable as an array
 			$this->$transactionList = Array("$transactions");
 		}
 
