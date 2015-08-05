@@ -1980,7 +1980,7 @@ class DTACH {
 			$pattern2 = "/^\/C\/\s*$/";
 
 			// retrieve the stored IBAN
-			$iban = trim($this->getTextFieldValue("iban"));
+			$iban = trim($this->getIban());
 
 			// see if the party account of the beneficiary matches pattern1
 			if (preg_match($pattern1, $beneficiaryPartyAccount)) {
@@ -2149,7 +2149,7 @@ class DTACH {
 		} elseif (preg_match($pattern2, $beneficiaryPartyAccount)) {
 			// check iban, again
 			// valid if empty
-			$iban = trim($this->getTextFieldValue("iban"));
+			$iban = trim($this->getIban());
 			if (strlen($iban)) {
 				//$this->validationResult["iban"] = True;
 				//if ($this->validationResult["iban"] == True) {
@@ -2896,7 +2896,7 @@ class DTACH {
 		$line2 = trim($this->getTextFieldValue("beneficiaryInstituteLine2"));
 
 		// retrieve the IBAN
-		$iban  = trim($this->getTextFieldValue("iban"));
+		$iban  = trim($this->getIban());
 
 		// continue in case we have an IBAN ...
 		if($this->isIban($iban)) {
@@ -3068,6 +3068,17 @@ class DTACH {
 		return;
 	}
 
+	function getIban(){
+		// retrieve the stored value vor IBAN
+		return $this->getTextFieldValue("iban");
+	}
+
+	function setIban($value){
+		// set the value for IBAN
+		$this->setTextFieldValue("iban", $value);
+		return;
+	}
+
 	function validateIban(){
 		// validate the IBAN value (58)
 		// TA 836 and 837, only
@@ -3079,14 +3090,15 @@ class DTACH {
 		if (in_array($transactionType, Array(836, 837))) {
 
 			// retrieve the stored value vor IBAN
-			$iban = $this->getTextFieldValue("iban");
+			$iban = $this->getIban();
 
-			// define a regex pattern: two characters followed by digits
-			$pattern = '/^[A-Z]{2}\d+\s*$/';
+			// define a regex pattern: 
+			// two characters followed by either digits, or characters
+			$ibanPattern = '/^[A-Z]{2}[\dA-Z]+\s*$/';
 
 			// see if the pattern matches, and the string has the length
 			// of 34 characters
-			if (preg_match($pattern, $iban)) {
+			if (preg_match($ibanPattern, $iban)) {
 				if(strlen($iban) == 34) {
 					return True;
 				}
@@ -3108,7 +3120,7 @@ class DTACH {
 		if (in_array($transactionType, Array(836, 837))) {
 
 			// retrieve the stored value vor IBAN
-			$value = $this->getTextFieldValue("iban");
+			$value = $this->getIban();
 
 			// remove all spaces
 			$value = trim($value);
@@ -3118,7 +3130,7 @@ class DTACH {
 			$value = str_pad($value ,34," ", STR_PAD_RIGHT);
 
 			// update the IBAN value
-			$this->setTextFieldValue("iban", "$value");
+			$this->setIban("$value");
 		}
 		return;
 	}
@@ -4287,7 +4299,7 @@ class DTACH {
 			$textString .= $this->toHex($v);
 
 			// iban (58)
-			$v = $this->getTextFieldValue("iban");
+			$v = $this->getIban();
 			$textString .= $this->toHex($v);
 
 			// 21 spaces
@@ -4441,7 +4453,7 @@ class DTACH {
 			$textString .= "00 05 ";
 
 			// iban (58)
-			$v = $this->getTextFieldValue("iban");
+			$v = $this->getIban();
 			$textString .= $this->toHex($v);
 
 			// 92x spaces
