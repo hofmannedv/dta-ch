@@ -143,3 +143,28 @@ format: two digits
 826;131220;;12345;131220;Bank 44;ABC12;;1;6;ABC01;12345678901;56789;;CHF;123,45;Felix Z;Markt 1;1234 Zürich;;/C/123456789;Hans Wurst;Taufgraben 1;1234 Bern;;1234567890123456;34
 ----
 
+== TA 827 (domestic CHF payments - bank and postal account payments and postal orders) ==
+
+[cols="1,5,2", options="header"]
+|===
+|Field id
+|Description
+|Value/Example
+
+|===
+
+== TA 837 (payments to financial institutions in Switzerland and abroad, in all currencies) ==
+
+[cols="1,5,2", options="header"]
+|===
+|Field id
+|Description
+|Value/Example
+
+|===
+
+== TA 890 (total record) ==
+
+This dta record will be added, automatically.
+
+
