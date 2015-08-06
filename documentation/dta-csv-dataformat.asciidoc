@@ -153,6 +153,36 @@ format: two digits
 
 |===
 
+== TA 830 (payments to financial institutions abroad in CHF and FX, domestic FX payments) ==
+
+[cols="1,5,2", options="header"]
+|===
+|Field id
+|Description
+|Value/Example
+
+|===
+
+== TA 832 (bank cheques in CHF and FX) ==
+
+[cols="1,5,2", options="header"]
+|===
+|Field id
+|Description
+|Value/Example
+
+|===
+
+== TA 836 (payments with an IBAN in Switzerland and abroad, in all currencies) ==
+
+[cols="1,5,2", options="header"]
+|===
+|Field id
+|Description
+|Value/Example
+
+|===
+
 == TA 837 (payments to financial institutions in Switzerland and abroad, in all currencies) ==
 
 [cols="1,5,2", options="header"]
