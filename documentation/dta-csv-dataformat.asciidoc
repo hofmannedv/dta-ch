@@ -151,7 +151,144 @@ format: two digits
 |Description
 |Value/Example
 
+|#0
+|transaction id
+|value: `827`
+
+|#1
+|requested processing date
++
+format: `YYMMDD` (see dta header structure for details)
+|example: `131220` for December 20, 2013
+
+|#2
+|bank clearing number beneficiary (receiver)
++
+format: twelve digits, postal accounts: empty
+|value: has to be empty
+
+|#3
+|output sequence number (processed by the bank)
+|value: has to be empty
+
+|#4
+|creation date. Date when the data file was created. Has to be the same
+for all data records.
++
+format: `YYMMDD`
+|example: `131220` for December 20, 2013
+
+|#5
+|bank clearing number order (sender)
++
+format: `xxxxxxx` (seven characters)
+|example: `ABC1234`
+
+|#6
+|data file sender identification. The same identification hast to be
+included for all records.
++
+format: `xxxxx` (five characters)
+|example: `ABC12`
+
+|#7 
+|entry sequence number
+|value: has to be empty, will be added automatically
+
+|#8
+|payment type
+|value: `0`; `1` for pension and salary payments
+
+|#9
+|processing flag
+|value: `0`
+
+|#10
+|ordering party identification (sender id). Corresponds to dta id #20
+part one.
++
+format: `xxxxx` (five characters)
+|example: `ABC01`
+
+|#11
+|ordering party transaction number. Corresponds to dta id #20 part two.
++
+format: max. sixteen characters
+|example: `fh-1567`
+
+|#12
+|account to be debited - with or without IBAN. Corresponds to dta id #25
++
+format: twenty-four characters
+|example: `CH930076201162123456`
+
+|#13
+|payment value date. Corresponds to dta id #32a part one.
++
+|value: has to be left empty
+
+|#14
+|ISO currency code. Corresponds to dta id #32a part two.
++
+|value: `CHF`
+
+|#15
+|payment amount. Corresponds to dta id #32a part three.
++
+format: `dd,dd` (see dta spec for exact length)
+|example: `123,45`
+
+|#16 to #19
+|ordering party line. Corresponds to dta id #50.
++
+format: twenty-four characters
+|
+
+|#20
+|beneficiary party identification (ISR party number). Corresponds to dta
+id #59 line 1.
++
+format: thirty characters
+|example: `/C/123456789`
+
+|#21 to #24
+|beneficiary party line 1 to 4. Name and address of the receiver.
+Corresponds to dta id #59 line 2 to 5.
++
+format: twenty-four characters per line
+|
+
+|#25
+|beneficiary transfer type
++
+format: plain text
+|value: bankPayment, postalPayment, or postalOrder
+
+|#26 to #29
+|beneficiary message (reason for payment). Corresponds to dta id #70.
++
+format: twenty-eight characters per line
+|
+
+|#30
+|end beneficiary's party account. Corresponds to dta id #55 line 1.
++
+format: thirty characters
+|example:`/C/1234567890`
+
+|#31 to #34
+|end beneficiary party. Corresponds to dta id #55 line 2 to 5.
++
+format: twenty-four characters per line
+|
+
 |===
+
+
+.Full example:
+----
+827;131220;1234;12345;131220;Bank 44;ABC12;;1;6;ABC01;12345678901;56789;;CHF;123,45;Felix Z;Markt 1;1234 Zürich;;/C/123456789 ;Hans Wurst;Taufgraben 1;1234 Bern;;bankPayment;Das;ist;ein;Test;/C/456789;Holger Klein;Vor dem Tor 1;4132 Muttenz;
+----
 
 == TA 830 (payments to financial institutions abroad in CHF and FX, domestic FX payments) ==
 
