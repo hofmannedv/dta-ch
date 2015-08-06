@@ -1,0 +1,11 @@
+README:
+------
+
+* dta-specification.pdf:
+  DTA specification as published by SIX Interbank Clearing, Zürich
+  (http://www.six-interbank-clearing.com)
+
+* dta-csv-dataformat.txt:
+  Description of the csv data format for each single bank transaction as
+  handled by the DTA-CH library.
+
