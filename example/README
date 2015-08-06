@@ -1,0 +1,11 @@
+README:
+------
+
+* example-csv.php:
+  example to create a full transaction record using the DTACH class
+
+* example-csv2.php:
+  example to create a full transaction record using the DTACHProcessing
+  class that covers most of the manual steps needed to prepare the 
+  record.
+
