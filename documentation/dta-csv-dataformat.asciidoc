@@ -460,7 +460,121 @@ if empty: charges are split
 |Description
 |Value/Example
 
+|#0
+|transaction id
+|value: `832`
+
+|#1
+|requested processing date
+|value: has to be empty
+
+|#2
+|bank clearing number beneficiary (receiver)
++
+format: twelve digits, postal accounts: empty
+|value: has to be empty
+
+|#3
+|output sequence number (processed by the bank)
+|value: has to be empty
+
+|#4
+|creation date. Date when the data file was created. Has to be the same
+for all data records.
++
+format: `YYMMDD`
+|example: `131220` for December 20, 2013
+
+|#5
+|bank clearing number order (sender)
++
+format: `xxxxxxx` (seven characters)
+|example: `ABC1234`
+
+|#6
+|data file sender identification. The same identification hast to be
+included for all records.
++
+format: `xxxxx` (five characters)
+|example: `ABC12`
+
+|#7 
+|entry sequence number
+|value: has to be empty, will be added automatically
+
+|#8
+|payment type
+|value: `0`
+
+|#9
+|processing flag
+|value: `0`
+
 |===
+
+* field id #10: ordering party identification (sender id)
+  corresponds to dta id #20 part one
+
+  format:	xxxxx (five characters)
+  example:	ABC01
+
+* field id #11: ordering party transaction number
+  corresponds to dta id #20 part two
+
+  format:	max. sixteen characters
+  example:	fh-1567
+
+* field id #12: account to be debited - with or without IBAN
+  corresponds to dta id #25
+
+  format:	twenty-four characters
+  example:	CH930076201162123456
+
+* field id #13: payment value date
+  corresponds to dta id #32a part one
+
+  has to be left empty
+
+* field id #14: ISO currency code
+  corresponds to dta id #32a part two
+
+  format:	three characters
+  example:	USD
+
+* field id #15: payment amount
+  corresponds to dta id #32a part three
+
+  format:	dd,dd (see dta spec for exact length)
+  example:	123,45
+
+* field id #16: convertion rate (has to be agreed with the bank)
+  corresponds to dta id #36
+
+  format:	dd,dd (see dta spec for details)
+  example:	123,45
+
+* field id #17 to #20: ordering party
+  corresponds to dta id #50
+
+  format:	twenty-four characters per line
+
+* field id #21 to 25: beneficiary's institution
+
+  line 1:	/C/ only
+
+  line 2 to 5:	name and the address of the bank
+
+* field id #26 to #29: beneficiary message (reason for payment)
+  corresponds to dta id #70
+
+  format:	thirty characters per line
+
+* field id #30: bank payment instructions
+  corresponds to field id #72
+
+  value:	CHG/OUR		to our charge
+		CHG/BEN		charge beneficiary
+				if empty: charges are split
 
 .Full example:
 ----
