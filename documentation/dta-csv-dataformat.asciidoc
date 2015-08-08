@@ -510,42 +510,42 @@ format: `xxxxx` (five characters)
 |processing flag
 |value: `0`
 
+|#10
+|ordering party identification (sender id). Corresponds to dta id #20
+part one.
++
+format: `xxxxx` (five characters)
+|example: `ABC01`
+
+|#11
+|ordering party transaction number. Corresponds to dta id #20 part two.
++
+format: max. sixteen characters
+|example: `fh-1567`
+
+|#12
+|account to be debited - with or without IBAN. Corresponds to dta id #25.
++
+format: twenty-four characters
+|example: `LI450076201162123456`
+
+|#13
+|payment value date. Corresponds to dta id #32a part one.
++
+|value: has to be left empty
+
+|#14
+|ISO currency code. Corresponds to dta id #32a part two.
++
+|value: `USD`
+
+|#15
+|payment amount. Corresponds to dta id #32a part three.
++
+format: `dd,dd` (see dta spec for exact length)
+|example: `123,45`
+
 |===
-
-* field id #10: ordering party identification (sender id)
-  corresponds to dta id #20 part one
-
-  format:	xxxxx (five characters)
-  example:	ABC01
-
-* field id #11: ordering party transaction number
-  corresponds to dta id #20 part two
-
-  format:	max. sixteen characters
-  example:	fh-1567
-
-* field id #12: account to be debited - with or without IBAN
-  corresponds to dta id #25
-
-  format:	twenty-four characters
-  example:	CH930076201162123456
-
-* field id #13: payment value date
-  corresponds to dta id #32a part one
-
-  has to be left empty
-
-* field id #14: ISO currency code
-  corresponds to dta id #32a part two
-
-  format:	three characters
-  example:	USD
-
-* field id #15: payment amount
-  corresponds to dta id #32a part three
-
-  format:	dd,dd (see dta spec for exact length)
-  example:	123,45
 
 * field id #16: convertion rate (has to be agreed with the bank)
   corresponds to dta id #36
