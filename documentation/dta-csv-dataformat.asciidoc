@@ -323,30 +323,32 @@ for all data records.
 format: `YYMMDD`
 |example: `131220` for December 20, 2013
 
+|#5
+|bank clearing number order (sender)
++
+format: `xxxxxxx` (seven characters)
+|example: `ABC1234`
+
+|#6
+|data file sender identification. The same identification hast to be
+included for all records.
++
+format: `xxxxx` (five characters)
+|example: `ABC12`
+
+|#7 
+|entry sequence number
+|value: has to be empty, will be added automatically
+
+|#8
+|payment type
+|value: `0`
+
+|#9
+|processing flag
+|value: `0`
+
 |===
-
-* field id #5: bank clearing number order (sender)
-
-  format:	xxxxxxx (seven characters)
-  example:	ABC1234
-
-* field id #6: data file sender identification
-  The same identification hast to be included for all records.
-
-  format:	xxxxx (five characters)
-  example:	ABC12
-
-* field id #7: entry sequence number
-
-  has to be empty, will be added automatically
-
-* field id #8: payment type
-
-  value:	0
-
-* field id #9: processing flag
-
-  value:	0
 
 * field id #10: ordering party identification (sender id)
   corresponds to dta id #20 part one
