@@ -415,28 +415,39 @@ option `D`:
 line 2 to 5: name and the address of the bank
 |
 
+|#27
+|beneficiary party account. Corresponds to dta id #59 line 1
++
+format: `/C/ddddddd` (`/C/` followed by the account number)
+|
+
+|#28 to #31
+|beneficiary party address
++
+format: twenty-four characters per line
+|
+
+|#32 to #35
+|beneficiary message (reason for payment). Corresponds to dta id #70.
++
+format: thirty characters per line
+|
+
+|#36: 
+|bank payment instructions
+
+values:
++
+`CHG/OUR` to our charge
++
+`CHG/BEN` charge beneficiary
++
+if empty: charges are split
+|
+
 |===
 
-* field id #27: beneficiary party account
-  corresponds to dta id #59 line 1
-
-  format:	/C/ddddddd (/C/ followed by the account number)
-
-* field id #28 to #31: beneficiary party address
-
-  format:	twenty-four characters per line
-
-* field id #32 to #35: beneficiary message (reason for payment)
-  corresponds to dta id #70
-
-  format:	thirty characters per line
-
-* field id #36: bank payment instructions
-
-  value:	CHG/OUR		to our charge
-		CHG/BEN		charge beneficiary
-				if empty: charges are split
- .Full example:
+.Full example:
 ----
 830;131220;;12345;131220;Bank 44;ABC12;;1;6;ABC01;12345678901;56789;;CHF;123,45;;Felix Z;Markt 1;1234 Zürich;;A;/C/11112222;ABCDE123;;;;/C/4444;Hans Wurst;Waldweg 5;12345 Stadt;;Zahlung;pro;Monat;und Jahr;CHG/OUR
 ----
