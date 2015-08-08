@@ -433,7 +433,7 @@ format: twenty-four characters per line
 format: thirty characters per line
 |
 
-|#36: 
+|#36 
 |bank payment instructions
 
 values:
@@ -545,36 +545,45 @@ format: twenty-four characters
 format: `dd,dd` (see dta spec for exact length)
 |example: `123,45`
 
+|#16
+|convertion rate (has to be agreed with the bank). Corresponds to dta id #36.
++
+format: `dd,dd` (see dta spec for details)
+|example: `123,45`
+
+|#17 to #20
+|ordering party. Corresponds to dta id #50.
++
+format: twenty-four characters per line
+|
+
+|#21 to #25
+|beneficiary's institution
+
+line 1: `/C/` only
++
+line 2 to 5: name and the address of the bank
+|
+
+|#26 to #29
+|beneficiary message (reason for payment). Corresponds to dta id #70.
++
+format: thirty characters per line
+|
+
+|#30 
+|bank payment instructions. Corresponds to field id #72.
+
+values:
++
+`CHG/OUR` to our charge
++
+`CHG/BEN` charge beneficiary
++
+if empty: charges are split
+|
+
 |===
-
-* field id #16: convertion rate (has to be agreed with the bank)
-  corresponds to dta id #36
-
-  format:	dd,dd (see dta spec for details)
-  example:	123,45
-
-* field id #17 to #20: ordering party
-  corresponds to dta id #50
-
-  format:	twenty-four characters per line
-
-* field id #21 to 25: beneficiary's institution
-
-  line 1:	/C/ only
-
-  line 2 to 5:	name and the address of the bank
-
-* field id #26 to #29: beneficiary message (reason for payment)
-  corresponds to dta id #70
-
-  format:	thirty characters per line
-
-* field id #30: bank payment instructions
-  corresponds to field id #72
-
-  value:	CHG/OUR		to our charge
-		CHG/BEN		charge beneficiary
-				if empty: charges are split
 
 .Full example:
 ----
