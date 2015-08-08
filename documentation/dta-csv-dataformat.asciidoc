@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 1.0
+:revnumber: 1.1
 :Author Initials: FH
 :edition: 1
 :lang: en
-:date: 6. Aug 2015
+:date: 8. Aug 2015
 :numbered:
 
 == TA 826 (ISR payments) ==
@@ -300,6 +300,11 @@ format: twenty-four characters per line
 
 |===
 
+.Full example:
+----
+830;131220;;12345;131220;Bank 44;ABC12;;1;6;ABC01;12345678901;56789;;CHF;123,45;;Felix Z;Markt 1;1234 Zürich;;A;/C/11112222;ABCDE123;;;;/C/4444;Hans Wurst;Waldweg 5;12345 Stadt;;Zahlung;pro;Monat;und Jahr;CHG/OUR
+----
+
 == TA 832 (bank cheques in CHF and FX) ==
 
 [cols="1,5,2", options="header"]
@@ -309,6 +314,11 @@ format: twenty-four characters per line
 |Value/Example
 
 |===
+
+.Full example:
+----
+832;131222;;00000;131222;Volksbank 1234;ABC12;;1;6;ABC01;12345678901;67890;;CHF;123,45;;Holger F;Haus 4;1000 Basel;;/C/;Tom Foster;45 House Road;12345 San Diego;California;Zahlung;pro;Monat;und Jahr;CHG/OUR
+----
 
 == TA 836 (payments with an IBAN in Switzerland and abroad, in all currencies) ==
 
@@ -320,6 +330,11 @@ format: twenty-four characters per line
 
 |===
 
+.Full example:
+----
+836;131223;;00000;131222;Geldhaus 23;ABC12;;1;6;ABC01;12345678901;67890;;CHF;123,45;;Holger F;Haus 4;1000 Basel;D;;;CH1234567890;Tom Foster;45 House Road;12345 San Diego;U;pro;Monat;und Jahr;CHG/OUR
+----
+
 == TA 837 (payments to financial institutions in Switzerland and abroad, in all currencies) ==
 
 [cols="1,5,2", options="header"]
@@ -329,6 +344,11 @@ format: twenty-four characters per line
 |Value/Example
 
 |===
+
+.Full example:
+----
+837;131222;;00000;131222;Volksbank 1234;ABC12;;1;6;ABC01;12345678901;67890;;CHF;123,45;;Holger F;Haus 4;1000 Basel;;A;/C/11112222;ABCDE123;;;;FR12345678901;/C/;Tom Foster;45 House Road;12345 San Diego;California;U;Zahlung pro;Monat;und Jahr;CHG/BEN;U;Text 1;Text 2;Text 3;Text 4
+----
 
 == TA 890 (total record) ==
 
