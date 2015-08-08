@@ -377,41 +377,45 @@ format: twenty-four characters
 +
 |value: `USD`
 
+|#15
+|payment amount. Corresponds to dta id #32a part three.
++
+format: `dd,dd` (see dta spec for exact length)
+|example: `123,45`
+
+|#16
+|convertion rate (has to be agreed with the bank). Corresponds to dta id #36.
++
+format: `dd,dd` (see dta spec for details)
+|example: `123,45`
+
+|#17 to #20
+|ordering party. Corresponds to dta id #50.
++
+format: twenty-four characters per line
+|
+
+|#21
+|identification bank address. Corresponds to dta id #57a or #57d.
++
+value: `A` for BIC address, or `D` for name and address for the institute
+|
+
+|#22 to #26
+|beneficiary's institution
++
+line 1: `/C/` and the bank clearing number
+
+option `A`:
++
+line 2 to 5: line 2: SWIFT address, and line 3 to 5: empty
+
+option `D`:
++
+line 2 to 5: name and the address of the bank
+|
+
 |===
-
-* field id #15: payment amount
-  corresponds to dta id #32a part three
-
-  format:	dd,dd (see dta spec for exact length)
-  example:	123,45
-
-* field id #16: convertion rate (has to be agreed with the bank)
-  corresponds to dta id #36
-
-  format:	dd,dd (see dta spec for details)
-  example:	123,45
-
-* field id #17 to #20: ordering party
-  corresponds to dta id #50
-
-  format:	twenty-four characters per line
-
-* field id #21: identification bank address
-  corresponds to dta id #57a or #57d
-
-  value:	A for BIC address
-		D for name and address for the institute
-
-* field id #22 to 26: beneficiary's institution
-
-  line 1:	/C/ and the BC number
-
-  option A:
-  line 2 to 5:	line 2: SWIFT address 
-		line 3 to 5: empty
-
-  option D:
-  line 2 to 5:	line 2 to 5: name and the address of the bank
 
 * field id #27: beneficiary party account
   corresponds to dta id #59 line 1
