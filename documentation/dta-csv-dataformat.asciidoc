@@ -813,122 +813,136 @@ format: `xxxxx` (five characters)
 |processing flag
 |value: `0`
 
+|#10
+|ordering party identification (sender id). Corresponds to dta id #20
+part one.
++
+format: `xxxxx` (five characters)
+|example: `ABC01`
+
+|#11
+|ordering party transaction number. Corresponds to dta id #20 part two.
++
+format: max. sixteen characters
+|example: `fh-1567`
+
+|#12
+|account to be debited - with or without IBAN. Corresponds to dta id #25.
++
+format: twenty-four characters
+|example:	CH930076201162123456
+
+|#13
+|payment value date. Corresponds to dta id #32a part one.
++
+|value: has to be left empty
+
+|#14
+|ISO currency code. Corresponds to dta id #32a part two.
++
+|value: `USD`
+
+|#15
+|payment amount. Corresponds to dta id #32a part three.
++
+format: `dd,dd` (see dta spec for exact length)
+|example: `123,45`
+
+|#16
+|convertion rate (has to be agreed with the bank). Corresponds to dta id #36.
++
+format: `dd,dd` (see dta spec for details)
+|example: `123,45`
+
+|#17 to #20
+|ordering party. Corresponds to dta id #50.
++
+format: twenty-four characters per line
+|
+
+|#21
+|identification bank address. Corresponds to dta id #57a or #57d.
++
+value: `A` for BIC address, or `D` for name and address for the institute
+|
+
+|#22 to #26
+|beneficiary's institution
+
+line 1: `/C/` and the bank clearing number
++
+option `A`: line 2 SWIFT address, and lines 3 to 5 are empty
++
+option `D`: lines 2 to 5 contain the name and the address of the bank
+|
+
+|#27: iban. Corresponds to dta id #58.
++
+|format: iban format, thirty-four characters and digits
+|
+
+|#28
+|beneficiary party account. Corresponds to dta id #59 line 1
++
+format: `/C/ddddddd` (`/C/` followed by the account number)
+|
+
+|#29 to #32
+|beneficiary party address
++
+format: twenty-four characters per line
+|
+
+|#33
+|identification purpose. Corresponds to dta id #70.
++
+value: `I` for structured, and `U` for unstructured data
+|
+
+|#34 to #36
+|purpose. Corresponds to dta id #70.
+
+value: 
++
+`I`: line 1: twenty digits, and lines 2 to 3: empty
++
+`U`: free text (thirty-five characters per line)
+|
+
+|#37
+|rules for charges. Corresponds to dta id #71a.
+
+value:
++
+`CHG/OUR` to our charge
++
+`CHG/BEN` charge beneficiary
++
+if empty: charges are split
+|
+
+|#38
+|identification bank payment instruction. Corresponds to dta id #72.
++
+value: `S` (structured), and `U` (unstructured)
+|
+
+|#39 to #42
+|bank payment instructions. Corresponds to dta id #72s and #72u.
+
+value: codes agreed with the bank 
++
+`S`: 3x thirty-five characters
++
+`U`: 4x thirty characters
+|
+
 |===
 
 .Full example:
 ----
 837;131222;;00000;131222;Volksbank 1234;ABC12;;1;6;ABC01;12345678901;67890;;CHF;123,45;;Holger F;Haus 4;1000 Basel;;A;/C/11112222;ABCDE123;;;;FR12345678901;/C/;Tom Foster;45 House Road;12345 San Diego;California;U;Zahlung pro;Monat;und Jahr;CHG/BEN;U;Text 1;Text 2;Text 3;Text 4
 ----
-
-* field id #10: ordering party identification (sender id)
-  corresponds to dta id #20 part one
-
-  format:	xxxxx (five characters)
-  example:	ABC01
-
-* field id #11: ordering party transaction number
-  corresponds to dta id #20 part two
-
-  format:	max. sixteen characters
-  example:	fh-1567
-
-* field id #12: account to be debited - with or without IBAN
-  corresponds to dta id #25
-
-  format:	twenty-four characters
-  example:	CH930076201162123456
-
-* field id #13: payment value date
-  corresponds to dta id #32a part one
-
-  has to be left empty
-
-* field id #14: ISO currency code
-  corresponds to dta id #32a part two
-
-  format:	three characters
-  example:	USD
-
-* field id #15: payment amount
-  corresponds to dta id #32a part three
-
-  format:	dd,dd (see dta spec for exact length)
-  example:	123,45
-
-* field id #16: convertion rate (has to be agreed with the bank)
-  corresponds to dta id #36
-
-  format:	dd,dd (see dta spec for details)
-  example:	123,45
-
-* field id #17 to #20: ordering party
-  corresponds to dta id #50
-
-  format:	twenty-four characters per line
-
-* field id #21: identification bank address
-  corresponds to dta id #57a or #57d
-
-  value:	A for BIC address
-		D for name and address for the institute
-
-* field id #22 to 26: beneficiary's institution
-
-  line 1:	/C/ and the BC number
-
-  option A:
-  line 2 to 5:	line 2: SWIFT address 
-		line 3 to 5: empty
-
-  option D:
-  line 2 to 5:	line 2 to 5: name and the address of the bank
-
-* field id #27: iban
-  corresponds to dta id #58
-
-  format:	iban format, thirty-four characters and digits
-
-* field id #28: beneficiary party account
-  corresponds to dta id #59 line 1
-
-  format:	/C/ddddddd (/C/ followed by the account number)
-
-* field id #29 to #32: beneficiary party address
-
-  format:	twenty-four characters per line
-
-* field id #33: identification purpose
-  corresponds to dta id #70
-
-  value:	I	structured
-		U	unstructured
-
-* field id #34 to #36: purpose
-  corresponds to dta id #70
-
-  value:	I	line 1: twenty digits
-			lines 2 to 3: empty
-
-		U	free text (thirty-five characters)
-
-* field id #37 rules for charges
-  corresponds to dta id #71a
-
-    value:	CHG/OUR		to our charge
-		CHG/BEN		charge beneficiary
-				if empty: charges are split
-
-* field id #38: identification bank payment instruction
-  corresponds to dta id #72
-
-  value:	S	structured
-		U	unstructured
-
-* field id #39 to #42: bank payment instructions
-  corresponds to dta id #72s and #72u
-
-  value:	codes agreed with the bank (S) (3x thirty-five characters)
-		unstructured information (U) (4x thirty characters)
 
 
 == TA 890 (total record) ==
