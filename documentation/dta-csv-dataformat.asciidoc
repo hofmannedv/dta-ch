@@ -646,100 +646,111 @@ format: `xxxxx` (five characters)
 |processing flag
 |value: `0`
 
+|#10
+|ordering party identification (sender id). Corresponds to dta id #20
+part one.
++
+format: `xxxxx` (five characters)
+|example: `ABC01`
+
+|#11
+|ordering party transaction number. Corresponds to dta id #20 part two.
++
+format: max. sixteen characters
+|example: `fh-1567`
+
+|#12
+|account to be debited - with or without IBAN. Corresponds to dta id #25.
++
+format: twenty-four characters
+|example:	CH930076201162123456
+
+|#13
+|payment value date. Corresponds to dta id #32a part one.
++
+|value: has to be left empty
+
+|#14
+|ISO currency code. Corresponds to dta id #32a part two.
++
+|value: `USD`
+
+|#15
+|payment amount. Corresponds to dta id #32a part three.
++
+format: `dd,dd` (see dta spec for exact length)
+|example: `123,45`
+
+|#16
+|convertion rate (has to be agreed with the bank). Corresponds to dta id #36.
++
+format: `dd,dd` (see dta spec for details)
+|example: `123,45`
+
+|#17 to #19
+|ordering party. Corresponds to dta id #50.
++
+format: twenty-four characters per line
+|
+
+|#20
+|identification bank address. Corresponds to dta id #57a or #57d.
++
+value: `A` for BIC address, or `D` for name and address for the institute
+|
+
+|#21 to #22
+|beneficiary's institution
+
+line 1: `/C/` and the bank clearing number
++
+option `A`: line 2 is empty
++
+option `D`: line 2 contains the name and the address of the bank
+|
+
+|#23
+|iban corresponds to dta id #58
++
+format: thirty-four characters
+|
+
+|#24 to #26
+|beneficiary party corresponds to dta id #59
++
+value: thirty-five characters per line
+|
+
+|#27
+|identification purpose. Corresponds to dta id #70.
++
+value: `I` for structured content, and `U` for unstructured content
+|
+
+|#28 to #30
+|transaction purpose. Corresponds to dta id #70.
+
+value:
++
+`I`: line 1: twenty digits, and lines 2 to 3: empty
++
+`U`: free text (thirty-five characters per line)
+|
+
+|#31
+|rules for charges. Corresponds to dta id #71a
+
+value: 
++
+`CHG/OUR` to our charge
++
+`CHG/BEN` charge beneficiary
++
+if empty: charges are split
+|
+
 |===
 
-* field id #10: ordering party identification (sender id)
-  corresponds to dta id #20 part one
-
-  format:	xxxxx (five characters)
-  example:	ABC01
-
-* field id #11: ordering party transaction number
-  corresponds to dta id #20 part two
-
-  format:	max. sixteen characters
-  example:	fh-1567
-
-* field id #12: account to be debited - with or without IBAN
-  corresponds to dta id #25
-
-  format:	twenty-four characters
-  example:	CH930076201162123456
-
-* field id #13: payment value date
-  corresponds to dta id #32a part one
-
-  has to be left empty
-
-* field id #14: ISO currency code
-  corresponds to dta id #32a part two
-
-  format:	three characters
-  value:	USD
-
-* field id #15: payment amount
-  corresponds to dta id #32a part three
-
-  format:	dd,dd (see dta spec for exact length)
-  example:	123,45
-
-* field id #16: convertion rate (has to be agreed with the bank)
-  corresponds to dta id #36
-
-  format:	dd,dd (see dta spec for details)
-  example:	123,45
-
-* field id #17 to #19: ordering party
-  corresponds to dta id #50
-
-  format:	twenty-four characters per line
-
-* field id #20: identification bank address
-  corresponds to dta id #57a or #57d
-
-  value:	A for BIC address
-		D for name and address for the institute
-
-* field id #21 to 22: beneficiary's institution
-
-  line 1:	/C/ and the BC number
-
-  option A:
-  line 2:	empty
-
-  option D:
-  line 2:	name and the address of the bank
-
-* field id #23: iban
-  corresponds to dta id #58
-
-  format:	thirty-four characters
-
-* field id #24 to #26: beneficiary party
-  corresponds to dta id #59
-
-  value:	thirty-five characters per line
-
-* field id #27: identification purpose
-  corresponds to dta id #70
-
-  value:	I	structured
-		U	unstructured
-
-* field id #28 to #30: purpose
-  corresponds to dta id #70
-
-  value:	I	line 1: twenty digits
-			lines 2 to 3: empty
-
-		U	free text (thirty-five characters)
-
-* field id #31 rules for charges
-  corresponds to dta id #71a
-
-    value:	CHG/OUR		to our charge
-		CHG/BEN		charge beneficiary
-				if empty: charges are split
 
 .Full example:
 ----
