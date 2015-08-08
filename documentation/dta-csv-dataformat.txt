@@ -28,7 +28,7 @@
   example:	ABC1234
 
 * field id #6: data file sender identification
-  The same identification hast to be included for all records.
+  The same identification has to be included for all records.
 
   format:	xxxxx (five characters)
   example:	ABC12
@@ -139,7 +139,7 @@ Full example:
   example:	ABC1234
 
 * field id #6: data file sender identification
-  The same identification hast to be included for all records.
+  The same identification has to be included for all records.
 
   format:	xxxxx (five characters)
   example:	ABC12
@@ -259,7 +259,7 @@ Full example:
   example:	ABC1234
 
 * field id #6: data file sender identification
-  The same identification hast to be included for all records.
+  The same identification has to be included for all records.
 
   format:	xxxxx (five characters)
   example:	ABC12
@@ -390,7 +390,7 @@ Full example:
   example:	ABC1234
 
 * field id #6: data file sender identification
-  The same identification hast to be included for all records.
+  The same identification has to be included for all records.
 
   format:	xxxxx (five characters)
   example:	ABC12
@@ -501,7 +501,7 @@ Full example:
   example:	ABC1234
 
 * field id #6: data file sender identification
-  The same identification hast to be included for all records.
+  The same identification has to be included for all records.
 
   format:	xxxxx (five characters)
   example:	ABC12
@@ -642,7 +642,7 @@ Full example:
   example:	ABC1234
 
 * field id #6: data file sender identification
-  The same identification hast to be included for all records.
+  The same identification has to be included for all records.
 
   format:	xxxxx (five characters)
   example:	ABC12
