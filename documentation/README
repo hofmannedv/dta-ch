@@ -9,3 +9,7 @@ README:
   Description of the csv data format for each single bank transaction as
   handled by the DTA-CH library.
 
+* dta-csv-dataformat.asciidoc:
+  Description of the csv data format for each single bank transaction as
+  handled by the DTA-CH library (AsciiDoc format).
+
