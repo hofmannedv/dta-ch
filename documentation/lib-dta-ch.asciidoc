@@ -19,6 +19,10 @@ banks with the help of an standardized DTA record file. DTA is the
 abbreviation for 'Datenträgeraustauschverfahren', and describes methods
 to exchange data media between financial institutes, and its clients.
 
+This library provides classes and methods to record both single and
+multiple transactions, to validate, cumulate, and sort these records
+according to the DTA specification from <<SIX, SIX Interbank Clearing>>.
+
 == Authors and Copyright ==
 
 (C) 2013-2015 Frank Hofmann, Berlin, Germany 
@@ -35,7 +39,7 @@ ToDo
 
 We think the following resources are helpul for you:
 
-* SIX Interbank Clearing, http://www.six-interbank-clearing.com/de/home.html
+* [[[SIX]]] SIX Interbank Clearing, http://www.six-interbank-clearing.com/de/home.html
 
 * DTA: Standards und Formate (PDF), http://www.six-interbank-clearing.com/dam/downloads/de/standardization/dta/dta.pdf
 
