@@ -1,0 +1,28 @@
+Documentation for lib-dta-ch
+============================
+Frank Hofmann
+:subtitle:
+:doctype: book
+:copyright: Frank Hofmann
+:revnumber: 1.0
+:Author Initials: FH
+:edition: 1
+:lang: en
+:date: 10 Aug 2015
+:numbered:
+
+== About lib-dta-ch ==
+
+ToDo
+
+== Authors and Copyright ==
+
+ToDo
+
+== Acknowledgements ==
+
+ToDo
+
+== Links and References ==
+
+We think the following resources are helpul for you:
