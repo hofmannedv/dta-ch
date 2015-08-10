@@ -31,17 +31,43 @@ Email frank.hofmann@efho.de
 
 Released under GNU Public License (GPL).
 
+== Project Website and Updates ==
+
+The library code is available from the lib-dta-ch project page at
+GitHub:
+
+https://github.com/hofmannedv/dta-ch
+
+== How to use lib-dta-ch in your project ==
+
+* import 'lib-dta-ch'
+
+
+== DTA Support ==
+
+Currently, these Swiss banks support DTA:
+
+* <<http://www.bnpparibas.ch/, BNP Paribas>>
+
+* <<http://www.raiffeisen.ch/, Raiffeisen Switzerland>>
+
+In contrast, about 22 Cantonal banks use <<http://www.finnova.com/,
+Finnova>>. ZKB, St. Galler KB and Luzerner KB are using core banking
+system called <<http://www.avaloq.com/, Avaloq>>.
+
 == Acknowledgements ==
 
-ToDo
+Many thanks to Gerold Rupprecht <geroldr@bluewin.ch> for his support on
+Swiss financial transactions.
 
 == Links and References ==
 
 We think the following resources are helpul for you:
 
-* [[[SIX]]] SIX Interbank Clearing, http://www.six-interbank-clearing.com/de/home.html
+[[[SIX]]]:: SIX Interbank Clearing, http://www.six-interbank-clearing.com/de/home.html
 
-* DTA: Standards und Formate (PDF), http://www.six-interbank-clearing.com/dam/downloads/de/standardization/dta/dta.pdf
+[[[DTAStandards]]]:: DTA: Standards und Formate (PDF), http://www.six-interbank-clearing.com/dam/downloads/de/standardization/dta/dta.pdf
 
-* DTA: Zahlungseinreichung an SIX Interbank Clearing (PDF), http://www.six-interbank-clearing.com/dam/downloads/de/standardization/dta/zahlungseinreichung.pdf
+[[[DTAPayments]]]:: DTA: Zahlungseinreichung an SIX Interbank Clearing (PDF), http://www.six-interbank-clearing.com/dam/downloads/de/standardization/dta/zahlungseinreichung.pdf
+
 
