@@ -59,17 +59,17 @@ Swiss financial transactions.
 
 We think the following resources are helpul for you:
 
-[[[Avaloq]]] Avaloq, http://www.avaloq.com/
+[[[Avaloq]]]:: Avaloq, http://www.avaloq.com/
 
-[[[BNP]]], BNP Paribas Switzerland, http://www.bnpparibas.ch/
+[[[BNP]]]:: BNP Paribas Switzerland, http://www.bnpparibas.ch/
 
 [[[DTAPayments]]]:: DTA: Zahlungseinreichung an SIX Interbank Clearing (PDF), http://www.six-interbank-clearing.com/dam/downloads/de/standardization/dta/zahlungseinreichung.pdf
 
 [[[DTAStandards]]]:: DTA: Standards und Formate (PDF), http://www.six-interbank-clearing.com/dam/downloads/de/standardization/dta/dta.pdf
 
-[[[Finnova]]] Finnova, http://www.finnova.com/
+[[[Finnova]]]:: Finnova, http://www.finnova.com/
 
-[[[Raiffeisen]]] Raiffeisen Switzerland, http://www.raiffeisen.ch/
+[[[Raiffeisen]]]:: Raiffeisen Switzerland, http://www.raiffeisen.ch/
 
 [[[SIX]]]:: SIX Interbank Clearing, http://www.six-interbank-clearing.com/de/home.html
 
