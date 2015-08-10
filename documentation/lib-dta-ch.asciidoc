@@ -41,19 +41,14 @@ https://github.com/hofmannedv/dta-ch
 == How to use lib-dta-ch in your project ==
 
 * import 'lib-dta-ch'
-
+* ToDo
 
 == DTA Support ==
 
-Currently, these Swiss banks support DTA:
-
-* <<http://www.bnpparibas.ch/, BNP Paribas>>
-
-* <<http://www.raiffeisen.ch/, Raiffeisen Switzerland>>
-
-In contrast, about 22 Cantonal banks use <<http://www.finnova.com/,
-Finnova>>. ZKB, St. Galler KB and Luzerner KB are using core banking
-system called <<http://www.avaloq.com/, Avaloq>>.
+Currently, these Swiss banks support DTA: <<BNP, BNP Paribas>>, and
+<<Raiffeisen, Raiffeisen Switzerland>>. In contrast, about 22 Cantonal
+banks use <<Finnova, Finnova>>. ZKB, St. Galler KB and Luzerner KB are
+using core banking system called <<Avaloq, Avaloq>>.
 
 == Acknowledgements ==
 
@@ -64,10 +59,17 @@ Swiss financial transactions.
 
 We think the following resources are helpul for you:
 
-[[[SIX]]]:: SIX Interbank Clearing, http://www.six-interbank-clearing.com/de/home.html
+[[[Avaloq]]] Avaloq, http://www.avaloq.com/
 
-[[[DTAStandards]]]:: DTA: Standards und Formate (PDF), http://www.six-interbank-clearing.com/dam/downloads/de/standardization/dta/dta.pdf
+[[[BNP]]], BNP Paribas Switzerland, http://www.bnpparibas.ch/
 
 [[[DTAPayments]]]:: DTA: Zahlungseinreichung an SIX Interbank Clearing (PDF), http://www.six-interbank-clearing.com/dam/downloads/de/standardization/dta/zahlungseinreichung.pdf
 
+[[[DTAStandards]]]:: DTA: Standards und Formate (PDF), http://www.six-interbank-clearing.com/dam/downloads/de/standardization/dta/dta.pdf
+
+[[[Finnova]]] Finnova, http://www.finnova.com/
+
+[[[Raiffeisen]]] Raiffeisen Switzerland, http://www.raiffeisen.ch/
+
+[[[SIX]]]:: SIX Interbank Clearing, http://www.six-interbank-clearing.com/de/home.html
 
