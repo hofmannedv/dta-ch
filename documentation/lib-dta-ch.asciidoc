@@ -13,7 +13,11 @@ Frank Hofmann
 
 == About lib-dta-ch ==
 
-ToDo
+lib-dta-ch is a PHP library to record bank transactions electronically,
+and to prepare these transactions for automatic processing by Swiss
+banks with the help of an standardized DTA record file. DTA is the
+abbreviation for 'Datenträgeraustauschverfahren', and describes methods
+to exchange data media between financial institutes, and its clients.
 
 == Authors and Copyright ==
 
