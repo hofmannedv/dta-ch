@@ -17,7 +17,11 @@ ToDo
 
 == Authors and Copyright ==
 
-ToDo
+(C) 2013-2015 Frank Hofmann, Berlin, Germany 
+
+Email frank.hofmann@efho.de
+
+Released under GNU Public License (GPL).
 
 == Acknowledgements ==
 
@@ -26,3 +30,10 @@ ToDo
 == Links and References ==
 
 We think the following resources are helpul for you:
+
+* SIX Interbank Clearing, http://www.six-interbank-clearing.com/de/home.html
+
+* DTA: Standards und Formate (PDF), http://www.six-interbank-clearing.com/dam/downloads/de/standardization/dta/dta.pdf
+
+* DTA: Zahlungseinreichung an SIX Interbank Clearing (PDF), http://www.six-interbank-clearing.com/dam/downloads/de/standardization/dta/zahlungseinreichung.pdf
+
