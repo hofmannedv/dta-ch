@@ -130,11 +130,44 @@ function ta836($senderDetails, $receiverDetails, $transactionDetails) {
 	return $transaction;
 }
 
+// define transaction data
+$senderDetails = array(
+	"orderingPartyLine1" 			=> "Holger Fischer",
+	"orderingPartyLine2" 			=> "Haus 4",
+	"orderingPartyLine3" 			=> "1000 Basel",
+	"bankClearingNumber" 			=> "00762",
+	"iban" 							=> "CH930076201162123456",
+	"senderIdentification" 			=> "ABC01",
+	"transactionNumber" 			=> "fh-1234"
+);
+
+$receiverDetails = array(
+	"nameAndAddressLine1" 			=> "Tom Foster",
+	"nameAndAddressLine2" 			=> "45 House Road",
+	"nameAndAddressLine3" 			=> "12345 San Diego",
+	"bankClearingNumber" 			=> "12345",
+	"bankAddress" 					=> "BCGE Geneve",
+	"iban" 							=> "CH1234567890",
+	"reasonForPaymentLine1" 		=> "order 12345",
+	"reasonForPaymentLine2" 		=> "contract 67890",
+	"reasonForPaymentLine3" 		=> "part 2"
+);
+
+$transactionDetails = array(
+	"dataFileSenderIdentification" 	=> "ABC12",
+	"currency" 						=> "CHF",
+	"paymentAmount" 				=> "123,45",
+	"convertionRate" 				=> "",
+	"rulesForCharges" 				=> "CHG/OUR"
+);
+
 // define transaction list
 $transactionData = array();
 
 // - entry one
-$transactionData[] = "836;131223;;00000;131222;Geldhaus 23;ABC12;;1;6;ABC01;12345678901;67890;;CHF;123,45;;Holger F;Haus 4;1000 Basel;D;;;CH1234567890;Tom Foster;45 House Road;12345 San Diego;U;pro;Monat;und Jahr;CHG/OUR";
+//$transactionData[] = "836;131223;;00000;131222;Geldhaus 23;ABC12;;1;6;ABC01;12345678901;67890;;CHF;123,45;;Holger F;Haus 4;1000 Basel;D;;;CH1234567890;Tom Foster;45 House Road;12345 San Diego;U;pro;Monat;und Jahr;CHG/OUR";
+
+$transactionData[] = ta836($senderDetails, $receiverDetails, $transactionDetails);
 
 // define output data format: set to fixed
 $outputDataFormat = "fixed";
