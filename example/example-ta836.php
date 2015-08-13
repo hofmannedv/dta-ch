@@ -17,31 +17,117 @@ function ta836($senderDetails, $receiverDetails, $transactionDetails) {
 	// create valid record for TA 836
 	// use specific default settings
 
-	// define transaction data for TA 836
-	$transactionData = "";
-
-	// read/extract sender details
+	// sender details
 	// - name of sender incl. address
 	// - bank clearing number (sender)
 	// - iban account number (sender)
 	// - sender identification
 	// - transaction number
 
-	// read/extract receiver details
+	// receiver details
 	// - name of receiver incl. address
 	// - bank clearing number (receiver)
 	// - bank address (receiver)
 	// - iban account number (receiver)
-	// - reason for payment
+	// - reason for payment (purpose)
 
-	// read/extract transaction details
+	// transaction details
 	// - date of transaction (payment value date)
 	// - value
 	// - currency
-	// - exchange rate
+	// - convertion rate
+	// - data file sender identification
+	// - rules for charges
+
+	// define transaction data for TA 836
+	$transaction = "";
+
+	// transaction type: 836
+	$transaction .= "836;";
+
+	// requested processing date: empty
+	$transaction .= ";";
+
+	// bank clearing number beneficiary (receiver): empty
+	$transaction .= ";";
+
+	// output sequence number (processed by the bank): 00000
+	$transaction .= "00000";
+
+	// data file creation date: set to today
+	$transaction .= date("ymd") . ";";
+
+	// bank clearing number order (sender)
+	$transaction .= $senderDetails["bankClearingNumber"] . ";";
+
+	// data file sender identification
+	$transaction .= $transactionDetails["dataFileSenderIdentification"] . ";";
+
+	// entry sequence number: empty
+	$transaction .= ";";
+
+	// transaction payment type: regular payment = 0
+	$transaction .= "0;";
+
+	// transaction processing flag: 0
+	$transaction .= "0;";
+
+	// ordering party identification (sender id)
+	$transaction .= $senderDetails["senderIdentification"] . ";";
+
+	// ordering party transaction number
+	$transaction .= $senderDetails["transactionNumber"] . ";";
+
+	// account to be debited (iban of sender)
+	$transaction .= $senderDetails["iban"] . ";";
+
+	// payment value date: has to be empty
+	$transaction .= ";";
+
+	// ISO currency code
+	$transaction .= $transactionDetails["currency"] . ";";
+
+	// payment amount
+	$transaction .= $transactionDetails["paymentAmount"] . ";";
+
+	// convertion rate
+	$transaction .= $transactionDetails["convertionRate"] . ";";
+
+	// ordering party: 3 lines
+	$transaction .= $senderDetails["orderingPartyLine1"] . ";";
+	$transaction .= $senderDetails["orderingPartyLine2"] . ";";
+	$transaction .= $senderDetails["orderingPartyLine3"] . ";";
+
+	// identification bank address (receiver): D
+	$transaction .= "D;";
+
+	// bank clearing number (receiver)
+	$transaction .= $receiverDetails["bankClearingNumber"] . ";";
+
+	// bank address (receiver)
+	$transaction .= $receiverDetails["bankAddress"] . ";";
+
+	// iban (receiver)
+	$transaction .= $receiverDetails["iban"] . ";";
+
+	// name and address (receiver)
+	$transaction .= $receiverDetails["nameAndAddressLine1"] . ";";
+	$transaction .= $receiverDetails["nameAndAddressLine2"] . ";";
+	$transaction .= $receiverDetails["nameAndAddressLine3"] . ";";
+
+	// transaction purpose as unstructured content
+	$transaction .= "U;";
+
+	// transaction purpose
+	$transaction .= $receiverDetails["reasonForPaymentLine1"] . ";";
+	$transaction .= $receiverDetails["reasonForPaymentLine2"] . ";";
+	$transaction .= $receiverDetails["reasonForPaymentLine3"] . ";";
+
+	// rules for charges
+	$transaction .= $transactionDetails["rulesForCharges"];
 
 	// return transaction data
-	return $transactionData;
+	return $transaction;
 }
 
 // define transaction list
