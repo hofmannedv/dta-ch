@@ -9,3 +9,6 @@ README:
   class that covers most of the manual steps needed to prepare the 
   record.
 
+* example-ta836.php:
+  simplified example call to create an TA 836 transaction record
+
