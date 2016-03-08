@@ -3921,6 +3921,7 @@ class DTACH {
 
 		// Start of text (SOT): CRLF+, 0D254E
 		// $textString = "0D 25 4E ";
+		$textString = "";
 		$v = "";
 
 		switch($transactionType) {
