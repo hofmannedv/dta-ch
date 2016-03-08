@@ -70,7 +70,7 @@ class DTACHProcessing {
 		$dta = new DTACH();
 
 		// fill object with data format
-		$dataFormat = $this->$dataFormat;
+		$dataFormat = $this->dataFormat;
 		$dta->setDataFormat($dataFormat);
 
 		// set date of delivery
@@ -111,7 +111,7 @@ class DTACHProcessing {
 
 		// go through the list of transactions one by one
 		foreach ($transactionData as $singleTransaction) {
-			$dta = processSingleTransaction ($singleTransaction);
+			$dta = $this->processSingleTransaction ($singleTransaction);
 
 			// add new dta to dta list
 			$dtaList[] = $dta;
