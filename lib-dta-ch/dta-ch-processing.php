@@ -4,7 +4,7 @@
 DTA-CH support class to process single transactions
 Requires lib-dta-ch.
 
-(C) 2015 Frank Hofmann, Berlin, Germany
+(C) 2015-16 Frank Hofmann, Berlin, Germany
 Released under GNU Public License (GPL)
 email frank.hofmann@efho.de
 -----------------------------------------------------------
@@ -24,7 +24,7 @@ class DTACHProcessing {
 		if(in_array($outputDataFormat, Array("fixed", "variable"))) {
 			// set data format, accordingly
 			$this->dataFormat = $outputDataFormat;
-		};
+		}
 
 		// define date of delivery
 		// - set the default date of delivery: today
@@ -37,7 +37,7 @@ class DTACHProcessing {
 
 			if (preg_match($datePattern, $transactiondeliveryDate) == True) {
 				$this->dateOfDelivery = $transactionDeliveryDate;
-			};
+			}
 		}
 
 		// store the transactions to be processed
@@ -57,7 +57,7 @@ class DTACHProcessing {
 		if(in_array($skipAdjustments, Array("no", "yes"))) {
 			// set adjust data, accordingly
 			$this->adjustData = $skipAdjustments;
-		};
+		}
 
 		return;
 	}
@@ -83,14 +83,14 @@ class DTACHProcessing {
 		// check for import error, and return with error code
 		if ($importValue == False) {
 			return False;
-		};
+		}
 
 		// auto-adjust data: header, and data fields
 		// skip if disabled
 		if ($this->adjustData == "yes") {
 			$dta->adjustHeader();
 			$dta->adjustDataFields();
-		};
+		}
 
 		// validate data: header, and data fields
 		$dta->validateHeader();
@@ -115,6 +115,7 @@ class DTACHProcessing {
 
 			// add new dta to dta list
 			$dtaList[] = $dta;
+		}
 
 		// return list of transactions
 		return $dtaList;
@@ -162,7 +163,7 @@ class DTACHProcessing {
 		// return the sorted list
 		return $dateList;
 
-	};
+	}
 
 	function identifyUniqueDateSegments ($dateList) {
 		// identify unique date segments in the transaction list
@@ -172,7 +173,7 @@ class DTACHProcessing {
 		// var_dump($dateSegments);
 
 		return $dateSegments;
-	};
+	}
 
 	function sortTransactions ($dtaList) {
 		// sort transaction list
@@ -201,7 +202,7 @@ class DTACHProcessing {
 					$piList[$dtaDate][] = $dta;
 
 					// quit searching, and end the inner foreach loop
-					break
+					break;
 				}
 			}
 		}
@@ -250,7 +251,7 @@ class DTACHProcessing {
 						$clearingList[$entry][] = $dta;
 
 						// quit searching, and end the inner foreach loop
-						break
+						break;
 					}
 				}
 			}
@@ -310,7 +311,7 @@ class DTACHProcessing {
 		if ($this->adjustData == "yes") {
 			$dta->adjustHeader();
 			$dta->adjustDataFields();
-		};
+		}
 
 		// validate new dta entry
 		$dta->validateHeader();
