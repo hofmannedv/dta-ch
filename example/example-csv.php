@@ -4,7 +4,7 @@
 -----------------------------------------------------------
 DTA-CH example reading CSV data
 
-(C) 2015 Frank Hofmann, Berlin, Germany
+(C) 2015-16 Frank Hofmann, Berlin, Germany
 Released under GNU Public License (GPL)
 email frank.hofmann@efho.de
 -----------------------------------------------------------
@@ -55,6 +55,7 @@ function processMultipleTransactions ($transactionData) {
 
 		// add new dta to dta list
 		$dtaList[] = $dta;
+	}
 
 	// return list of transactions
 	return $dtaList;
@@ -123,7 +124,7 @@ function sortTransactions ($dtaList) {
 				$piList[$dtaDate][] = $dta;
 
 				// quit searching, and end the inner foreach loop
-				break
+				break;
 			}
 		}
 	}
@@ -172,7 +173,7 @@ function sortTransactions ($dtaList) {
 					$clearingList[$entry][] = $dta;
 
 					// quit searching, and end the inner foreach loop
-					break
+					break;
 				}
 			}
 		}
