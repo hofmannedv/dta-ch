@@ -3,7 +3,7 @@
 -----------------------------------------------------------
 DTA-CH class
 
-(C) 2015 Frank Hofmann, Berlin, Germany
+(C) 2015-16 Frank Hofmann, Berlin, Germany
 Released under GNU Public License (GPL)
 email frank.hofmann@efho.de
 -----------------------------------------------------------
@@ -1493,7 +1493,7 @@ class DTACH {
 			// validate the account information
 			if (preg_match($ibanPattern, $iban)) {
 				// the pattern looks good, so let's continue
-				if isIban($iban) {
+				if ($this->isIban($iban)) {
 					return True;
 				}
 			}
@@ -1607,7 +1607,7 @@ class DTACH {
 		// step 4: validate the control remainder ------------------------
 		
 		// for a valid IBAN, IBAN mod 97 has to result in 1
-		if (intval($iban) % 97) == 1) {
+		if (intval($iban) % 97 == 1) {
 			return True;
 		}
 
@@ -2087,14 +2087,14 @@ class DTACH {
 			// see if the party account of the beneficiary matches pattern1
 			if (preg_match($pattern1, $beneficiaryPartyAccount)) {
 				// check for an empty IBAN field
-				if isEmptyIban() {
+				if ($this->isEmptyIban()) {
 					$this->validationResult["iban"] = True;
 					return True;
 				}
 			} elseif (preg_match($pattern2, $beneficiaryPartyAccount)) {
 				// see if the party account of the beneficiary matches pattern2
 				// check for an non-empty IBAN field with an valid IBAN number
-				if (isEmptyIban() == False) {
+				if ($this->isEmptyIban() == False) {
 					//$this->validationResult["iban"] = True;
 					//if ($this->validationResult["iban"] == True) {
 					return True;
@@ -2251,7 +2251,7 @@ class DTACH {
 		} elseif (preg_match($pattern2, $beneficiaryPartyAccount)) {
 			// check IBAN, again
 			// valid if empty
-			if (isEmptyIban() == False) {
+			if ($this->isEmptyIban() == False) {
 				//$this->validationResult["iban"] = True;
 				//if ($this->validationResult["iban"] == True) {
 				// extend the string to a length of 24 characters
@@ -3211,7 +3211,7 @@ class DTACH {
 			$iban = $this->getIban();
 
 			// check for a valid IBAN
-			if isIban($iban) {
+			if ($this->isIban($iban)) {
 				// check for the correct string length
 				if(strlen($iban) == 34) {
 					return True;
