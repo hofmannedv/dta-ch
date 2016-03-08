@@ -35,7 +35,7 @@ class DTACHProcessing {
 			// define regex date pattern
 			$datePattern = '/^\d{2}((0[1-9])|(1[0-2]))((0[1-9])|([1,2]\d)|(3[0,1]))$/';
 
-			if (preg_match($datePattern, $transactiondeliveryDate) == True) {
+			if (preg_match($datePattern, $transactionDeliveryDate) == True) {
 				$this->dateOfDelivery = $transactionDeliveryDate;
 			}
 		}
@@ -43,10 +43,10 @@ class DTACHProcessing {
 		// store the transactions to be processed
 		// we expect an array of strings
 		if(is_array($transactions)) {
-			$this->$transactionList = $transactions;
+			$this->transactionList = $transactions;
 		} else {
 			// handle the given variable as an array
-			$this->$transactionList = Array("$transactions");
+			$this->transactionList = Array("$transactions");
 		}
 
 		// auto-correct the values (do not skip)
