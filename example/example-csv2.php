@@ -49,13 +49,13 @@ $sortedTransactionList = $dtaProcessing->sortTransactions ($transactionList);
 $dataFileSenderIdentification = $transactionList[0]->getDataFileSenderIdentification();
 
 // - create the TA 890 record
-$ta890 = $dtaProcessing->createTA890 ($dataFileSenderIdentification, $totalValue);
+$ta890 = $dtaProcessing->createTA890 ($dataFileSenderIdentification, $dtaTotal);
 
 // add the TA 890 record to the transactionList
 $sortedTransactionList[] = $ta890;
 
 // adjust numbering of the single dta records
-$sortedTransactionList = $dtaProcessing->numberTransactions();
+$sortedTransactionList = $dtaProcessing->numberTransactions($sortedTransactionList);
 
 // export dta list to plain text file
 $fileContent = $dtaProcessing->exportDtaToPlaintext ($sortedTransactionList);
