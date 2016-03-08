@@ -33,7 +33,7 @@ $skipAdjustments = "no";
 
 // create dta-ch-processing object
 // initialize a new dta-ch-processing object
-$dtaProcessing = new DTACHProcessing($transactionData, $transactionDeliveryDate, $skipAdjustments);
+$dtaProcessing = new DTACHProcessing($transactionData, $outputDataFormat, $transactionDeliveryDate, $skipAdjustments);
 
 // process the transaction list
 $transactionList = $dtaProcessing->processMultipleTransactions ();
